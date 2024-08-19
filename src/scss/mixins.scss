@@ -1,0 +1,43 @@
+@import 'variables';
+
+@mixin split {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin h-gap($gap) {
+  display: flex;
+  flex-direction: row;
+  gap: $gap;
+}
+
+@mixin h-gap-centered($gap) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: $gap;
+}
+
+@mixin v-gap($gap) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+
+@mixin v-gap-centered($gap) {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $gap;
+}
+
+@mixin centered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin transition($duration, $properties...) {
+  transition: $properties $transition-timing $duration;
+}
