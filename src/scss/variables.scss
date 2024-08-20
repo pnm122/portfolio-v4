@@ -9,7 +9,7 @@ $gray-25: oklch(0.75 0 0);
 $gray-50: oklch(0.5 0 0);
 $gray-75: oklch(0.25 0 0);
 
-$green-10: oklch(0.95 0.08 134.67);
+$green-10: oklch(0.95 0.06 134.67);
 $green-25: oklch(0.75 0.14 134.67);
 $green-50: oklch(0.5 0.14 134.67);
 $green-75: oklch(0.25 0.1 134.67);
@@ -29,6 +29,7 @@ $font-body: 'Plus Jakarta Sans', 'Neue Haas Grotesk Text Pro', system-ui, sans-s
 // Font sizes
 $font-size-base: 1rem;
 
+$font-size-6: calc($font-size-base * (6 / 8));
 $font-size-7: calc($font-size-base * (7 / 8));
 $font-size-8: $font-size-base;
 $font-size-9: calc($font-size-base * (9 / 8));
@@ -42,6 +43,7 @@ $font-size-28: calc($font-size-base * (28 / 8));
 $font-size-32: calc($font-size-base * (32 / 8));
 $font-size-36: calc($font-size-base * (36 / 8));
 $font-size-40: calc($font-size-base * (40 / 8));
+$font-size-60: calc($font-size-base * (60 / 8));
 
 // Line heights
 $line-height-base: 1.5;
@@ -50,7 +52,7 @@ $line-height-6: calc($line-height-base * (6 / 8));
 $line-height-8: $line-height-base;
 
 // <------------- Animations ------------->
-$transition-timing: cubic-bezier(0, .42, .42, 1);
+$transition-timing: cubic-bezier(0, 0.42, 0.42, 1);
 $transition-duration-base: 0.5s;
 
 $transition-duration-2: calc($transition-duration-base * (2 / 8));

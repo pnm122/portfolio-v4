@@ -33,6 +33,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"svelte-physics-renderer": "^0.1.3"
+		"svelte-physics-renderer": "^0.1.5"
 	}
 }
