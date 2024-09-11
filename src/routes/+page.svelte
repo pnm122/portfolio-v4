@@ -66,7 +66,6 @@
     max-width: min-content;
     margin: auto;
     padding-block: 80px;
-    padding-bottom: 1000px;
 
     &__heading {
       font-size: $font-size-32;

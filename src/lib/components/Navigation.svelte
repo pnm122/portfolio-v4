@@ -1,5 +1,6 @@
 <script lang="ts">
 	import createClasses from "$utils/createClasses";
+	import Button from "./Button.svelte";
 
   let open = $state(false)
 </script>
@@ -12,14 +13,26 @@
     })}>
       <ul class='nav__list'>
         <li class='list-item'>
-          <a class='list-item__link' href="#" onclick={() => open = false}>
-            <span>Projects</span>
-          </a>
+          <Button
+            type='link'
+            href='#'
+            onClick={() => open = false}
+            style='text'
+            size='small'
+          >
+            Projects
+          </Button>
         </li>
         <li class='list-item'>
-          <a class='list-item__link' href="#" onclick={() => open = false}>
-            <span>Contact Me</span>
-          </a>
+          <Button
+            type='link'
+            href='#'
+            onClick={() => open = false}
+            style='text'
+            size='small'
+          >
+            Contact Me
+          </Button>
         </li>
       </ul>
     </nav>
