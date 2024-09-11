@@ -113,7 +113,6 @@
 
     &__list {
       display: flex;
-      flex-direction: row-reverse;
       align-items: center;
       gap: 16px;
       margin: 0;
@@ -136,11 +135,9 @@
 
       @for $i from 1 through $nav-items {
         .list-item:nth-of-type(#{$i}) {
-          transition-delay: calc($nav-item-delay * (3 - $i));
+          transition-delay: calc($nav-item-delay * $i);
         }
       }
-
-      
     }
 
     &--expanded {
@@ -152,7 +149,7 @@
 
       @for $i from 1 through $nav-items {
         .list-item:nth-of-type(#{$i}) {
-          transition-delay: calc($nav-item-delay * $i);
+          transition-delay: calc($nav-item-delay * (3 - $i));
         }
       }
     }
