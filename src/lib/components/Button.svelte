@@ -6,7 +6,7 @@
 
   interface Props {
     size?: 'small' | 'medium' | 'large'
-    style?: 'primary'
+    style?: 'primary' | 'text'
     type?: 'link' | 'button'
     href?: string
     onClick?: (e: MouseEvent) => void
@@ -61,7 +61,7 @@
             x: scaleOffset(xOffset),
             y: scaleOffset(yOffset),
             ease: 'elastic.out',
-            duration: 0.5
+            duration: 0.75
           })
         },
         onHover: () => {
@@ -73,7 +73,7 @@
             x: 0,
             y: 0,
             ease: 'elastic.out',
-            duration: 0.5
+            duration: 0.75
           })
         }
       })
@@ -88,8 +88,14 @@
     bind:this={button}
     class={classes}
     onclick={e => onClick && onClick(e)}>
-    <div bind:this={buttonBackground} class='button__background'></div>
-    <span class='button__inner'>{@render children()}</span>
+    <div bind:this={buttonBackground} class='button__background'>
+      {#if style === 'text'}
+        {@render children()}
+      {/if}
+    </div>
+    <span class='button__inner'>
+      {@render children()}
+    </span>
   </button>
 {:else}
   <a
@@ -97,8 +103,14 @@
     href={href}
     class={classes}
     onclick={e => onClick && onClick(e)}>
-    <div bind:this={buttonBackground} class='button__background'></div>
-    <span class='button__inner'>{@render children()}</span>
+    <div bind:this={buttonBackground} class='button__background'>
+      {#if style === 'text'}
+        {@render children()}
+      {/if}
+    </div>
+    <span class='button__inner'>
+      {@render children()}
+    </span>
   </a>
 {/if}
 
@@ -141,6 +153,18 @@
       font-size: $font-size-10;
     }
 
+    &--text {
+      --button-color: transparent;
+      --button-inner-color: #{$black};
+
+      padding-inline: 8px;
+      border-radius: 0;
+
+      .button__inner {
+        visibility: hidden;
+      }
+    }
+
     &__background {
       position: absolute;
       inset: 0;
@@ -148,6 +172,7 @@
       border-radius: 999px;
       background-color: var(--button-color);
       pointer-events: none;
+      @include centered;
     }
 
     &__inner {
