@@ -1,24 +1,28 @@
 // <------------- Colors ------------->
 
 // Palette
-$white: white;
+$white: oklch(99.25% 0.005 67.77);
 $black: black;
 
-$gray-10: oklch(0.9 0 0);
-$gray-25: oklch(0.75 0 0);
-$gray-50: oklch(0.5 0 0);
-$gray-75: oklch(0.25 0 0);
+$gray-1: oklch(91% 0.002 67.75);
+$gray-3: oklch(73% 0.002 67.75);
+$gray-5: oklch(55% 0.002 67.75);
+$gray-7: oklch(32.57% 0.002 67.75);
 
-$green-10: oklch(0.95 0.06 134.67);
-$green-25: oklch(0.75 0.14 134.67);
-$green-50: oklch(0.5 0.14 134.67);
-$green-75: oklch(0.25 0.1 134.67);
+$green-1: oklch(94.41% 0.086 158.41);
+$green-2: oklch(82.51% 0.191 152.77);
+$green-6: oklch(36.71% 0.073 154.39);
+$green-7: oklch(26.54% 0.032 156.65);
 
-// Aliases
-$primary-10: $green-10;
-$primary-25: $green-25;
-$primary-50: $green-50;
-$primary-75: $green-75;
+// Semantic tokens
+$primary: $green-2;
+$primary-dark: $green-6;
+$primary-extra-dark: $green-7;
+$primary-light: $green-1;
+
+$background: $white;
+$heading: $black;
+$paragraph: $gray-7;
 
 // <------------- Fonts ------------->
 
@@ -52,7 +56,7 @@ $line-height-6: calc($line-height-base * (6 / 8));
 $line-height-8: $line-height-base;
 
 // <------------- Animations ------------->
-$transition-timing: cubic-bezier(0, 0.42, 0.42, 1);
+$transition-timing: cubic-bezier(.7, 0, .3, 1);
 $transition-duration-base: 0.5s;
 
 $transition-duration-2: calc($transition-duration-base * (2 / 8));

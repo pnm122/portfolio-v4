@@ -33,6 +33,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"gsap": "^3.12.5",
 		"svelte-physics-renderer": "^0.1.5"
 	}
 }

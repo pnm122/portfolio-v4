@@ -37,6 +37,17 @@
 	place-items: center;
 }
 
+@mixin focus {
+  outline: 2px auto $black;
+  outline-offset: 3px;
+}
+
 @mixin transition($duration, $properties...) {
-	transition: $properties $transition-timing $duration;
+  $transitions: ();
+  
+  @each $property in $properties {
+    $transitions: append($transitions, #{$property} #{$duration} #{$transition-timing}, comma);
+  }
+  
+  transition: $transitions;
 }
