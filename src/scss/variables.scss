@@ -64,3 +64,11 @@ $transition-duration-4: calc($transition-duration-base * (4 / 8));
 $transition-duration-8: $transition-duration-base;
 $transition-duration-16: calc($transition-duration-base * (16 / 8));
 $transition-duration-24: calc($transition-duration-base * (24 / 8));
+
+// <------------- Screen breakpoints ------------->
+
+$screen-xs: 480px;
+$screen-sm: 624px;
+$screen-md: 768px;
+$screen-lg: 1024px;
+$screen-xl: 1280px;
