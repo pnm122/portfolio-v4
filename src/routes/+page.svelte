@@ -27,8 +27,16 @@
     padding-block: 80px;
 
     &__heading {
-      font-size: $font-size-60;
+      font-size: $font-size-32;
       white-space: nowrap;
+
+      @media screen and (min-width: $screen-xs) {
+        font-size: $font-size-40;
+      }
+
+      @media screen and (min-width: $screen-sm) {
+        font-size: $font-size-60;
+      }
     }
 
     :global(.hero__cta) {

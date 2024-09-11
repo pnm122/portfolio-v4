@@ -127,7 +127,7 @@
 
     &--small {
       height: 32px;
-      padding-inline: 12px;
+      padding-inline: 14px;
     }
 
     &--medium {
