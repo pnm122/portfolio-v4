@@ -38,12 +38,19 @@
   // Needed to guarantee that the onHoverEnd animation happens after the last onMove animation
   let isHovering = $state(false)
 
-  function scaleOffset(offset: number) {
-    return offset >= 0 ? (
-      offset / (1 + (offset / 10))
-    ) : (
-      -1 * ((-1 * offset) / (1 + ((-1 * offset) / 10)))
+  function scaleOffset(offset: number, scale: number, max: number) {
+    let flip = false
+    if(offset < 0) {
+      flip = true
+      offset = -1 * offset
+    }
+
+    const res = (
+      (-1 * max / ((scale * offset) + 1))
+      + max
     )
+    if(flip) return res * -1
+    else return res
   }
 
   $effect(() => {
@@ -58,8 +65,10 @@
           const xOffset = x! - bgX - (width / 2)
           const yOffset = y! - bgY - (height / 2)
           gsap.to(buttonBackground!, {
-            x: scaleOffset(xOffset),
-            y: scaleOffset(yOffset),
+            x: scaleOffset(xOffset, 0.08, 24),
+            y: scaleOffset(yOffset, 0.08, 24),
+            rotateY: scaleOffset(xOffset / 4, 0.08, 20),
+            rotateX: scaleOffset(yOffset * -2, 0.08, 20),
             ease: 'elastic.out',
             duration: 0.75
           })
@@ -72,6 +81,8 @@
           gsap.to(buttonBackground!, {
             x: 0,
             y: 0,
+            rotateY: 0,
+            rotateX: 0,
             ease: 'elastic.out',
             duration: 0.75
           })
@@ -126,6 +137,7 @@
     width: fit-content;
     text-transform: lowercase;
     outline: none;
+    perspective: 100px;
     @include centered;
 
     &:focus-visible &__background {
