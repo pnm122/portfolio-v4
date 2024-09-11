@@ -1,6 +1,4 @@
 <script lang="ts">
-	import createClasses from "$utils/createClasses";
-
   interface Props {
     text: string
   }
@@ -10,21 +8,29 @@
   }: Props = $props()
 </script>
 
-{#each text as letter}
-  <span class={createClasses({
-    'letter': true,
-    'letter--space': letter === ' '
-  })}>
-    {letter}
-  </span>
+{#each text.split(' ') as word}
+  <div class='word'>
+    {#each word as letter}
+      <div class='letter'>
+        {letter}
+      </div>
+    {/each}
+  </div>
+  {' '}
 {/each}
 
 <style lang="scss">
-  .letter {
-    display: inline-block;
+  .split {
+    display: block;
+  }
 
-    &--space {
-      width: 0.2em;
-    }
+  .word {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .letter {
+    position: relative;
+    display: inline-block;
   }
 </style>
