@@ -1,7 +1,15 @@
 @import 'variables';
 
-@mixin split {
+@mixin h-split {
 	display: flex;
+  flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+@mixin v-split {
+	display: flex;
+  flex-direction: column;
 	align-items: center;
 	justify-content: space-between;
 }
@@ -50,4 +58,13 @@
   }
   
   transition: $transitions;
+}
+
+@mixin force-size($width, $height) {
+  width: $width;
+  min-width: $width;
+  max-width: $width;
+  height: $height;
+  min-height: $height;
+  max-height: $height;
 }
