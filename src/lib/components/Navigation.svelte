@@ -5,7 +5,7 @@
   let open = $state(false)
 </script>
 
-<div class='navigation'>
+<div class='navigation container'>
   <div class='navigation__content'>
     <nav class={createClasses({
       'nav': true,
@@ -57,6 +57,7 @@
 
   .navigation {
     position: fixed;
+    z-index: 999;
     inset: 24px;
     bottom: unset;
     height: 0;
@@ -110,7 +111,6 @@
   }
 
   .nav {
-
     &__list {
       display: flex;
       align-items: center;
