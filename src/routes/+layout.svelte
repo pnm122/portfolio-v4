@@ -3,10 +3,11 @@
 	import Navigation from '$components/Navigation.svelte';
 	import '$scss/index.scss';
 	import gsap from 'gsap';
+	import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 	import { Observer } from 'gsap/dist/Observer';
 
   if(browser) {
-    gsap.registerPlugin(Observer)
+    gsap.registerPlugin(Observer, ScrollTrigger)
   }
 </script>
 

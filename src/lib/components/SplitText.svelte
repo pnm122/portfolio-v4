@@ -20,10 +20,6 @@
 {/each}
 
 <style lang="scss">
-  .split {
-    display: block;
-  }
-
   .word {
     position: relative;
     display: inline-block;
