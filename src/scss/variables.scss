@@ -9,16 +9,22 @@ $gray-3: oklch(73% 0.002 67.75);
 $gray-5: oklch(55% 0.002 67.75);
 $gray-7: oklch(32.57% 0.002 67.75);
 
-$green-1: oklch(94.41% 0.086 158.41);
+$green-1: oklch(90% 0.08 158.03);
 $green-2: oklch(82.51% 0.191 152.77);
 $green-6: oklch(36.71% 0.073 154.39);
 $green-7: oklch(26.54% 0.032 156.65);
+
+$purple-1: oklch(90% 0.06 306.29);
+$purple-3: oklch(73.12% 0.15 306.29);
 
 // Semantic tokens
 $primary: $green-2;
 $primary-dark: $green-6;
 $primary-extra-dark: $green-7;
 $primary-light: $green-1;
+
+$accent: $purple-3;
+$accent-light: $purple-1;
 
 $background: $white;
 $heading: $black;
