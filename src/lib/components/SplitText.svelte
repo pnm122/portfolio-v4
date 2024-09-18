@@ -1,21 +1,31 @@
 <script lang="ts">
   interface Props {
     text: string
+    noOverflow?: boolean
   }
 
   const {
-    text
+    text,
+    noOverflow
   }: Props = $props()
 </script>
 
 {#each text.split(' ') as word}
-  <div class='word'>
-    {#each word as letter}
-      <div class='letter'>
-        {letter}
+  {#if noOverflow}
+    <div class='word-wrapper'>
+      <div class='word'>
+        {#each word as letter}
+          <div class='letter'>{letter}</div>
+        {/each}
       </div>
-    {/each}
-  </div>
+    </div>
+  {:else}
+    <div class='word'>
+      {#each word as letter}
+        <div class='letter'>{letter}</div>
+      {/each}
+    </div>
+  {/if}
   {' '}
 {/each}
 
@@ -23,6 +33,12 @@
   .word {
     position: relative;
     display: inline-block;
+  }
+
+  .word-wrapper {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: top;
   }
   
   .letter {

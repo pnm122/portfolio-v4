@@ -1,8 +1,10 @@
 <script lang="ts">
-	import Button from "$components/Button.svelte";
+	import { browser } from "$app/environment";
+import Button from "$components/Button.svelte";
 	import SplitText from "$components/SplitText.svelte";
 	import popInAnimation from "$utils/animation/popInAnimation";
 	import rollInAnimation from "$utils/animation/rollInAnimation";
+	import slowRollInAnimation from "$utils/animation/slowRollInAnimation";
 	import gsap from "gsap";
 	import { Canvas, Rectangle, Circle } from "svelte-physics-renderer";
 
@@ -34,65 +36,121 @@
 
   let skillsCanvas: Canvas | undefined = $state()
 
+  function hideElementsAppearingOnScroll() {
+    gsap.to(`
+      .about-heading__text .letter,
+      .about-heading__image,
+      .about__content .word
+    `, {
+      visibility: 'hidden',
+      duration: 0
+    })
+  }
+
+  function createHeroAnimations(tl: gsap.core.Timeline) {
+    tl.to('body', { overflow: 'hidden' })
+    tl.fromTo('.hero__heading .letter', ...rollInAnimation())
+    tl.fromTo('.hero__description', ...popInAnimation({ delay: 0.125 }))
+    tl.fromTo('.hero__cta', ...popInAnimation({ delay: 0.125 }))
+
+    tl.fromTo('.homepage', {
+      scale: 0.85,
+      transformOrigin: 'center 50vh'
+    }, {
+      scale: 1,
+      ease: 'power4.out',
+      duration: 0.375,
+      delay: 0.125
+    })
+
+    tl.fromTo('.navigation .toggle__bar', {
+      scaleX: 0
+    }, {
+      scaleX: 1,
+      ease: 'power4.out',
+      duration: 0.25,
+      stagger: 0.05,
+      delay: 0.25
+    })
+
+    tl.to('body', { overflow: 'auto' })
+  }
+
+  function createScrollBasedAnimations(tl: gsap.core.Timeline) {
+    const pictureAnimationData = {
+      '#spellingbee': {
+        parallax: 100,
+        rotate: 30,
+        rotateRange: 20
+      },
+      '#chatapp': {
+        parallax: 50,
+        rotate: -25,
+        rotateRange: -10
+      },
+      '#datepicker': {
+        parallax: 125,
+        rotate: -30,
+        rotateRange: 10
+      }
+    }
+
+    Object.keys(pictureAnimationData).forEach((el) => {
+      gsap.fromTo(el, {
+        opacity: 0,
+      }, {
+        opacity: 1,
+        duration: 1,
+        ease: 'expo.inOut',
+        visibility: 'visible',
+        scrollTrigger: {
+          trigger: el
+        }
+      })
+
+      const { parallax, rotate, rotateRange } = pictureAnimationData[el as '#spellingbee']
+      tl.fromTo(el, {
+        rotate: rotate - (rotateRange / 2),
+        y: parallax
+      }, {
+        rotate: rotate + (rotateRange / 2),
+        y: -1 * parallax,
+        scrollTrigger: {
+          trigger: el,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1
+        }
+      })
+    })
+
+    gsap.fromTo('.about-heading__text .letter', ...slowRollInAnimation({
+      visibility: 'visible',
+      scrollTrigger: {
+        trigger: '.about-heading__text',
+        start: 'top bottom'
+      }
+    }))
+
+    gsap.fromTo('.about__content .word', ...slowRollInAnimation({
+      visibility: 'visible',
+      scrollTrigger: {
+        trigger: '.about__content',
+        start: 'top bottom'
+      }
+    }))
+  }
+
   $effect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline()
+      const heroTimeline = gsap.timeline()
+      const scrollTimeline = gsap.timeline()
 
-      tl.to('body', { overflow: 'hidden' })
-      tl.fromTo('.hero__heading .letter', ...rollInAnimation())
-      tl.fromTo('.hero__description', ...popInAnimation({ delay: 0.125 }))
-      tl.fromTo('.hero__cta', ...popInAnimation({ delay: 0.125 }))
+      hideElementsAppearingOnScroll()
+      createHeroAnimations(heroTimeline)
 
-      tl.fromTo('.homepage', {
-        scale: 0.85,
-        transformOrigin: 'center 50vh'
-      }, {
-        scale: 1,
-        ease: 'power4.out',
-        duration: 0.375,
-        delay: 0.125
-      })
-
-      tl.to('body', { overflow: 'auto' })
-
-      tl.fromTo('.navigation .toggle__bar', {
-        scaleX: 0
-      }, {
-        scaleX: 1,
-        ease: 'power4.out',
-        duration: 0.25,
-        stagger: 0.05,
-        delay: 0.25
-      })
-
-      tl.fromTo('.hero', {
-        filter: 'brightness(100%)',
-      }, {
-        filter: 'brightness(0%)',
-        scrollTrigger: {
-          trigger: '.about',
-          start: 'top 425px',
-          end: 'top top',
-          scrub: true
-        }
-      })
-
-      tl.fromTo('.hero__inner', {
-        scale: 1,
-        y: 0
-      }, {
-        scale: 0.5,
-        y: -100,
-        scrollTrigger: {
-          trigger: '.raised',
-          start: 'top 425px',
-          end: 'top top',
-          scrub: true
-        }
-      })
-
-      // must come first so from state doesn't override intended initial from state
-      tl.fromTo('.raised', {
+      // // must come first so from state doesn't override intended initial from state
+      gsap.fromTo('body', {
         // Can't animate with variables? :(
         backgroundColor: 'oklch(36.71% 0.073 154.39)'
       }, {
@@ -105,7 +163,7 @@
         }
       })
 
-      tl.fromTo('.raised', {
+      gsap.fromTo('body', {
         // Can't animate with variables? :(
         backgroundColor: 'oklch(99.25% 0.005 67.77)'
       }, {
@@ -116,17 +174,12 @@
           end: 'top 25%',
           scrub: true
         }
-      })
+      })  
 
-      tl.fromTo('.about__heading .word', ...popInAnimation({
-        stagger: 0.05,
-        scrollTrigger: {
-          trigger: '.about__heading',
-          start: 'top center',
-          end: 'top 100px',
-          scrub: 1.5
-        }
-      }))
+      // Activate scroll timeline only after the hero animations are done
+      heroTimeline.eventCallback('onComplete', () => {
+        createScrollBasedAnimations(scrollTimeline)
+      })
     })
 
     const observer = new IntersectionObserver((e) => {
@@ -175,29 +228,53 @@
       </Button>
     </div>
   </section>
-  <!-- <a href='#about' id='scroll'>
-    scroll
-  </a> -->
-  <section class='raised'>
+  <section>
     <section class='about' id='about'>
-      <div class='about__inner'>
-        <h1 class='about__heading'>
-          <SplitText
-            text='Creativity is at my core. I love creating rich digital experiences — from perfecting the smallest details to scaffolding the biggest ideas.'
-          />
-        </h1>
-        <div class='about__content'>
-          <p>
-            Most recently, I was an intern on the Design Systems team at Chatham Financial. Most notably, I created, added features to, and maintained components in a component library,
-      wrote extensive unit tests, and created a pipeline to automate the process of converting design tokens into code variables.
-          </p>
-          <p>
-            Previously, I spent 8 months freelancing on Fiverr, where I became a Level 1 Seller offering web design and development services. I maintained a 5 star rating, crafting quality, bespoke solutions for nearly 50 orders.
-          </p>
-          <p>
-            I’m an avid tennis player and fan, and I’m passionate about playing music, including guitar, piano, and drums. I also love learning new things, and I’m always seeking out new knowledge.
-          </p>
+      <div class='about__heading-wrapper'>
+        <div class='about-heading'>
+          <h1 class='about-heading__text'>
+            <SplitText
+              noOverflow
+              text='Creativity is at my core. I love creating rich digital experiences — from perfecting the smallest details to scaffolding the biggest ideas.'
+            />
+          </h1>
+          <img
+            class='about-heading__image'
+            id='datepicker'
+            src='images/homepage/datepicker.png'
+            alt='date picker'>
+          <img
+            class='about-heading__image'
+            id='spellingbee'
+            src='images/homepage/spellingbee.png'
+            alt='spelling bee app'>
+          <img
+            class='about-heading__image'
+            id='chatapp'
+            src='images/homepage/chatapp.png'
+            alt='chat app'>
         </div>
+      </div>
+      <div class='about__content'>
+        <p>
+          <SplitText
+            noOverflow
+            text='Most recently, I was an intern on the Design Systems team at Chatham Financial. Most notably, I created, added features to, and maintained components in a component library,
+    wrote extensive unit tests, and created a pipeline to automate the process of converting design tokens into code variables.'
+          />
+        </p>
+        <p>
+          <SplitText
+            noOverflow
+            text='Previously, I spent 8 months freelancing on Fiverr, where I became a Level 1 Seller offering web design and development services. I maintained a 5 star rating, crafting quality, bespoke solutions for nearly 50 orders.'
+          />
+        </p>
+        <p>
+          <SplitText
+            noOverflow
+            text='I’m an avid tennis player and fan, and I’m passionate about playing music, including guitar, piano, and drums. I also love learning new things, and I’m always seeking out new knowledge.'
+          />
+        </p>
       </div>
     </section>
     <section class='skills'>
@@ -226,7 +303,7 @@
             {#each skills as skill}
               <li class='skill-list__item' style='align-self: {getRandomAlignment()};'>
                 <Circle
-                  size={100}
+                  size={browser && window.innerWidth < 768 ? 64 : 100}
                   class='skill-circle'
                   restitution={0.75}>
                   {skill}
@@ -249,13 +326,13 @@
 <style lang="scss">
   @import '$scss/variables';
   @import '$scss/mixins';
+  
+  .homepage {
+    overflow: hidden;
+  }
 
   .hero {
-    position: sticky;
-    z-index: -1;
-    top: 0;
     height: 450px;
-    background-color: $background;
     @include centered;
 
     &__inner {
@@ -293,46 +370,83 @@
     }
   }
 
-  #scroll {
-    position: fixed;
-    left: 50%;
-    bottom: 0;
-    transform: translateX(-50%);
-  }
-
-  .raised {
-    background-color: $background;
-  }
-
   .about {
-    padding-top: 80px;
-    padding-bottom: 200px;
+    @include container;
 
-    &__inner {
-      display: flex;
-      flex-direction: column;
-      gap: 64px;
-      @include container;
-    }
-
-    &__heading {
-      text-align: center;
-      font-size: $font-size-20;
-
-      @media screen and (min-width: $screen-sm) {
-        font-size: $font-size-24;
-      }
+    &__heading-wrapper {
+      padding-block: 300px;
 
       @media screen and (min-width: $screen-md) {
-        font-size: $font-size-32;
+        padding-top: 80px;
+      }
+    }
+
+    .about-heading {
+      position: relative;
+      margin: auto;
+      width: 100%;
+      max-width: 1024px;
+
+      &__text {
+        text-align: center;
+        font-size: $font-size-20;
+
+        @media screen and (min-width: $screen-sm) {
+          font-size: $font-size-24;
+        }
+
+        @media screen and (min-width: $screen-md) {
+          font-size: $font-size-32;
+        }
+      }
+
+      &__image {
+        position: absolute;
+        transform: translate(-50%, -50%);
+
+        &#spellingbee {
+          z-index: -1;
+          left: 50%;
+          top: -50%;
+
+          @media screen and (min-width: $screen-md) {
+            z-index: 1;
+            left: 15%;
+            top: 150%;
+          }
+        }
+
+        &#chatapp {
+          z-index: -2;
+          left: 50%;
+          top: 60%;
+
+          @media screen and (min-width: $screen-md) {
+            left: 75%;
+            top: 115%;
+          }
+        }
+
+        &#datepicker {
+          z-index: -1;
+          left: 50%;
+          top: 150%;
+
+          @media screen and (min-width: $screen-md) {
+            left: 100%;
+            top: 0%;
+          }
+        }
       }
     }
 
     &__content {
-      @include columns(1);
+      @include v-gap(48px);
 
-      @media screen and (min-width: $screen-lg) {
-        @include columns(3);
+      @media screen and (min-width: $screen-md) {
+        width: 100%;
+        max-width: 50%;
+        margin-left: auto;
       }
 
       p {
@@ -416,9 +530,14 @@
 
         :global(.skill-circle) {
           background-color: $primary-extra-dark;
-        color: $white;
+          color: $white;
           pointer-events: none;
+          font-size: $font-size-6;
           @include centered;
+
+          @media screen and (min-width: $screen-md) {
+            font-size: $font-size-8;
+          }
         }
       }
     }
