@@ -2,14 +2,14 @@
 
 @mixin h-split {
 	display: flex;
-  flex-direction: row;
+	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
 }
 
 @mixin v-split {
 	display: flex;
-  flex-direction: column;
+	flex-direction: column;
 	align-items: center;
 	justify-content: space-between;
 }
@@ -46,36 +46,36 @@
 }
 
 @mixin focus {
-  outline: 2px auto $black;
-  outline-offset: 3px;
+	outline: 2px auto $black;
+	outline-offset: 3px;
 }
 
 @mixin transition($duration, $properties...) {
-  $transitions: ();
-  
-  @each $property in $properties {
-    $transitions: append($transitions, #{$property} #{$duration} #{$transition-timing}, comma);
-  }
-  
-  transition: $transitions;
+	$transitions: ();
+
+	@each $property in $properties {
+		$transitions: append($transitions, #{$property} #{$duration} #{$transition-timing}, comma);
+	}
+
+	transition: $transitions;
 }
 
 @mixin force-size($width, $height) {
-  width: $width;
-  min-width: $width;
-  max-width: $width;
-  height: $height;
-  min-height: $height;
-  max-height: $height;
+	width: $width;
+	min-width: $width;
+	max-width: $width;
+	height: $height;
+	min-height: $height;
+	max-height: $height;
 }
 
 @mixin columns($num-cols) {
-  display: grid;
-  grid-template-columns: repeat($num-cols, minmax(0, 1fr));
-  gap: 24px;
+	display: grid;
+	grid-template-columns: repeat($num-cols, minmax(0, 1fr));
+	gap: 24px;
 }
 
 @mixin container {
-  width: min(calc(100% - 48px), 1440px);
-  margin: auto;
+	width: min(calc(100% - 48px), 1440px);
+	margin: auto;
 }
