@@ -5,8 +5,6 @@
 	}
 
 	const { text, noOverflow }: Props = $props()
-
-	console.log(text)
 </script>
 
 {#each text.split(/[ \n\t]/) as word}

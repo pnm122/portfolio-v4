@@ -6,6 +6,7 @@
 	import rollInAnimation from '$utils/animation/rollInAnimation'
 	import slowRollInAnimation from '$utils/animation/slowRollInAnimation'
 	import gsap from 'gsap'
+	import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 	import { Canvas, Rectangle, Circle } from 'svelte-physics-renderer'
 
 	const skills = [
@@ -20,6 +21,7 @@
 		'Stencil',
 		'Node',
 		'Express',
+    'Jasmine',
 		'Flask',
 		'Flutter',
 		'Firebase',
@@ -35,6 +37,7 @@
 	]
 
 	let skillsCanvas: Canvas | undefined = $state()
+  let screenWidth = $state(browser ? window.innerWidth : 0)
 
 	function hideElementsAppearingOnScroll() {
 		gsap.to(
@@ -174,46 +177,30 @@
 			hideElementsAppearingOnScroll()
 			createHeroAnimations(heroTimeline)
 
-			// // must come first so from state doesn't override intended initial from state
-			gsap.fromTo(
-				'body',
-				{
-					// Can't animate with variables? :(
-					backgroundColor: 'oklch(36.71% 0.073 154.39)'
-				},
-				{
-					backgroundColor: 'oklch(99.25% 0.005 67.77)',
-					scrollTrigger: {
-						trigger: '.skills',
-						start: 'bottom center',
-						end: 'bottom 25%',
-						scrub: true
-					}
-				}
-			)
-
-			gsap.fromTo(
-				'body',
-				{
-					// Can't animate with variables? :(
-					backgroundColor: 'oklch(99.25% 0.005 67.77)'
-				},
-				{
-					backgroundColor: 'oklch(36.71% 0.073 154.39)',
-					scrollTrigger: {
-						trigger: '.skills',
-						start: 'top center',
-						end: 'top 25%',
-						scrub: true
-					}
-				}
-			)
-
 			// Activate scroll timeline only after the hero animations are done
 			heroTimeline.eventCallback('onComplete', () => {
 				createScrollBasedAnimations(scrollTimeline)
+        // skillsCanvas!.context.start()
 			})
+
+      // ScrollTrigger.create({
+      //   trigger: '.skills',
+      //   start: 'top bottom',
+      //   onEnter: () => {
+      //     console.log('enter')
+      //   }
+      // })
 		})
+
+		function onResize() {
+      screenWidth = window.innerWidth
+			if (skillsCanvas?.context.state === 'running') {
+				skillsCanvas.context.stop()
+				skillsCanvas.context.start()
+			}
+		}
+
+		window.addEventListener('resize', onResize)
 
 		const observer = new IntersectionObserver((e) => {
 			if (e[0].isIntersecting) {
@@ -225,14 +212,6 @@
 
 		observer.observe(document.querySelector('.skills')!)
 
-		function onResize() {
-			if (skillsCanvas?.context.state === 'running') {
-				skillsCanvas.context.stop()
-				skillsCanvas.context.start()
-			}
-		}
-
-		window.addEventListener('resize', onResize)
 
 		return () => {
 			observer.disconnect()
@@ -322,6 +301,29 @@
 				gravity={{ scale: 0.0005 }}
 			>
 				<div class="skills__inner">
+          <ul class="skill-list">
+						{#each skills as skill}
+							<li class="skill-list__item" style="align-self: {getRandomAlignment()};">
+								{#if screenWidth < 768}
+                  <Circle
+                    size={72}
+                    class="skill-circle"
+                    restitution={0.75}
+                  >
+                    {skill}
+                  </Circle>
+                {:else}
+                  <Circle
+                    size={100}
+                    class="skill-circle"
+                    restitution={0.75}
+                  >
+                    {skill}
+                  </Circle>
+                {/if}
+							</li>
+						{/each}
+					</ul>
 					<div class="skills__content">
 						<Rectangle class="skills__left-wall" isStatic />
 						<Rectangle class="skills__right-wall" isStatic />
@@ -337,32 +339,8 @@
 							</p>
 						</Rectangle>
 					</div>
-					<ul class="skill-list">
-						{#each skills as skill}
-							<li class="skill-list__item" style="align-self: {getRandomAlignment()};">
-								<Circle
-									size={browser && window.innerWidth < 768 ? 64 : 100}
-									class="skill-circle"
-									restitution={0.75}
-								>
-									{skill}
-								</Circle>
-							</li>
-						{/each}
-					</ul>
 				</div>
 			</Canvas>
-			<span>
-				{skillsCanvas?.context.state}
-			</span>
-			<button
-				onclick={() =>
-					skillsCanvas?.context.state === 'running'
-						? skillsCanvas.context.stop()
-						: skillsCanvas?.context.start()}
-			>
-				Toggle canvas
-			</button>
 		</section>
 	</section>
 </div>
@@ -450,8 +428,8 @@
 
 				&#spellingbee {
 					z-index: -1;
-					left: 50%;
-					top: -50%;
+					left: 75%;
+					top: -40%;
 
 					@media screen and (min-width: $screen-md) {
 						z-index: 1;
@@ -462,8 +440,8 @@
 
 				&#chatapp {
 					z-index: -2;
-					left: 50%;
-					top: 60%;
+					left: 25%;
+					top: -33%;
 
 					@media screen and (min-width: $screen-md) {
 						left: 75%;
@@ -485,6 +463,7 @@
 		}
 
 		&__content {
+      padding-bottom: 160px;
 			@include v-gap(48px);
 
 			@media screen and (min-width: $screen-md) {
@@ -503,11 +482,12 @@
 		width: 100%;
 		height: 100vh;
 		max-height: 800px;
+    background-color: $primary-dark;
 
 		&__inner {
 			display: flex;
-			align-items: flex-end;
-			justify-content: space-between;
+      flex-direction: column;
+			justify-content: flex-end;
 			height: 100%;
 		}
 
@@ -540,7 +520,7 @@
 		:global(.skills__left-wall) {
 			position: absolute;
 			right: 100%;
-			top: 0;
+			top: -1000%;
 			bottom: 0;
 			width: 100px;
 		}
@@ -548,7 +528,7 @@
 		:global(.skills__right-wall) {
 			position: absolute;
 			left: 100%;
-			top: 0;
+			top: -1000%;
 			bottom: 0;
 			width: 100px;
 		}
@@ -562,8 +542,8 @@
 		}
 
 		.skill-list {
-			margin: 0;
-			padding: 0 15% 100% 0;
+			margin-left: auto;
+			padding: 0 15% 100%;
 			display: flex;
 			flex-direction: column;
 			gap: 160px;
