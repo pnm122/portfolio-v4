@@ -44,11 +44,15 @@
 	.navigation {
 		position: fixed;
 		z-index: 999;
-		inset: 24px;
-		bottom: unset;
+		top: 24px;
+    right: 24px;
 		height: 0;
 		display: flex;
 		justify-content: flex-end;
+    /* Force nav to fit content when expanded */
+    max-width: fit-content;
+    /* Width of toggle button */
+    min-width: 56px;
 
 		&__content {
 			width: 0;
@@ -58,10 +62,11 @@
 			justify-content: flex-end;
 			align-items: center;
 			@include h-gap(16px);
-			@include transition($transition-duration-4, width);
+			@include transition($transition-duration-4, width, padding);
 
 			&:has(.toggle[aria-checked='true']) {
 				width: 100%;
+        padding-left: 8px;
 			}
 
 			&:has(.toggle[aria-checked='false']) {
