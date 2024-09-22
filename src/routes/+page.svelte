@@ -292,55 +292,57 @@
 			</div>
 		</section>
 		<section class="skills">
-			<Canvas
-				bind:this={skillsCanvas}
-				width="100%"
-				height="100%"
-				interactive
-				bounded={false}
-				gravity={{ scale: 0.0005 }}
-			>
-				<div class="skills__inner">
-          <ul class="skill-list">
-						{#each skills as skill}
-							<li class="skill-list__item" style="align-self: {getRandomAlignment()};">
-								{#if screenWidth < 768}
-                  <Circle
-                    size={72}
-                    class="skill-circle"
-                    restitution={0.75}
-                  >
-                    {skill}
-                  </Circle>
-                {:else}
-                  <Circle
-                    size={100}
-                    class="skill-circle"
-                    restitution={0.75}
-                  >
-                    {skill}
-                  </Circle>
-                {/if}
-							</li>
-						{/each}
-					</ul>
-					<div class="skills__content">
-						<Rectangle class="skills__left-wall" isStatic />
-						<Rectangle class="skills__right-wall" isStatic />
-						<Rectangle class="skills__bottom-wall" isStatic />
-						<Rectangle style="width: fit-content;" isStatic>
-							<h1 class="skills__heading">Skills</h1>
-						</Rectangle>
-						<Rectangle style="width: fit-content;" isStatic>
-							<p class="skills__description">
-								Through schoolwork, personal and service projects, and professional experience as
-								both a freelancer and as an intern, I've developed actionable skills in many web
-								tools and technologies.
-							</p>
-						</Rectangle>
-					</div>
-				</div>
-			</Canvas>
+			<div class="skills__container">
+			  <Canvas
+  				bind:this={skillsCanvas}
+  				width="100%"
+  				height="100%"
+  				interactive
+  				bounded={false}
+  				gravity={{ scale: 0.0005 }}
+  			>
+  				<div class="skills__inner">
+            <ul class="skill-list">
+  						{#each skills as skill}
+  							<li class="skill-list__item" style="align-self: {getRandomAlignment()};">
+  								{#if screenWidth < 768}
+                    <Circle
+                      size={72}
+                      class="skill-circle"
+                      restitution={0.75}
+                    >
+                      {skill}
+                    </Circle>
+                  {:else}
+                    <Circle
+                      size={100}
+                      class="skill-circle"
+                      restitution={0.75}
+                    >
+                      {skill}
+                    </Circle>
+                  {/if}
+  							</li>
+  						{/each}
+  					</ul>
+  					<div class="skills__content">
+  						<Rectangle class="skills__left-wall" isStatic />
+  						<Rectangle class="skills__right-wall" isStatic />
+  						<Rectangle class="skills__bottom-wall" isStatic />
+  						<Rectangle style="width: fit-content;" isStatic>
+  							<h1 class="skills__heading">Skills</h1>
+  						</Rectangle>
+  						<Rectangle style="width: fit-content;" isStatic>
+  							<p class="skills__description">
+  								Through schoolwork, personal and service projects, and professional experience as
+  								both a freelancer and as an intern, I've developed actionable skills in many web
+  								tools and technologies.
+  							</p>
+  						</Rectangle>
+  					</div>
+  				</div>
+  			</Canvas>
+			</div>
 		</section>
 	</section>
 </div>
@@ -484,6 +486,11 @@
 		max-height: 800px;
     background-color: $primary-dark;
 
+    &__container {
+      height: 100%;
+      @include container;
+    }
+
 		&__inner {
 			display: flex;
       flex-direction: column;
@@ -496,7 +503,7 @@
 			display: flex;
 			flex-direction: column;
 			justify-content: flex-end;
-			padding: 24px;
+			padding-bottom: 24px;
 		}
 
 		&__heading {
