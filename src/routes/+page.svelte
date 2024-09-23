@@ -5,6 +5,7 @@
 	import popInAnimation from '$utils/animation/popInAnimation'
 	import rollInAnimation from '$utils/animation/rollInAnimation'
 	import slowRollInAnimation from '$utils/animation/slowRollInAnimation'
+	import isTouchDevice from '$utils/isTouchDevice'
 	import gsap from 'gsap'
 	import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 	import { Canvas, Rectangle, Circle } from 'svelte-physics-renderer'
@@ -170,6 +171,8 @@
 	}
 
 	$effect(() => {
+    let heroAnimationsComplete: () => void
+    const waitForHeroAnimations = new Promise<void>(res => heroAnimationsComplete = res)
 		const ctx = gsap.context(() => {
 			const heroTimeline = gsap.timeline()
 			const scrollTimeline = gsap.timeline()
@@ -179,8 +182,8 @@
 
 			// Activate scroll timeline only after the hero animations are done
 			heroTimeline.eventCallback('onComplete', () => {
+        heroAnimationsComplete()
 				createScrollBasedAnimations(scrollTimeline)
-        // skillsCanvas!.context.start()
 			})
 
       // ScrollTrigger.create({
@@ -202,8 +205,9 @@
 
 		window.addEventListener('resize', onResize)
 
-		const observer = new IntersectionObserver((e) => {
+		const observer = new IntersectionObserver(async (e) => {
 			if (e[0].isIntersecting) {
+        await waitForHeroAnimations
 				skillsCanvas?.context.start()
 			} else {
 				skillsCanvas?.context.stop()
@@ -297,7 +301,10 @@
   				bind:this={skillsCanvas}
   				width="100%"
   				height="100%"
-  				interactive
+  				interactive={
+            // Interactive canvas + touch device = annoying scroll behavior
+            browser && !isTouchDevice()
+          }
   				bounded={false}
   				gravity={{ scale: 0.0005 }}
   			>
