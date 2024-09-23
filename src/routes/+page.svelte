@@ -557,7 +557,7 @@
 
 		.skill-list {
 			margin-left: auto;
-			padding: 0 15% 100%;
+			padding: 0 15% 650px;
 			display: flex;
 			flex-direction: column;
 			gap: 160px;
