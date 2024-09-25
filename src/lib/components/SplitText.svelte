@@ -9,19 +9,19 @@
 
 {#each text.split(/[ \n\t]/) as word}
 	{#if noOverflow}
-		<div class="word-wrapper">
-			<div class="word">
+		<span class="word-wrapper">
+			<span class="word">
 				{#each word as letter}
-					<div class="letter">{letter}</div>
+					<span class="letter">{letter}</span>
 				{/each}
-			</div>
-		</div>
+			</span>
+		</span>
 	{:else}
-		<div class="word">
+		<span class="word">
 			{#each word as letter}
-				<div class="letter">{letter}</div>
+				<span class="letter">{letter}</span>
 			{/each}
-		</div>
+		</span>
 	{/if}
 	{' '}
 {/each}
