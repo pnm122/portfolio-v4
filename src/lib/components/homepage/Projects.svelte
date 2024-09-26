@@ -1,6 +1,10 @@
 <script lang="ts">
 	import gsap from "gsap"
+	import ScrollTrigger from "gsap/dist/ScrollTrigger"
 
+  const projects = [{}, {}, {}, {}]
+
+  let projectsTween: gsap.core.Tween
   $effect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline()
@@ -20,13 +24,12 @@
         }
       })
       
-      gsap.to(projects, {
+      projectsTween = gsap.to(projects, {
         xPercent: -100 * (projects.length - 1),
         ease: 'none',
         scrollTrigger: {
           trigger: projectsContainer,
           pin: true,
-          // pinSpacing: false,
           scrub: 1,
           snap: {
             snapTo: 1 / (projects.length - 1),
@@ -36,7 +39,7 @@
           },
           start: 'top top',
           // base vertical scrolling on how wide the container is so it feels more natural
-          end: () => `${projectsContainer.offsetWidth}px`
+          end: () => `${projectsContainer.offsetWidth ?? 0}px`
         }
       })
     })
@@ -45,14 +48,34 @@
       ctx.revert()
     }
   })
+
+  function scrollToProject(n: number) {
+    const { start, end } = projectsTween.scrollTrigger!
+    const projectScrollSize = ((end - start) / (projects.length - 1))
+    gsap.to(window, {
+      scrollTo: {
+        y: start + (projectScrollSize * n)
+      }
+    })
+  }
 </script>
 
+<div id='projects-scroll-ref'></div>
 <section class='projects'>
   <div class='projects__inner'>
     <div class='project'></div>
     <div class='project'></div>
     <div class='project'></div>
     <div class='project'></div>
+    <div class='project-buttons'>
+      {#each projects as _, i}
+        <button
+          class='project-buttons__button'
+          onclick={() => scrollToProject(i)}>
+          Project {i}
+        </button>
+      {/each}
+    </div>
   </div>
 </section>
 
@@ -61,6 +84,7 @@
 
   .projects {
     margin-top: 200px;
+    position: relative;
 
     &__inner {
       display: flex;
@@ -88,6 +112,13 @@
       &:nth-of-type(4) {
         background-color: blueviolet;
       }
+    }
+
+    .project-buttons {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      @include h-gap(12px);
     }
   }
 </style>

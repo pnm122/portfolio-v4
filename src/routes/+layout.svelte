@@ -6,9 +6,10 @@
 	import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 	import { Observer } from 'gsap/dist/Observer'
 	import MouseFollower from '$components/MouseFollower.svelte'
+	import ScrollToPlugin from 'gsap/dist/ScrollToPlugin'
 
 	if (browser) {
-		gsap.registerPlugin(Observer, ScrollTrigger)
+		gsap.registerPlugin(Observer, ScrollTrigger, ScrollToPlugin)
 	}
 </script>
 
