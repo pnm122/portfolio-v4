@@ -23,6 +23,12 @@
           end: 'top top'
         }
       })
+
+      const buttonsTo = gsap.quickTo(
+        document.querySelector('.project-buttons'),
+        'left'
+      )
+      
       
       projectsTween = gsap.to(projects, {
         xPercent: -100 * (projects.length - 1),
@@ -39,7 +45,14 @@
           },
           start: 'top top',
           // base vertical scrolling on how wide the container is so it feels more natural
-          end: () => `${projectsContainer.offsetWidth ?? 0}px`
+          end: () => `${projectsContainer.offsetWidth ?? 0}px`,
+          onUpdate: (self) => {
+            const buttonsWidth = (document.querySelector('.project-buttons') as HTMLElement).clientWidth
+            const leftOffset = 24
+            const rightOffset = 200
+            const containerWidth = window.innerWidth - leftOffset - rightOffset
+            buttonsTo(((1 - self.progress) * containerWidth) + leftOffset)
+          }
         }
       })
     })
@@ -117,8 +130,12 @@
     .project-buttons {
       position: absolute;
       bottom: 24px;
-      right: 24px;
+      left: calc(100% - 200px);
       @include h-gap(12px);
+
+      &__button {
+        white-space: nowrap;
+      }
     }
   }
 </style>
