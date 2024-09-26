@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { browser } from '$app/environment'
 	import Button from '$components/Button.svelte'
+	import Projects from '$components/homepage/Projects.svelte'
 	import SplitText from '$components/SplitText.svelte'
 	import popInAnimation from '$utils/animation/popInAnimation'
 	import rollInAnimation from '$utils/animation/rollInAnimation'
@@ -343,6 +344,7 @@
       </Canvas>
     </div>
   </section>
+  <Projects />
 </div>
 
 <style lang="scss">
