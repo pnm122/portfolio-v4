@@ -28,8 +28,20 @@
         document.querySelector('.project-buttons'),
         'left'
       )
+
+      const scaleImages = gsap.quickTo(
+        gsap.utils.toArray('.project-image__image'),
+        'scaleY',
+        {
+          duration: 1,
+          ease: 'power4.out'
+        }
+      )
       
-      
+      const scaleProxy = { scale: 1 }
+      gsap.set(gsap.utils.toArray('.project-image__image'), {
+        transformOrigin: 'center'
+      })
       projectsTween = gsap.to(projectImages, {
         xPercent: -100 * (projects.length - 1),
         ease: 'none',
@@ -45,8 +57,23 @@
           },
           start: 'top top',
           // base vertical scrolling on how wide the container is so it feels more natural
-          end: () => `${window.innerWidth * projects.length}px`,
+          end: () => `${Math.min(window.innerWidth, 1000) * projects.length}px`,
           onUpdate({ progress, getVelocity }) {
+            const clamp = gsap.utils.clamp(0.6, 1)
+            const scale = clamp(1.1 - (Math.abs(getVelocity()) / 10000))
+            if(scale < scaleProxy.scale) {
+              scaleProxy.scale = scale
+              gsap.to(scaleProxy, {
+                scale: 1,
+                duration: 1,
+                ease: 'power4.out',
+                overwrite: true,
+                onUpdate() {
+                  scaleImages(scaleProxy.scale)
+                }
+              })
+            }
+
             const leftOffset = 24
             const rightOffset = 200
             const containerWidth = window.innerWidth - leftOffset - rightOffset
@@ -142,6 +169,12 @@
   aria-label='Projects'>
   {#each projects as project}
     <div class='project-image'>
+      <!-- <img
+        class='project-image__image'
+        src=''
+        alt=''> -->
+      <div
+        class='project-image__image'></div>
     </div>
   {/each}
   {#each projects as project, i}
@@ -196,21 +229,27 @@
 
     .project-image {
       @include force-size(100vw, 100%);
+      padding: clamp(24px, 7.5%, 80px);
 
-      &:nth-of-type(1) {
+      &:nth-of-type(1) .project-image__image {
         background-color: royalblue;
       }
 
-      &:nth-of-type(2) {
+      &:nth-of-type(2) .project-image__image {
         background-color: tan;
       }
 
-      &:nth-of-type(3) {
+      &:nth-of-type(3) .project-image__image {
         background-color: mediumseagreen;
       }
 
-      &:nth-of-type(4) {
+      &:nth-of-type(4) .project-image__image {
         background-color: mediumslateblue;
+      }
+
+      &__image {
+        width: 100%;
+        height: 100%;
       }
     }
 
