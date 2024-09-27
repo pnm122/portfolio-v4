@@ -29,19 +29,25 @@
         'left'
       )
 
-      const scaleImages = gsap.quickTo(
-        gsap.utils.toArray('.project-image__image'),
-        'scaleY',
+      const setPaddingTop = gsap.quickTo(
+        gsap.utils.toArray('.project-image__padding-box'),
+        'paddingTop',
+        {
+          duration: 1,
+          ease: 'power4.out'
+        }
+      )
+
+      const setPaddingBottom = gsap.quickTo(
+        gsap.utils.toArray('.project-image__padding-box'),
+        'paddingBottom',
         {
           duration: 1,
           ease: 'power4.out'
         }
       )
       
-      const scaleProxy = { scale: 1 }
-      gsap.set(gsap.utils.toArray('.project-image__image'), {
-        transformOrigin: 'center'
-      })
+      const paddingProxy = { padding: 0 }
       projectsTween = gsap.to(projectImages, {
         xPercent: -100 * (projects.length - 1),
         ease: 'none',
@@ -59,17 +65,23 @@
           // base vertical scrolling on how wide the container is so it feels more natural
           end: () => `${Math.min(window.innerWidth, 1000) * projects.length}px`,
           onUpdate({ progress, getVelocity }) {
-            const clamp = gsap.utils.clamp(0.6, 1)
-            const scale = clamp(1.1 - (Math.abs(getVelocity()) / 10000))
-            if(scale < scaleProxy.scale) {
-              scaleProxy.scale = scale
-              gsap.to(scaleProxy, {
-                scale: 1,
+            // Vertically crop the project images based on scroll velocity
+            // Faster scroll ==> more cropping
+            const clamp = gsap.utils.clamp(0, 100)
+            // Start from 1.1 so small scroll speeds don't affect cropping (which can be somewhat jarring)
+            const scrollSpeed = Math.abs(getVelocity()) / 10000
+            const padding = clamp(scrollSpeed * 100)
+            if(padding > paddingProxy.padding) {
+              paddingProxy.padding = padding
+              gsap.to(paddingProxy, {
+                padding: 0,
                 duration: 1,
                 ease: 'power4.out',
                 overwrite: true,
                 onUpdate() {
-                  scaleImages(scaleProxy.scale)
+                  console.log(paddingProxy.padding)
+                  setPaddingTop(paddingProxy.padding)
+                  setPaddingBottom(paddingProxy.padding)
                 }
               })
             }
@@ -173,8 +185,10 @@
         class='project-image__image'
         src=''
         alt=''> -->
-      <div
-        class='project-image__image'></div>
+      <div class='project-image__padding-box'>
+        <div
+          class='project-image__image'></div>
+      </div>
     </div>
   {/each}
   {#each projects as project, i}
@@ -247,9 +261,15 @@
         background-color: mediumslateblue;
       }
 
+      &__padding-box {
+        width: 100%;
+        height: 100%;
+      }
+      
       &__image {
         width: 100%;
         height: 100%;
+        border-radius: 16px;
       }
     }
 
@@ -261,6 +281,11 @@
 
       &__button {
         white-space: nowrap;
+        width: 120px;
+        height: 72px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.15);
       }
     }
   }
