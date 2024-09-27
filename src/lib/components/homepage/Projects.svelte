@@ -3,6 +3,7 @@
 	import gsap from "gsap"
 
   const projects = [{}, {}, {}, {}]
+  let selectedProject = $state(0)
 
   let projectsTween: gsap.core.Tween
   $effect(() => {
@@ -45,11 +46,21 @@
           start: 'top top',
           // base vertical scrolling on how wide the container is so it feels more natural
           end: () => `${window.innerWidth * projects.length}px`,
-          onUpdate: (self) => {
+          onUpdate({ progress, getVelocity }) {
             const leftOffset = 24
             const rightOffset = 200
             const containerWidth = window.innerWidth - leftOffset - rightOffset
-            buttonsTo(((1 - self.progress) * containerWidth) + leftOffset)
+            buttonsTo(((1 - progress) * containerWidth) + leftOffset)
+
+            if(Math.abs(getVelocity()) > 100) return
+            const selected = projects.findIndex((_, index) => {
+              const ACCEPTABLE_RANGE = 0.1
+              const progressIfSelected = index / (projects.length - 1)
+              return progress >= progressIfSelected - ACCEPTABLE_RANGE && progress <= progressIfSelected + ACCEPTABLE_RANGE
+            })
+            if(selectedProject !== selected) {
+              selectedProject = selected
+            }
           }
         }
       })
@@ -83,12 +94,14 @@
           }
         })
 
-        gsap.set(project, { opacity: 0 })
+        gsap.set(project, { visibility: 'hidden' })
         
         tl.fromTo(project, {
+          visibility: 'hidden',
           opacity: 0,
           scale: 1.75
         }, {
+          visibility: 'visible',
           opacity: 1,
           scale: 1,
           ease: 'none'
@@ -99,6 +112,8 @@
           scale: 0.5,
           ease: 'none'
         })
+
+        tl.set(project, { visibility: 'hidden' })
       })
     })
 
@@ -120,20 +135,36 @@
   }
 </script>
 
-<section class='projects'>
+<section 
+  class='projects'
+  aria-live='polite'
+  aria-roledescription='carousel'
+  aria-label='Projects'>
   {#each projects as project}
     <div class='project-image'>
     </div>
   {/each}
   {#each projects as project, i}
-    <div class='project'>
-      <h1 class='project__title'>Project {i + 1}</h1>
+    <div
+      class='project'
+      role='group'
+      aria-labelledby={`project__title${i + 1}`}
+      aria-roledescription='slide'>
+      <h1
+        class='project__title'
+        id={`project__title${i + 1}`}>
+        Project {i + 1}
+      </h1>
     </div>
   {/each}
-  <div class='project-buttons'>
+  <div
+    class='project-buttons'
+    role='tablist'>
     {#each projects as _, i}
       <button
         class='project-buttons__button'
+        role='tab'
+        aria-selected={selectedProject === i}
         onclick={() => scrollToProject(i)}>
         Project {i + 1}
       </button>
