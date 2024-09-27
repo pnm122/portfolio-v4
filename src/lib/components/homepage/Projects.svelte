@@ -1,18 +1,17 @@
 <script lang="ts">
+	import vEase from "$utils/vEase"
 	import gsap from "gsap"
-	import ScrollTrigger from "gsap/dist/ScrollTrigger"
 
   const projects = [{}, {}, {}, {}]
 
   let projectsTween: gsap.core.Tween
   $effect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline()
-      
-      const projects = gsap.utils.toArray('.project')
+      const projectImages = gsap.utils.toArray('.project-image')
       const projectsContainer = document.querySelector('.projects') as HTMLElement
-      const projectsInner = document.querySelector('.projects__inner') as HTMLElement
-      gsap.from(projectsInner, {
+      // Scale the projects themselves rather than the whole container
+      // If you scale the container, GSAP's calculations on its position get wonky
+      gsap.from(projectImages, {
         scale: 0.333,
         transformOrigin: '50vw center',
         ease: 'none',
@@ -30,7 +29,7 @@
       )
       
       
-      projectsTween = gsap.to(projects, {
+      projectsTween = gsap.to(projectImages, {
         xPercent: -100 * (projects.length - 1),
         ease: 'none',
         scrollTrigger: {
@@ -45,15 +44,61 @@
           },
           start: 'top top',
           // base vertical scrolling on how wide the container is so it feels more natural
-          end: () => `${projectsContainer.offsetWidth ?? 0}px`,
+          end: () => `${window.innerWidth * projects.length}px`,
           onUpdate: (self) => {
-            const buttonsWidth = (document.querySelector('.project-buttons') as HTMLElement).clientWidth
             const leftOffset = 24
             const rightOffset = 200
             const containerWidth = window.innerWidth - leftOffset - rightOffset
             buttonsTo(((1 - self.progress) * containerWidth) + leftOffset)
           }
         }
+      })
+
+      gsap.utils.toArray<HTMLElement>('.project-buttons__button').forEach((btn, index) => {
+        gsap.to(btn, {
+          y: -24,
+          // The button will go back to y=0 at the end of the animation
+          ease: vEase,
+          scrollTrigger: {
+            containerAnimation: projectsTween,
+            trigger: `.project-image:nth-of-type(${index + 1})`,
+            // Start when the project appears from the right
+            start: 'left right',
+            // End when the project is fully out of frame on the left
+            // The peak of the animation will then be right in the middle, when the project is fully onscreen
+            end: 'right left',
+            scrub: true
+          }
+        })
+      })
+
+      gsap.utils.toArray<HTMLElement>('.project').forEach((project, index) => {
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            containerAnimation: projectsTween,
+            trigger: `.project-image:nth-of-type(${index + 1})`,
+            start: 'left right-=50%',
+            end: 'right left+=50%',
+            scrub: true
+          }
+        })
+
+        gsap.set(project, { opacity: 0 })
+        
+        tl.fromTo(project, {
+          opacity: 0,
+          scale: 1.75
+        }, {
+          opacity: 1,
+          scale: 1,
+          ease: 'none'
+        })
+
+        tl.to(project, {
+          opacity: 0,
+          scale: 0.5,
+          ease: 'none'
+        })
       })
     })
 
@@ -66,6 +111,8 @@
     const { start, end } = projectsTween.scrollTrigger!
     const projectScrollSize = ((end - start) / (projects.length - 1))
     gsap.to(window, {
+      ease: 'expo.inOut',
+      duration: 1,
       scrollTo: {
         y: start + (projectScrollSize * n)
       }
@@ -73,22 +120,24 @@
   }
 </script>
 
-<div id='projects-scroll-ref'></div>
 <section class='projects'>
-  <div class='projects__inner'>
-    <div class='project'></div>
-    <div class='project'></div>
-    <div class='project'></div>
-    <div class='project'></div>
-    <div class='project-buttons'>
-      {#each projects as _, i}
-        <button
-          class='project-buttons__button'
-          onclick={() => scrollToProject(i)}>
-          Project {i}
-        </button>
-      {/each}
+  {#each projects as project}
+    <div class='project-image'>
     </div>
+  {/each}
+  {#each projects as project, i}
+    <div class='project'>
+      <h1 class='project__title'>Project {i + 1}</h1>
+    </div>
+  {/each}
+  <div class='project-buttons'>
+    {#each projects as _, i}
+      <button
+        class='project-buttons__button'
+        onclick={() => scrollToProject(i)}>
+        Project {i + 1}
+      </button>
+    {/each}
   </div>
 </section>
 
@@ -98,32 +147,39 @@
   .projects {
     margin-top: 200px;
     position: relative;
-
-    &__inner {
-      display: flex;
-      flex-direction: row;
-      height: 100vh;
-      max-height: -webkit-fill-available;
-      overflow: hidden;
-    }
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    overflow: hidden;
 
     .project {
+      position: absolute;
+      z-index: 1;
+      bottom: 50%;
+      left: 24px;
+
+      &__title {
+        font-size: $font-size-24;
+      }
+    }
+
+    .project-image {
       @include force-size(100vw, 100%);
 
       &:nth-of-type(1) {
-        background-color: red;
+        background-color: royalblue;
       }
 
       &:nth-of-type(2) {
-        background-color: greenyellow;
+        background-color: tan;
       }
 
       &:nth-of-type(3) {
-        background-color: blue;
+        background-color: mediumseagreen;
       }
 
       &:nth-of-type(4) {
-        background-color: blueviolet;
+        background-color: mediumslateblue;
       }
     }
 

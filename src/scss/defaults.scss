@@ -15,10 +15,6 @@
 	src: url('/fonts/Monigue/Monigue.woff2') format('woff2');
 }
 
-html {
-	scroll-behavior: smooth;
-}
-
 body {
 	font-family: $font-body;
 	line-height: $line-height-8;
