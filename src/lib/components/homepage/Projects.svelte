@@ -26,7 +26,7 @@
 
       const buttonsTo = gsap.quickTo(
         document.querySelector('.project-buttons'),
-        'left'
+        'x'
       )
 
       const setPaddingTop = gsap.quickTo(
@@ -79,17 +79,18 @@
                 ease: 'power4.out',
                 overwrite: true,
                 onUpdate() {
-                  console.log(paddingProxy.padding)
                   setPaddingTop(paddingProxy.padding)
                   setPaddingBottom(paddingProxy.padding)
                 }
               })
             }
 
-            const leftOffset = 24
-            const rightOffset = 200
-            const containerWidth = window.innerWidth - leftOffset - rightOffset
-            buttonsTo(((1 - progress) * containerWidth) + leftOffset)
+            // Update button locations based on progress
+            // Keeps currently selected button in the center of the screen
+            const buttonWidth = 120
+            const containerWidth = document.querySelector('.project-buttons')!.getBoundingClientRect().width
+            const endPosition = -1 * (containerWidth - buttonWidth)
+            buttonsTo(progress * endPosition)
 
             if(Math.abs(getVelocity()) > 100) return
             const selected = projects.findIndex((_, index) => {
@@ -274,15 +275,17 @@
     }
 
     .project-buttons {
+      --button-width: 120px;
+
       position: absolute;
       bottom: 24px;
-      left: calc(100% - 200px);
+      left: calc(50% - (var(--button-width) / 2));
       @include h-gap(12px);
 
       &__button {
         white-space: nowrap;
-        width: 120px;
-        height: 72px;
+        width: var(--button-width);
+        aspect-ratio: 16 / 9;
         background-color: #fff;
         border-radius: 8px;
         box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.15);
