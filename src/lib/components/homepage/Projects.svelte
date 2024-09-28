@@ -35,9 +35,71 @@
     slug: 'flex',
     skills: ['React', 'Spring Boot', 'Figma', 'TypeScript']
   }]
-  let selectedProject = $state(0)
 
+  let selectedProject = $state(0)
   let projectsTween: gsap.core.Tween
+
+  function createViewProjectFollower() {
+    if(!window.matchMedia('(pointer: fine)')) {
+      return () => {}
+    }
+
+    const xTo = gsap.quickTo(".view-project", "x", { duration: 0.5, ease: 'expo.out' }),
+          yTo = gsap.quickTo(".view-project", "y", { duration: 0.5, ease: 'expo.out' })
+
+    let showing = false
+    let oldTimeline: gsap.core.Timeline
+    const viewProject = document.querySelector('.view-project')!
+    const { height } = viewProject.getBoundingClientRect()
+    gsap.set(viewProject, { visibility: 'hidden', scale: 0 })
+    const callback = (e: MouseEvent) => {
+      xTo(e.clientX - 12)
+      yTo(e.clientY - (height / 2))
+      const withinProjects = (e.target as HTMLElement).closest('.project')
+      if(withinProjects && !showing) {
+        showing = true
+
+        // cancel old timeline so that it doesn't override the new timeline we're creating
+        if(oldTimeline && oldTimeline.isActive()) {
+          oldTimeline.kill()
+        }
+
+        const tl = gsap.timeline()
+        tl.set(viewProject, { visibility: 'visible' })
+        tl.to(viewProject, {
+          scale: 1,
+          duration: 0.25,
+          ease: 'power4.out'
+        })
+        oldTimeline = tl
+      } else if(!withinProjects && showing) {
+        showing = false
+
+        // cancel old timeline so that it doesn't override the new timeline we're creating
+        if(oldTimeline && oldTimeline.isActive()) {
+          oldTimeline.kill()
+        }
+
+        const tl = gsap.timeline()
+        tl.to(viewProject, {
+          scale: 0,
+          duration: 0.25,
+          ease: 'power4.out'
+        })
+        tl.set(viewProject, { visibility: 'hidden' })
+        oldTimeline = tl
+      }
+    }
+
+    window.addEventListener('mousemove', callback)
+
+    const cleanup = () => {
+      window.removeEventListener('mousemove', callback)
+    }
+
+    return cleanup
+  }
+
   $effect(() => {
     const ctx = gsap.context(() => {
       const projectImages = gsap.utils.toArray('.project-image')
@@ -189,7 +251,10 @@
       })
     })
 
+    const cleanup = createViewProjectFollower()
+
     return () => {
+      cleanup()
       ctx.revert()
     }
   })
@@ -207,6 +272,12 @@
   }
 </script>
 
+<div class='view-project' aria-hidden='true'>
+  <span>View project</span>
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M15.8075 9.82182L7.90554 17.7237C7.70519 17.9241 7.46949 18.024 7.19843 18.0236C6.92737 18.0231 6.69167 17.9231 6.49133 17.7237C6.29098 17.5243 6.1908 17.2884 6.1908 17.0159C6.1908 16.7435 6.29098 16.508 6.49133 16.3095L14.3932 8.40761L7.4636 8.40761C7.18075 8.40761 6.94788 8.3105 6.76498 8.11628C6.58207 7.92206 6.49085 7.6833 6.49133 7.39998C6.50311 7.12893 6.60046 6.89629 6.78336 6.70207C6.96627 6.50785 7.1989 6.41051 7.48128 6.41003H16.8151C16.9565 6.41003 17.0833 6.43643 17.1955 6.48923C17.3077 6.54203 17.4107 6.6158 17.5045 6.71055C17.5983 6.80531 17.6721 6.90831 17.7258 7.01956C17.7796 7.13081 17.806 7.25762 17.805 7.39998L17.805 16.7338C17.805 16.9931 17.7079 17.2198 17.5137 17.414C17.3195 17.6082 17.0866 17.7115 16.8151 17.7237C16.5322 17.7237 16.2935 17.6264 16.0988 17.4317C15.9041 17.237 15.807 16.9985 15.8075 16.7161L15.8075 9.82182Z" fill="#182A1F"/>
+  </svg>      
+</div>
 <section 
   class='projects'
   aria-live='polite'
@@ -230,23 +301,28 @@
       role='group'
       aria-labelledby={`project__title--${name}`}
       aria-roledescription='slide'>
-      <h1
-        class='project__title'
-        id={`project__title--${name}`}>
-        {name}
-      </h1>
-      <p
-        class='project__description'>
-        {description}
-      </p>
-      <ul class='project__skills'>
-        {#each skills.slice(0, 4) as skill}
-          <li class='skill'>{skill}</li>
-        {/each}
-        {#if skills.length > 4}
-          <span class='skill'>+{skills.length - 4}</span>
-        {/if}
-      </ul>
+      <a
+        class='project__link'
+        aria-label='View project'
+        href='#'>
+        <h1
+          class='project__title'
+          id={`project__title--${name}`}>
+          {name}
+        </h1>
+        <p
+          class='project__description'>
+          {description}
+        </p>
+        <ul class='project__skills'>
+          {#each skills.slice(0, 4) as skill}
+            <li class='skill'>{skill}</li>
+          {/each}
+          {#if skills.length > 4}
+            <span class='skill'>+{skills.length - 4}</span>
+          {/if}
+        </ul>
+      </a>
     </div>
   {/each}
   <div
@@ -267,6 +343,30 @@
 <style lang="scss">
   @import '$scss/mixins';
 
+  .view-project {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: $accent-light;
+    padding-inline: 10px;
+    height: 32px;
+    border-radius: 999px;
+    font-size: $font-size-8;
+    @include h-gap(8px);
+    align-items: center;
+    pointer-events: none;
+    display: none;
+
+    @media (pointer: fine) {
+      display: flex;
+    }
+
+    svg {
+      @include force-size(1.25rem, 1.25rem);
+    }
+  }
+
   .projects {
     --button-width: 120px;
     --button-height: calc(9 / 16 * var(--button-width));
@@ -283,11 +383,17 @@
     .project {
       position: absolute;
       z-index: 1;
-      // Place project info above buttons
-      bottom: calc(var(--button-bottom-padding) + var(--selected-button-offset) + var(--button-height));
-      left: 24px;
-      padding-bottom: 16px;
-      @include v-gap(0px);
+      inset: 0;
+
+      &__link {
+        height: 100%;
+        width: 100%;
+        // Place project info above buttons
+        padding-bottom: calc(16px + var(--button-bottom-padding) + var(--selected-button-offset) + var(--button-height));
+        padding-left: 24px;
+        justify-content: flex-end;
+        @include v-gap(0px);
+      }
 
       &__title {
         font-size: $font-size-24;
@@ -351,6 +457,7 @@
 
     .project-buttons {
       position: absolute;
+      z-index: 2;
       bottom: var(--button-bottom-padding);
       left: calc(50% - (var(--button-width) / 2));
       @include h-gap(12px);
