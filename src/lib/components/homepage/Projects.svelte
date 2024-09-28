@@ -13,25 +13,25 @@
   const projects: Project[] = [{
     name: 'Spelling Bee',
     description: 'A replica of the New York Times’ Spelling Bee game with additional features, including hints and leaderboards.',
-    imgSrc: '',
+    imgSrc: 'spelling-bee.png',
     slug: 'spelling-bee',
     skills: ['Svelte', 'MongoDB', 'Figma', 'Node.js', 'Express.js', 'TypeScript', 'Python']
   }, {
     name: 'Chatham Financial',
     description: 'A collection of projects from working as an intern at Chatham Financial, primarily focused on improving their design system.',
-    imgSrc: '',
+    imgSrc: 'chatham-financial.png',
     slug: 'chatham-financial',
     skills: ['Stencil', 'SCSS', 'Jasmine', 'Gitlab CI', 'Git', 'TypeScript', 'Figma']
   }, {
     name: 'Club Tennis',
     description: 'A website created for the Club Tennis team at the University of Pittsburgh, featuring a bespoke design and admin panel made from scratch.',
-    imgSrc: '',
+    imgSrc: 'club-tennis.png',
     slug: 'club-tennis',
     skills: ['React', 'Figma', 'Firebase', 'GSAP', 'TypeScript']
   }, {
     name: 'Flex',
     description: 'A fitness tracker created as part of a Software Engineering course at the University of Pittsburgh.',
-    imgSrc: '',
+    imgSrc: 'flex.png',
     slug: 'flex',
     skills: ['React', 'Spring Boot', 'Figma', 'TypeScript']
   }]
@@ -285,17 +285,15 @@
   aria-label='Projects'>
   {#each projects as { imgSrc, name }}
     <div class='project-image'>
-      <!-- <img
-        class='project-image__image'
-        src={imgSrc}
-        alt={name}> -->
       <div class='project-image__padding-box'>
-        <div
-          class='project-image__image'></div>
+        <img
+          class='project-image__image'
+          src={`images/homepage/project-covers/${imgSrc}`}
+          alt={name}>
       </div>
     </div>
   {/each}
-  {#each projects as { name, description, skills }, i}
+  {#each projects as { name, description, skills, slug }, i}
     <div
       class='project'
       role='group'
@@ -304,7 +302,7 @@
       <a
         class='project__link'
         aria-label='View project'
-        href='#'>
+        href={`/project/${slug}`}>
         <h1
           class='project__title'
           id={`project__title--${name}`}>
@@ -328,13 +326,17 @@
   <div
     class='project-buttons'
     role='tablist'>
-    {#each projects as { name }, i}
+    {#each projects as { name, imgSrc }, i}
       <button
         class='project-buttons__button'
         role='tab'
+        aria-label={name}
         aria-selected={selectedProject === i}
         onclick={() => scrollToProject(i)}>
-        {name.slice(0, 12)}
+        <img
+          src={`images/homepage/project-covers/${imgSrc}`}
+          alt={name}
+          class='button-image'>
       </button>
     {/each}
   </div>
@@ -353,6 +355,7 @@
     height: 32px;
     border-radius: 999px;
     font-size: $font-size-8;
+    text-transform: lowercase;
     @include h-gap(8px);
     align-items: center;
     pointer-events: none;
@@ -397,6 +400,7 @@
 
       &__title {
         font-size: $font-size-24;
+        text-transform: lowercase;
 
         @media screen and (min-width: $screen-md) {
           font-size: $font-size-40;
@@ -427,31 +431,17 @@
       @include force-size(100vw, 100%);
       padding: clamp(24px, 7.5%, 80px);
 
-      &:nth-of-type(1) .project-image__image {
-        background-color: royalblue;
-      }
-
-      &:nth-of-type(2) .project-image__image {
-        background-color: tan;
-      }
-
-      &:nth-of-type(3) .project-image__image {
-        background-color: mediumseagreen;
-      }
-
-      &:nth-of-type(4) .project-image__image {
-        background-color: mediumslateblue;
-      }
-
       &__padding-box {
         width: 100%;
         height: 100%;
       }
       
       &__image {
+        background-color: $gray-1;
         width: 100%;
         height: 100%;
         border-radius: 16px;
+        object-fit: cover;
       }
     }
 
@@ -469,6 +459,13 @@
         background-color: #fff;
         border-radius: 8px;
         box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+
+        .button-image {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
       }
     }
   }
