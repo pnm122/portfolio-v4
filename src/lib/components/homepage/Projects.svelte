@@ -7,28 +7,33 @@
     description: string
     imgSrc: string
     slug: string
+    skills: string[]
   }
 
   const projects: Project[] = [{
     name: 'Spelling Bee',
     description: 'A replica of the New York Times’ Spelling Bee game with additional features, including hints and leaderboards.',
     imgSrc: '',
-    slug: 'spelling-bee'
+    slug: 'spelling-bee',
+    skills: ['Svelte', 'MongoDB', 'Figma', 'Node.js', 'Express.js', 'TypeScript', 'Python']
   }, {
     name: 'Chatham Financial',
     description: 'A collection of projects from working as an intern at Chatham Financial, primarily focused on improving their design system.',
     imgSrc: '',
-    slug: 'chatham-financial'
+    slug: 'chatham-financial',
+    skills: ['Stencil', 'SCSS', 'Jasmine', 'Gitlab CI', 'Git', 'TypeScript', 'Figma']
   }, {
     name: 'Club Tennis',
     description: 'A website created for the Club Tennis team at the University of Pittsburgh, featuring a bespoke design and admin panel made from scratch.',
     imgSrc: '',
-    slug: 'club-tennis'
+    slug: 'club-tennis',
+    skills: ['React', 'Figma', 'Firebase', 'GSAP', 'TypeScript']
   }, {
     name: 'Flex',
     description: 'A fitness tracker created as part of a Software Engineering course at the University of Pittsburgh.',
     imgSrc: '',
-    slug: 'flex'
+    slug: 'flex',
+    skills: ['React', 'Spring Boot', 'Figma', 'TypeScript']
   }]
   let selectedProject = $state(0)
 
@@ -219,7 +224,7 @@
       </div>
     </div>
   {/each}
-  {#each projects as { name, description }, i}
+  {#each projects as { name, description, skills }, i}
     <div
       class='project'
       role='group'
@@ -234,6 +239,14 @@
         class='project__description'>
         {description}
       </p>
+      <ul class='project__skills'>
+        {#each skills.slice(0, 4) as skill}
+          <li class='skill'>{skill}</li>
+        {/each}
+        {#if skills.length > 4}
+          <span class='skill'>+{skills.length - 4}</span>
+        {/if}
+      </ul>
     </div>
   {/each}
   <div
@@ -288,6 +301,19 @@
         width: 100%;
         max-width: 340px;
         color: $black;
+      }
+
+      &__skills {
+        @include h-gap(8px);
+        flex-wrap: wrap;
+        margin: 6px 0 0 0;
+        padding: 0;
+
+        .skill {
+          display: block;
+          font-size: $font-size-6;
+          color: $black;
+        }
       }
     }
 
