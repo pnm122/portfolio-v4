@@ -2,7 +2,34 @@
 	import vEase from "$utils/vEase"
 	import gsap from "gsap"
 
-  const projects = [{}, {}, {}, {}]
+  interface Project {
+    name: string
+    description: string
+    imgSrc: string
+    slug: string
+  }
+
+  const projects: Project[] = [{
+    name: 'Spelling Bee',
+    description: 'A replica of the New York Times’ Spelling Bee game with additional features, including hints and leaderboards.',
+    imgSrc: '',
+    slug: 'spelling-bee'
+  }, {
+    name: 'Chatham Financial',
+    description: 'A collection of projects from working as an intern at Chatham Financial, primarily focused on improving their design system.',
+    imgSrc: '',
+    slug: 'chatham-financial'
+  }, {
+    name: 'Club Tennis',
+    description: 'A website created for the Club Tennis team at the University of Pittsburgh, featuring a bespoke design and admin panel made from scratch.',
+    imgSrc: '',
+    slug: 'club-tennis'
+  }, {
+    name: 'Flex',
+    description: 'A fitness tracker created as part of a Software Engineering course at the University of Pittsburgh.',
+    imgSrc: '',
+    slug: 'flex'
+  }]
   let selectedProject = $state(0)
 
   let projectsTween: gsap.core.Tween
@@ -68,8 +95,8 @@
             // Vertically crop the project images based on scroll velocity
             // Faster scroll ==> more cropping
             const clamp = gsap.utils.clamp(0, 100)
-            // Start from 1.1 so small scroll speeds don't affect cropping (which can be somewhat jarring)
-            const scrollSpeed = Math.abs(getVelocity()) / 10000
+            // Add negative offset so small scroll speeds don't affect cropping (which can be somewhat jarring)
+            const scrollSpeed = (Math.abs(getVelocity()) / 8000) - 0.1
             const padding = clamp(scrollSpeed * 100)
             if(padding > paddingProxy.padding) {
               paddingProxy.padding = padding
@@ -139,7 +166,7 @@
         tl.fromTo(project, {
           visibility: 'hidden',
           opacity: 0,
-          scale: 1.75
+          scale: 0.5
         }, {
           visibility: 'visible',
           opacity: 1,
@@ -149,7 +176,7 @@
 
         tl.to(project, {
           opacity: 0,
-          scale: 0.5,
+          scale: 1.5,
           ease: 'none'
         })
 
@@ -180,41 +207,45 @@
   aria-live='polite'
   aria-roledescription='carousel'
   aria-label='Projects'>
-  {#each projects as project}
+  {#each projects as { imgSrc, name }}
     <div class='project-image'>
       <!-- <img
         class='project-image__image'
-        src=''
-        alt=''> -->
+        src={imgSrc}
+        alt={name}> -->
       <div class='project-image__padding-box'>
         <div
           class='project-image__image'></div>
       </div>
     </div>
   {/each}
-  {#each projects as project, i}
+  {#each projects as { name, description }, i}
     <div
       class='project'
       role='group'
-      aria-labelledby={`project__title${i + 1}`}
+      aria-labelledby={`project__title--${name}`}
       aria-roledescription='slide'>
       <h1
         class='project__title'
-        id={`project__title${i + 1}`}>
-        Project {i + 1}
+        id={`project__title--${name}`}>
+        {name}
       </h1>
+      <p
+        class='project__description'>
+        {description}
+      </p>
     </div>
   {/each}
   <div
     class='project-buttons'
     role='tablist'>
-    {#each projects as _, i}
+    {#each projects as { name }, i}
       <button
         class='project-buttons__button'
         role='tab'
         aria-selected={selectedProject === i}
         onclick={() => scrollToProject(i)}>
-        Project {i + 1}
+        {name.slice(0, 12)}
       </button>
     {/each}
   </div>
@@ -224,6 +255,11 @@
   @import '$scss/mixins';
 
   .projects {
+    --button-width: 120px;
+    --button-height: calc(9 / 16 * var(--button-width));
+    --button-bottom-padding: 24px;
+    --selected-button-offset: 24px;
+
     margin-top: 200px;
     position: relative;
     display: flex;
@@ -234,11 +270,24 @@
     .project {
       position: absolute;
       z-index: 1;
-      bottom: 50%;
+      // Place project info above buttons
+      bottom: calc(var(--button-bottom-padding) + var(--selected-button-offset) + var(--button-height));
       left: 24px;
+      padding-bottom: 16px;
+      @include v-gap(0px);
 
       &__title {
         font-size: $font-size-24;
+
+        @media screen and (min-width: $screen-md) {
+          font-size: $font-size-40;
+        }
+      }
+
+      &__description {
+        width: 100%;
+        max-width: 340px;
+        color: $black;
       }
     }
 
@@ -275,10 +324,8 @@
     }
 
     .project-buttons {
-      --button-width: 120px;
-
       position: absolute;
-      bottom: 24px;
+      bottom: var(--button-bottom-padding);
       left: calc(50% - (var(--button-width) / 2));
       @include h-gap(12px);
 
