@@ -1,4 +1,5 @@
 <script lang="ts">
+	import createClasses from "$utils/createClasses"
 	import vEase from "$utils/vEase"
 	import gsap from "gsap"
 
@@ -36,6 +37,8 @@
     skills: ['React', 'Spring Boot', 'Figma', 'TypeScript']
   }]
 
+  let showing = $state(false)
+  let currentShowViewProjectTimeline = $state<gsap.core.Timeline | undefined>()
   let selectedProject = $state(0)
   let projectsTween: gsap.core.Tween
 
@@ -47,8 +50,6 @@
     const xTo = gsap.quickTo(".view-project", "x", { duration: 0.5, ease: 'expo.out' }),
           yTo = gsap.quickTo(".view-project", "y", { duration: 0.5, ease: 'expo.out' })
 
-    let showing = false
-    let oldTimeline: gsap.core.Timeline
     const viewProject = document.querySelector('.view-project')!
     const { height } = viewProject.getBoundingClientRect()
     gsap.set(viewProject, { visibility: 'hidden', scale: 0 })
@@ -57,37 +58,9 @@
       yTo(e.clientY - (height / 2))
       const withinProjects = (e.target as HTMLElement).closest('.project')
       if(withinProjects && !showing) {
-        showing = true
-
-        // cancel old timeline so that it doesn't override the new timeline we're creating
-        if(oldTimeline && oldTimeline.isActive()) {
-          oldTimeline.kill()
-        }
-
-        const tl = gsap.timeline()
-        tl.set(viewProject, { visibility: 'visible' })
-        tl.to(viewProject, {
-          scale: 1,
-          duration: 0.25,
-          ease: 'power4.out'
-        })
-        oldTimeline = tl
+        showViewProject()
       } else if(!withinProjects && showing) {
-        showing = false
-
-        // cancel old timeline so that it doesn't override the new timeline we're creating
-        if(oldTimeline && oldTimeline.isActive()) {
-          oldTimeline.kill()
-        }
-
-        const tl = gsap.timeline()
-        tl.to(viewProject, {
-          scale: 0,
-          duration: 0.25,
-          ease: 'power4.out'
-        })
-        tl.set(viewProject, { visibility: 'hidden' })
-        oldTimeline = tl
+        hideViewProject()
       }
     }
 
@@ -186,6 +159,10 @@
             const endPosition = -1 * (containerWidth - buttonWidth)
             buttonsTo(progress * endPosition)
 
+            // Mark a project as selected when the scroll velocity is low enough and
+            // the project is roughly in the center of the page
+            // Velocity check makes sure projects don't get selected as a user scrolls quickly by them
+            // or clicks a button that skips over a project
             if(Math.abs(getVelocity()) > 100) return
             const selected = projects.findIndex((_, index) => {
               const ACCEPTABLE_RANGE = 0.1
@@ -259,6 +236,44 @@
     }
   })
 
+  function showViewProject() {
+    showing = true
+    const viewProject = document.querySelector('.view-project')!
+
+    // cancel old timeline so that it doesn't override the new timeline we're creating
+    if(currentShowViewProjectTimeline && currentShowViewProjectTimeline.isActive()) {
+      currentShowViewProjectTimeline.kill()
+    }
+
+    const tl = gsap.timeline()
+    tl.set(viewProject, { visibility: 'visible' })
+    tl.to(viewProject, {
+      scale: 1,
+      duration: 0.25,
+      ease: 'power4.out'
+    })
+    currentShowViewProjectTimeline = tl
+  }
+
+  function hideViewProject() {
+    showing = false
+    const viewProject = document.querySelector('.view-project')!
+
+    // cancel old timeline so that it doesn't override the new timeline we're creating
+    if(currentShowViewProjectTimeline && currentShowViewProjectTimeline.isActive()) {
+      currentShowViewProjectTimeline.kill()
+    }
+
+    const tl = gsap.timeline()
+    tl.to(viewProject, {
+      scale: 0,
+      duration: 0.25,
+      ease: 'power4.out'
+    })
+    tl.set(viewProject, { visibility: 'hidden' })
+    currentShowViewProjectTimeline = tl
+  }
+
   function scrollToProject(n: number) {
     const { start, end } = projectsTween.scrollTrigger!
     const projectScrollSize = ((end - start) / (projects.length - 1))
@@ -269,6 +284,29 @@
         y: start + (projectScrollSize * n)
       }
     })
+  }
+
+  function onProjectLinkKeydown(e: KeyboardEvent) {
+    function focusCurrentProjectButton() {
+      document.querySelector<HTMLElement>(`.project-buttons__button:nth-of-type(${selectedProject + 1})`)?.focus()
+    }
+    if((e.key === 'Tab' && !e.shiftKey) || e.key === 'ArrowDown') {
+      e.preventDefault();
+      focusCurrentProjectButton()
+    }
+  }
+
+  function onButtonGroupKeydown(e: KeyboardEvent) {
+    if(e.key === 'ArrowUp') {
+      e.preventDefault();
+      document.querySelector<HTMLElement>('.project--selected .project__link')?.focus()
+    }
+  }
+
+  function onButtonFocus(index: number) {
+    scrollToProject(index);
+    // Stop container from scrolling on focus (which breaks the view of the projects)
+    (document.querySelector('.projects') as HTMLElement).scrollLeft = 0
   }
 </script>
 
@@ -293,16 +331,20 @@
       </div>
     </div>
   {/each}
-  {#each projects as { name, description, skills, slug }, i}
+  {#each projects as { name, description, skills, slug }, index}
     <div
-      class='project'
+      class={createClasses({
+        'project': true,
+        'project--selected': index === selectedProject
+      })}
       role='group'
       aria-labelledby={`project__title--${name}`}
       aria-roledescription='slide'>
       <a
         class='project__link'
         aria-label='View project'
-        href={`/project/${slug}`}>
+        href={`/project/${slug}`}
+        onkeydown={onProjectLinkKeydown}>
         <h1
           class='project__title'
           id={`project__title--${name}`}>
@@ -325,14 +367,16 @@
   {/each}
   <div
     class='project-buttons'
-    role='tablist'>
+    role='tablist'
+    tabindex="-1"
+    onkeydown={onButtonGroupKeydown}>
     {#each projects as { name, imgSrc }, i}
       <button
         class='project-buttons__button'
         role='tab'
         aria-label={name}
         aria-selected={selectedProject === i}
-        onclick={() => scrollToProject(i)}>
+        onfocus={() => onButtonFocus(i)}>
         <img
           src={`images/homepage/project-covers/${imgSrc}`}
           alt={name}
@@ -396,6 +440,16 @@
         padding-left: 24px;
         justify-content: flex-end;
         @include v-gap(0px);
+
+        &:focus-visible {
+          outline: none;
+          
+          .project__title,
+          .project__description {
+            text-decoration: underline;
+          }
+        }
+
       }
 
       &__title {
@@ -460,6 +514,10 @@
         border-radius: 8px;
         box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.15);
         overflow: hidden;
+
+        &:focus-visible {
+          outline: 2px solid $black;
+        }
 
         .button-image {
           width: 100%;
