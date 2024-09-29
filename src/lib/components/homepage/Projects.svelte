@@ -124,8 +124,8 @@
           scrub: 1,
           snap: {
             snapTo: 1 / (projects.length - 1),
-            duration: { min: 0.5, max: 1 },
-            ease: 'power4.out',
+            duration: { min: 0.75, max: 1.25 },
+            ease: 'expo.inOut',
             directional: false
           },
           start: 'top top',
@@ -318,6 +318,7 @@
 </div>
 <section 
   class='projects'
+  id='projects'
   aria-live='polite'
   aria-roledescription='carousel'
   aria-label='Projects'>
@@ -443,7 +444,7 @@
 
         &:focus-visible {
           outline: none;
-          
+
           .project__title,
           .project__description {
             text-decoration: underline;

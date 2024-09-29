@@ -15,12 +15,12 @@
 		>
 			<ul class="nav__list">
 				<li class="list-item">
-					<Button type="link" href="#" onClick={() => (open = false)} style="text" size="small">
+					<Button type="link" href="#projects" onClick={() => (open = false)} style="text" size="small">
 						Projects
 					</Button>
 				</li>
 				<li class="list-item">
-					<Button type="link" href="#" onClick={() => (open = false)} style="text" size="small">
+					<Button type="link" href="#contact" onClick={() => (open = false)} style="text" size="small">
 						Contact Me
 					</Button>
 				</li>
