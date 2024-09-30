@@ -170,6 +170,7 @@
               return progress >= progressIfSelected - ACCEPTABLE_RANGE && progress <= progressIfSelected + ACCEPTABLE_RANGE
             })
             if(selectedProject !== selected) {
+              console.log('update selected to', selected)
               selectedProject = selected
             }
           }
@@ -303,7 +304,7 @@
     }
   }
 
-  function onButtonFocus(index: number) {
+  function onButtonClickOrFocus(index: number) {
     scrollToProject(index);
     // Stop container from scrolling on focus (which breaks the view of the projects)
     (document.querySelector('.projects') as HTMLElement).scrollLeft = 0
@@ -377,7 +378,12 @@
         role='tab'
         aria-label={name}
         aria-selected={selectedProject === i}
-        onfocus={() => onButtonFocus(i)}>
+        onclick={
+          // Do this on click to cover the case that the button is already focused
+          // Also need on focus for tabbing
+          () => onButtonClickOrFocus(i)
+        }
+        onfocus={() => onButtonClickOrFocus(i)}>
         <img
           src={`images/homepage/project-covers/${imgSrc}`}
           alt={name}
