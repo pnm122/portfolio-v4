@@ -17,6 +17,8 @@ $green-7: oklch(26.54% 0.032 156.65);
 $purple-1: oklch(90% 0.06 306.29);
 $purple-3: oklch(73.12% 0.15 306.29);
 
+$blue-3: oklch(0.79 0.11 253.58);
+
 // Semantic tokens
 $primary: $green-2;
 $primary-dark: $green-6;
@@ -25,6 +27,8 @@ $primary-light: $green-1;
 
 $accent: $purple-3;
 $accent-light: $purple-1;
+
+$tertiary: $blue-3;
 
 $background: $white;
 $heading: $black;
@@ -54,6 +58,8 @@ $font-size-32: calc($font-size-base * (32 / 8));
 $font-size-36: calc($font-size-base * (36 / 8));
 $font-size-40: calc($font-size-base * (40 / 8));
 $font-size-60: calc($font-size-base * (60 / 8));
+$font-size-96: calc($font-size-base * (96 / 8));
+$font-size-128: calc($font-size-base * (128 / 8));
 
 // Line heights
 $line-height-base: 1.5;

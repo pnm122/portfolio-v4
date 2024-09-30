@@ -1,6 +1,7 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { browser } from '$app/environment'
 	import Button from '$components/Button.svelte'
+	import Contact from '$components/homepage/Contact.svelte'
 	import Projects from '$components/homepage/Projects.svelte'
 	import SplitText from '$components/SplitText.svelte'
 	import popInAnimation from '$utils/animation/popInAnimation'
@@ -345,6 +346,7 @@
     </div>
   </section>
   <Projects />
+  <Contact />
 </div>
 
 <style lang="scss">
@@ -573,4 +575,10 @@
 			}
 		}
 	}
-</style>
+</style> -->
+
+<script lang="ts">
+  import Contact from '$components/homepage/Contact.svelte'
+</script>
+
+<Contact />
