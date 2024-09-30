@@ -1,5 +1,6 @@
 <script lang="ts">
 	import gsap from "gsap"
+	import { untrack } from "svelte"
 	import { Canvas, Circle, Rectangle } from "svelte-physics-renderer"
 
   const format = new Intl.DateTimeFormat([], {
@@ -16,18 +17,7 @@
   let time = $state(new Date())
   let animationCompleted = $state(false)
 
-  $inspect(time)
-
-  function startCanvas() {
-    canvas?.context.start()
-  }
-
-  function stopCanvas() {
-    canvas?.context.stop()
-  }
-
   $effect(() => {
-    console.log('effect')
     const ctx = gsap.context(() => {
       gsap.set('.lets-talk', {
         transformOrigin: 'bottom left'
@@ -41,19 +31,21 @@
           scrub: true
         },
         onStart: () => {
-          // if(animationCompleted) animationCompleted = false
-          (() => {
-        stopCanvas()
-      })()
+          untrack(() => {
+            if(animationCompleted) animationCompleted = false
+            canvas?.context.stop()
+          })
         },
         onUpdate: () => {
-          // if(animationCompleted) animationCompleted = false
+          untrack(() => {
+            if(animationCompleted) animationCompleted = false
+          })
         },
         onComplete: () => {
-          // if(!animationCompleted) animationCompleted = true
-          (() => {
-            startCanvas()
-          })()
+          untrack(() => {
+            if(!animationCompleted) animationCompleted = true
+            canvas?.context.start()
+          })
         }
       })
 
@@ -79,29 +71,31 @@
       })
     })
 
-    // function onResize() {
-		// 	if (canvas?.context.state === 'running') {
-    //     if(animationCompleted) {
-    //       canvas.context.stop()
-    //       canvas.context.start()
-    //     } else {
-    //       canvas.context.stop()
-    //     }
-		// 	}
-		// }
+    function onResize() {
+			untrack(() => {
+        if (canvas?.context.state === 'running') {
+          if(animationCompleted) {
+            canvas.context.stop()
+            canvas.context.start()
+          } else {
+            canvas.context.stop()
+          }
+        }
+      })
+		}
 
-		// window.addEventListener('resize', onResize)
+		window.addEventListener('resize', onResize)
 
-    // const interval = setInterval(() => {
-    //   time = new Date(time.getTime() + 1000)
-    // }, 1000)
+    const interval = setInterval(() => {
+      time = new Date(time.getTime() + 1000)
+    }, 1000)
 
 		return () => {
-			// window.removeEventListener('resize', onResize)
-			(() => {
-        stopCanvas()
-      })()
-      // clearInterval(interval)
+			window.removeEventListener('resize', onResize)
+			untrack(() => {
+        canvas?.context.stop()
+      })
+      clearInterval(interval)
       ctx.revert()
 		}
   })
@@ -180,7 +174,6 @@
       </div>
       <Rectangle class='wall wall--left' isStatic />
       <Rectangle class='wall wall--right' isStatic />
-      <!-- <Rectangle class='wall wall--top' isStatic /> -->
       <Rectangle class='wall wall--bottom' isStatic />
     </div>
   </Canvas>
@@ -271,6 +264,7 @@
 
     :global(.time__inner) {
       width: fit-content;
+      white-space: nowrap;
     }
 
     :global(.contact-link) {
@@ -309,12 +303,11 @@
       bottom: 0;
       width: 200px;
     }
-
-    :global(.wall--top),
     :global(.wall--bottom) {
       left: 0;
       right: 0;
       height: 200px;
+      top: 100%;
     }
 
     :global(.wall--left) {
@@ -323,14 +316,6 @@
 
     :global(.wall--right) {
       left: 100%;
-    }
-
-    :global(.wall--top) {
-      bottom: 100%;
-    }
-
-    :global(.wall--bottom) {
-      top: 100%;
     }
   }
 </style>
