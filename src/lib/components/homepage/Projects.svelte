@@ -2,6 +2,7 @@
 	import createClasses from "$utils/createClasses"
 	import vEase from "$utils/vEase"
 	import gsap from "gsap"
+	import { untrack } from "svelte"
 
   interface Project {
     name: string
@@ -41,16 +42,16 @@
   let currentShowViewProjectTimeline = $state<gsap.core.Timeline | undefined>()
   let selectedProject = $state(0)
   let projectsTween: gsap.core.Tween
+  let viewProject: HTMLDivElement | undefined = $state()
 
   function createViewProjectFollower() {
-    if(!window.matchMedia('(pointer: fine)')) {
+    if(!window.matchMedia('(pointer: fine)') || !viewProject) {
       return () => {}
     }
 
     const xTo = gsap.quickTo(".view-project", "x", { duration: 0.5, ease: 'expo.out' }),
           yTo = gsap.quickTo(".view-project", "y", { duration: 0.5, ease: 'expo.out' })
 
-    const viewProject = document.querySelector('.view-project')!
     const { height } = viewProject.getBoundingClientRect()
     gsap.set(viewProject, { visibility: 'hidden', scale: 0 })
     const callback = (e: MouseEvent) => {
@@ -155,9 +156,11 @@
             // Update button locations based on progress
             // Keeps currently selected button in the center of the screen
             const buttonWidth = 120
-            const containerWidth = document.querySelector('.project-buttons')!.getBoundingClientRect().width
-            const endPosition = -1 * (containerWidth - buttonWidth)
-            buttonsTo(progress * endPosition)
+            const containerWidth = document.querySelector('.project-buttons')?.getBoundingClientRect().width
+            if(containerWidth) {
+              const endPosition = -1 * (containerWidth - buttonWidth)
+              buttonsTo(progress * endPosition)
+            }
 
             // Mark a project as selected when the scroll velocity is low enough and
             // the project is roughly in the center of the page
@@ -169,10 +172,11 @@
               const progressIfSelected = index / (projects.length - 1)
               return progress >= progressIfSelected - ACCEPTABLE_RANGE && progress <= progressIfSelected + ACCEPTABLE_RANGE
             })
-            if(selectedProject !== selected) {
-              console.log('update selected to', selected)
-              selectedProject = selected
-            }
+            untrack(() => {
+              if(selectedProject !== selected) {
+                selectedProject = selected
+              }
+            })
           }
         }
       })
@@ -238,8 +242,8 @@
   })
 
   function showViewProject() {
+    if(!viewProject) return
     showing = true
-    const viewProject = document.querySelector('.view-project')!
 
     // cancel old timeline so that it doesn't override the new timeline we're creating
     if(currentShowViewProjectTimeline && currentShowViewProjectTimeline.isActive()) {
@@ -257,8 +261,8 @@
   }
 
   function hideViewProject() {
+    if(!viewProject) return
     showing = false
-    const viewProject = document.querySelector('.view-project')!
 
     // cancel old timeline so that it doesn't override the new timeline we're creating
     if(currentShowViewProjectTimeline && currentShowViewProjectTimeline.isActive()) {
@@ -311,7 +315,7 @@
   }
 </script>
 
-<div class='view-project' aria-hidden='true'>
+<div bind:this={viewProject} class='view-project' aria-hidden='true'>
   <span>View project</span>
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M15.8075 9.82182L7.90554 17.7237C7.70519 17.9241 7.46949 18.024 7.19843 18.0236C6.92737 18.0231 6.69167 17.9231 6.49133 17.7237C6.29098 17.5243 6.1908 17.2884 6.1908 17.0159C6.1908 16.7435 6.29098 16.508 6.49133 16.3095L14.3932 8.40761L7.4636 8.40761C7.18075 8.40761 6.94788 8.3105 6.76498 8.11628C6.58207 7.92206 6.49085 7.6833 6.49133 7.39998C6.50311 7.12893 6.60046 6.89629 6.78336 6.70207C6.96627 6.50785 7.1989 6.41051 7.48128 6.41003H16.8151C16.9565 6.41003 17.0833 6.43643 17.1955 6.48923C17.3077 6.54203 17.4107 6.6158 17.5045 6.71055C17.5983 6.80531 17.6721 6.90831 17.7258 7.01956C17.7796 7.13081 17.806 7.25762 17.805 7.39998L17.805 16.7338C17.805 16.9931 17.7079 17.2198 17.5137 17.414C17.3195 17.6082 17.0866 17.7115 16.8151 17.7237C16.5322 17.7237 16.2935 17.6264 16.0988 17.4317C15.9041 17.237 15.807 16.9985 15.8075 16.7161L15.8075 9.82182Z" fill="#182A1F"/>
