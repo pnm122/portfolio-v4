@@ -8,6 +8,7 @@
 	import rollInAnimation from '$utils/animation/rollInAnimation'
 	import slowRollInAnimation from '$utils/animation/slowRollInAnimation'
 	import isTouchDevice from '$utils/isTouchDevice'
+	import scrollToLink from '$utils/scrollToLink'
 	import gsap from 'gsap'
 	import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 	import { Canvas, Rectangle, Circle } from 'svelte-physics-renderer'
@@ -228,7 +229,13 @@
 				<b>intuitive</b>
 				design and <u>modern</u> web development.
 			</p>
-			<Button size="large" type="link" class="hero__cta">Contact Me</Button>
+			<Button
+        size="large"
+        type="link"
+        class="hero__cta"
+        onClick={e => scrollToLink(e, '#contact')}>
+        Contact Me
+      </Button>
 		</div>
 	</section>
   <section class="about" id="about">

@@ -1,27 +1,15 @@
 <script lang="ts">
 	import createClasses from '$utils/createClasses'
-	import gsap from 'gsap'
 	import Button from './Button.svelte'
+	import scrollToLink from '$utils/scrollToLink'
 
 	let open = $state(false)
 
-  function scrollToLink(link: string) {
-    gsap.to(window, {
-      scrollTo: {
-        y: link
-      },
-      ease: 'expo.out',
-      duration: 1
-    })
-  }
-
   function onLinkClicked(e: MouseEvent, link: string) {
     open = false
-    console.log(window.location.pathname)
     // GSAP overrides default smooth scrolling, replace it here
     if(window.location.pathname === '/') {
-      e.preventDefault()
-      scrollToLink(link)
+      scrollToLink(e, link)
     }
   }
 </script>
