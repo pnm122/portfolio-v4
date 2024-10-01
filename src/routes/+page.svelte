@@ -181,14 +181,6 @@
 			heroTimeline.eventCallback('onComplete', () => {
 				createScrollBasedAnimations(scrollTimeline)
 			})
-
-      // ScrollTrigger.create({
-      //   trigger: '.skills',
-      //   start: 'top bottom',
-      //   onEnter: () => {
-      //     console.log('enter')
-      //   }
-      // })
 		})
 
 		function onResize() {
@@ -272,18 +264,21 @@
       <p>
         <SplitText
           noOverflow
+          wordsOnly
           text="Most recently, I was an intern on the Design Systems team at Chatham Financial. Most notably, I created, added features to, and maintained components in a component library, wrote extensive unit tests, and created a pipeline to automate the process of converting design tokens into code variables."
         />
       </p>
       <p>
         <SplitText
           noOverflow
+          wordsOnly
           text="Previously, I spent 8 months freelancing on Fiverr, where I became a Level 1 Seller offering web design and development services. I maintained a 5 star rating, crafting quality, bespoke solutions for nearly 50 orders."
         />
       </p>
       <p>
         <SplitText
           noOverflow
+          wordsOnly
           text="I’m an avid tennis player and fan, and I’m passionate about playing music, including guitar, piano, and drums. I also love learning new things, and I’m always seeking out new knowledge."
         />
       </p>

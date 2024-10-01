@@ -1,26 +1,35 @@
 <script lang="ts">
 	interface Props {
 		text: string
+    wordsOnly?: boolean
 		noOverflow?: boolean
 	}
 
-	const { text, noOverflow }: Props = $props()
+	const { text, noOverflow, wordsOnly }: Props = $props()
 </script>
 
 {#each text.split(/[ \n\t]/) as word}
 	{#if noOverflow}
 		<span class="word-wrapper">
 			<span class="word">
-				{#each word as letter}
-					<span class="letter">{letter}</span>
-				{/each}
+        {#if wordsOnly}
+          {word}
+        {:else}
+          {#each word as letter}
+            <span class="letter">{letter}</span>
+          {/each}
+        {/if}
 			</span>
 		</span>
 	{:else}
 		<span class="word">
-			{#each word as letter}
-				<span class="letter">{letter}</span>
-			{/each}
+			{#if wordsOnly}
+        {word}
+      {:else}
+        {#each word as letter}
+          <span class="letter">{letter}</span>
+        {/each}
+      {/if}
 		</span>
 	{/if}
 	{' '}
