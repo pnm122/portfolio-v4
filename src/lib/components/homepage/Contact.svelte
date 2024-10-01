@@ -19,7 +19,9 @@ import gsap from "gsap"
   let animationCompleted = $state(false)
 
   $effect(() => {
-    const ctx = gsap.context(() => {
+    const ctx = gsap.context(async () => {
+      await document.fonts.ready
+
       gsap.set('.lets-talk', {
         transformOrigin: 'bottom left'
       })
@@ -56,8 +58,12 @@ import gsap from "gsap"
         duration: 1
       })
 
+      const contact = document.querySelector<HTMLElement>('.contact')
+      const letsTalk = document.querySelector<HTMLElement>('.lets-talk')
+      const initialLetsTalkScale = contact && letsTalk ? contact.offsetWidth / letsTalk.offsetWidth : 1.5
+
       tl.from('.lets-talk', {
-        scale: 1.5,
+        scale: initialLetsTalkScale,
         ease: 'none',
         duration: 0.5
       }, 0.5)
