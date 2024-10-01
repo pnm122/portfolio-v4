@@ -213,7 +213,7 @@ import gsap from "gsap"
 
   .contact {
     @include container;
-    height: 700px;
+    height: 850px;
     position: relative;
     margin-top: 350px;
     // A little margin to make sure that the animation end triggers
