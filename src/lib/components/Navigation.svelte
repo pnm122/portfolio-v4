@@ -1,8 +1,29 @@
 <script lang="ts">
 	import createClasses from '$utils/createClasses'
+	import gsap from 'gsap'
 	import Button from './Button.svelte'
 
 	let open = $state(false)
+
+  function scrollToLink(link: string) {
+    gsap.to(window, {
+      scrollTo: {
+        y: link
+      },
+      ease: 'expo.out',
+      duration: 1
+    })
+  }
+
+  function onLinkClicked(e: MouseEvent, link: string) {
+    open = false
+    console.log(window.location.pathname)
+    // GSAP overrides default smooth scrolling, replace it here
+    if(window.location.pathname === '/') {
+      e.preventDefault()
+      scrollToLink(link)
+    }
+  }
 </script>
 
 <div class="navigation container">
@@ -15,12 +36,12 @@
 		>
 			<ul class="nav__list">
 				<li class="list-item">
-					<Button type="link" href="#projects" onClick={() => (open = false)} style="text" size="small">
+					<Button type="link" href="/#projects" onClick={(e) => onLinkClicked(e, '#projects')} style="text" size="small">
 						Projects
 					</Button>
 				</li>
 				<li class="list-item">
-					<Button type="link" href="#contact" onClick={() => (open = false)} style="text" size="small">
+					<Button type="link" href="/#contact" onClick={(e) => onLinkClicked(e, '#contact')} style="text" size="small">
 						Contact Me
 					</Button>
 				</li>

@@ -114,7 +114,6 @@ import gsap from "gsap"
 </script>
 
 <div
-  id='contact'
   class='contact'>
   <Canvas
     bind:this={canvas}
@@ -200,6 +199,7 @@ import gsap from "gsap"
     </div>
   </Canvas>
 </div>
+<div id='contact'></div>
 
 <style lang="scss">
   @import '$scss/mixins';
