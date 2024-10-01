@@ -1,5 +1,6 @@
 <script lang="ts">
-	import gsap from "gsap"
+	import SplitText from "$components/SplitText.svelte"
+import gsap from "gsap"
 	import { untrack } from "svelte"
 	import { Canvas, Circle, Rectangle } from "svelte-physics-renderer"
 
@@ -26,7 +27,7 @@
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: '.contact',
-          start: 'bottom-=600px bottom',
+          start: 'bottom-=400px bottom',
           end: 'bottom bottom',
           scrub: true
         },
@@ -50,15 +51,16 @@
       })
 
       tl.from('.lets-talk', {
-        y: '-600px',
-        scale: () => {
-          const contact = document.querySelector<HTMLElement>('.contact')
-          const letsTalk = document.querySelector<HTMLElement>('.lets-talk')
-          if(!contact || !letsTalk) return 3
-          return contact.clientWidth / letsTalk.clientWidth
-        },
-        ease: 'none'
+        y: '-400px',
+        ease: 'none',
+        duration: 1
       })
+
+      tl.from('.lets-talk', {
+        scale: 1.5,
+        ease: 'none',
+        duration: 0.5
+      }, 0.5)
 
       gsap.from('.contact-link, .contact__image', {
         opacity: 0,
@@ -99,6 +101,16 @@
       ctx.revert()
 		}
   })
+
+  function onLetsTalkClicked() {
+    gsap.to(window, {
+      scrollTo: {
+        y: 'max'
+      },
+      ease: 'expo.out',
+      duration: 1
+    })
+  }
 </script>
 
 <div
@@ -114,7 +126,14 @@
       <div class='contact__body'>
         <Rectangle isStatic>
           <h1 class='lets-talk'>
-            Let's talk
+            <button
+              class='lets-talk__button'
+              disabled={animationCompleted}
+              onclick={onLetsTalkClicked}>
+              <SplitText
+                text="let's talk!"
+              />
+            </button>
           </h1>
         </Rectangle>
         <p class='time'>
@@ -132,6 +151,7 @@
           restitution={0.75}
           size={160}>
           <a
+            aria-disabled={canvas?.context.state !== 'running'}
             class='contact-link__inner'
             href='mailto:pnmartin02@gmail.com'>
             Email
@@ -143,6 +163,7 @@
           restitution={0.75}
           size={160}>
           <a
+            aria-disabled={canvas?.context.state !== 'running'}
             class='contact-link__inner'
             href='https://github.com/pnm122'
             target='_blank'
@@ -156,6 +177,7 @@
           restitution={0.75}
           size={160}>
           <a
+            aria-disabled={canvas?.context.state !== 'running'}
             class='contact-link__inner'
             href='https://www.linkedin.com/in/pierce-martin-02/'
             target='_blank'
@@ -185,9 +207,9 @@
 
   .contact {
     @include container;
-    height: 1500px;
+    height: 700px;
     position: relative;
-    margin-top: 500px;
+    margin-top: 350px;
     // A little margin to make sure that the animation end triggers
     margin-bottom: 4px;
     
@@ -217,14 +239,18 @@
     }
 
     :global(.lets-talk) {
-      text-transform: lowercase;
       font-size: $font-size-40;
       line-height: 0.825;
       margin-bottom: -0.11em;
-      width: fit-content;
       white-space: nowrap;
-      position: relative;
-      z-index: 1;
+
+      :global(.lets-talk__button) {
+        color: $black;
+      }
+      
+      :global(.lets-talk__button:disabled) {
+        cursor: default;
+      }
 
       @media screen and (min-width: $screen-sm) {
         font-size: $font-size-60;
@@ -243,10 +269,9 @@
       @include v-gap(320px);
       padding-bottom: 1500px;
       padding-left: 15%;
-      position: relative;
 
       @media screen and (min-width: $screen-sm) {
-        padding-left: 45%;
+        padding-left: 41%;
       }
     }
 
@@ -272,13 +297,19 @@
       font-family: $font-heading;
       font-size: $font-size-24;
       color: $heading;
-      height: 160px;
 
       :global(.contact-link__inner) {
         width: 100%;
         height: 100%;
+        border-radius: 999px;
         @include centered;
       }
+    }
+
+    :global(.contact-link__inner:focus-visible),
+    :global(.contact-link__inner:hover) {
+      text-decoration: underline;
+      outline: none;
     }
 
     :global(.contact-link--email) {

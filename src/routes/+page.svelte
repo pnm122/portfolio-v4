@@ -1,4 +1,4 @@
-<!-- <script lang="ts">
+<script lang="ts">
 	import { browser } from '$app/environment'
 	import Button from '$components/Button.svelte'
 	import Contact from '$components/homepage/Contact.svelte'
@@ -575,10 +575,4 @@
 			}
 		}
 	}
-</style> -->
-
-<script lang="ts">
-  import Contact from '$components/homepage/Contact.svelte'
-</script>
-
-<Contact />
+</style>
