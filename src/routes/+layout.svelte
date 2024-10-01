@@ -7,10 +7,22 @@
 	import { Observer } from 'gsap/dist/Observer'
 	import MouseFollower from '$components/MouseFollower.svelte'
 	import ScrollToPlugin from 'gsap/dist/ScrollToPlugin'
+	import { onNavigate } from '$app/navigation'
 
 	if (browser) {
 		gsap.registerPlugin(Observer, ScrollTrigger, ScrollToPlugin)
 	}
+
+  onNavigate((navigation) => {
+    if(!document.startViewTransition) return
+
+    return new Promise(res => {
+      document.startViewTransition(async () => {
+        res()
+        await navigation.complete
+      })
+    })
+  })
 </script>
 
 <Navigation />
