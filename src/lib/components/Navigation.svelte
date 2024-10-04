@@ -24,8 +24,8 @@
 		>
 			<ul class="nav__list">
 				<li class="list-item">
-					<Button type="link" href="/#projects" onClick={(e) => onLinkClicked(e, '#projects')} style="text" size="small">
-						Projects
+					<Button type="link" href="/#case-studies" onClick={(e) => onLinkClicked(e, '#case-studies')} style="text" size="small">
+						Case studies
 					</Button>
 				</li>
 				<li class="list-item">

@@ -316,23 +316,24 @@
 </script>
 
 <div bind:this={viewProject} class='view-project' aria-hidden='true'>
-  <span>View project</span>
+  <span>View case study</span>
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M15.8075 9.82182L7.90554 17.7237C7.70519 17.9241 7.46949 18.024 7.19843 18.0236C6.92737 18.0231 6.69167 17.9231 6.49133 17.7237C6.29098 17.5243 6.1908 17.2884 6.1908 17.0159C6.1908 16.7435 6.29098 16.508 6.49133 16.3095L14.3932 8.40761L7.4636 8.40761C7.18075 8.40761 6.94788 8.3105 6.76498 8.11628C6.58207 7.92206 6.49085 7.6833 6.49133 7.39998C6.50311 7.12893 6.60046 6.89629 6.78336 6.70207C6.96627 6.50785 7.1989 6.41051 7.48128 6.41003H16.8151C16.9565 6.41003 17.0833 6.43643 17.1955 6.48923C17.3077 6.54203 17.4107 6.6158 17.5045 6.71055C17.5983 6.80531 17.6721 6.90831 17.7258 7.01956C17.7796 7.13081 17.806 7.25762 17.805 7.39998L17.805 16.7338C17.805 16.9931 17.7079 17.2198 17.5137 17.414C17.3195 17.6082 17.0866 17.7115 16.8151 17.7237C16.5322 17.7237 16.2935 17.6264 16.0988 17.4317C15.9041 17.237 15.807 16.9985 15.8075 16.7161L15.8075 9.82182Z" fill="#182A1F"/>
   </svg>      
 </div>
 <section 
   class='projects'
-  id='projects'
+  id='case-studies'
   aria-live='polite'
   aria-roledescription='carousel'
-  aria-label='Projects'>
-  {#each projects as { imgSrc, name }}
+  aria-label='Case studies'>
+  {#each projects as { imgSrc, name, slug }}
     <div class='project-image'>
       <div class='project-image__padding-box'>
         <img
           class='project-image__image'
           src={`images/homepage/project-covers/${imgSrc}`}
+          style={`view-transition-name: project-cover--${slug}`}
           alt={name}>
       </div>
     </div>
@@ -348,12 +349,13 @@
       aria-roledescription='slide'>
       <a
         class='project__link'
-        aria-label='View project'
+        aria-label='View case study'
         href={`/project/${slug}`}
         onkeydown={onProjectLinkKeydown}>
         <h1
           class='project__title'
-          id={`project__title--${name}`}>
+          id={`project__title--${name}`}
+          style={`view-transition-name: project-title--${slug}`}>
           {name}
         </h1>
         <p
