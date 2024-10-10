@@ -5,6 +5,7 @@ $white: oklch(99.25% 0.005 67.77);
 $black: black;
 
 $gray-1: oklch(91% 0.002 67.75);
+$gray-2: oklch(84% 0.002 67.75);
 $gray-3: oklch(73% 0.002 67.75);
 $gray-5: oklch(55% 0.002 67.75);
 $gray-7: oklch(32.57% 0.002 67.75);
@@ -58,6 +59,7 @@ $font-size-32: calc($font-size-base * (32 / 8));
 $font-size-36: calc($font-size-base * (36 / 8));
 $font-size-40: calc($font-size-base * (40 / 8));
 $font-size-60: calc($font-size-base * (60 / 8));
+$font-size-80: calc($font-size-base * (80 / 8));
 $font-size-96: calc($font-size-base * (96 / 8));
 $font-size-128: calc($font-size-base * (128 / 8));
 

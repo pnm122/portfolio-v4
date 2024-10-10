@@ -13,16 +13,16 @@
 		gsap.registerPlugin(Observer, ScrollTrigger, ScrollToPlugin)
 	}
 
-  onNavigate((navigation) => {
-    if(!document.startViewTransition) return
+	onNavigate((navigation) => {
+		if (!document.startViewTransition) return
 
-    return new Promise(res => {
-      document.startViewTransition(async () => {
-        res()
-        await navigation.complete
-      })
-    })
-  })
+		return new Promise((res) => {
+			document.startViewTransition(async () => {
+				res()
+				await navigation.complete
+			})
+		})
+	})
 </script>
 
 <Navigation />

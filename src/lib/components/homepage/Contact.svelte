@@ -1,358 +1,353 @@
 <script lang="ts">
-	import SplitText from "$components/SplitText.svelte"
-import gsap from "gsap"
-	import { untrack } from "svelte"
-	import { Canvas, Circle, Rectangle } from "svelte-physics-renderer"
+	import SplitText from '$components/SplitText.svelte'
+	import gsap from 'gsap'
+	import { untrack } from 'svelte'
+	import { Canvas, Circle, Rectangle } from 'svelte-physics-renderer'
 
-  const format = new Intl.DateTimeFormat([], {
-    timeZone: 'America/New_York',
-    year: '2-digit',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit'
-  })
+	const format = new Intl.DateTimeFormat([], {
+		timeZone: 'America/New_York',
+		year: '2-digit',
+		month: '2-digit',
+		day: '2-digit',
+		hour: '2-digit',
+		minute: '2-digit',
+		second: '2-digit'
+	})
 
-  let canvas = $state<Canvas | undefined>()
-  let time = $state(new Date())
-  let animationCompleted = $state(false)
+	let canvas = $state<Canvas | undefined>()
+	let time = $state(new Date())
+	let animationCompleted = $state(false)
 
-  $effect(() => {
-    const ctx = gsap.context(async () => {
-      await document.fonts.ready
+	$effect(() => {
+		const ctx = gsap.context(async () => {
+			await document.fonts.ready
 
-      gsap.set('.lets-talk', {
-        transformOrigin: 'bottom left'
-      })
+			gsap.set('.lets-talk', {
+				transformOrigin: 'bottom left'
+			})
 
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: '.contact',
-          start: 'bottom-=400px bottom',
-          end: 'bottom bottom',
-          scrub: true
-        },
-        onStart: () => {
-          untrack(() => {
-            if(animationCompleted) animationCompleted = false
-            canvas?.context.stop()
-          })
-        },
-        onUpdate: () => {
-          untrack(() => {
-            if(animationCompleted) animationCompleted = false
-          })
-        },
-        onComplete: () => {
-          untrack(() => {
-            if(!animationCompleted) animationCompleted = true
-            canvas?.context.start()
-          })
-        }
-      })
+			const tl = gsap.timeline({
+				scrollTrigger: {
+					trigger: '.contact',
+					start: 'bottom-=400px bottom',
+					end: 'bottom bottom',
+					scrub: true
+				},
+				onStart: () => {
+					untrack(() => {
+						if (animationCompleted) animationCompleted = false
+						canvas?.context.stop()
+					})
+				},
+				onUpdate: () => {
+					untrack(() => {
+						if (animationCompleted) animationCompleted = false
+					})
+				},
+				onComplete: () => {
+					untrack(() => {
+						if (!animationCompleted) animationCompleted = true
+						canvas?.context.start()
+					})
+				}
+			})
 
-      tl.from('.lets-talk', {
-        y: '-400px',
-        ease: 'none',
-        duration: 1
-      })
+			tl.from('.lets-talk', {
+				y: '-400px',
+				ease: 'none',
+				duration: 1
+			})
 
-      const contact = document.querySelector<HTMLElement>('.contact')
-      const letsTalk = document.querySelector<HTMLElement>('.lets-talk')
-      const initialLetsTalkScale = contact && letsTalk ? contact.offsetWidth / letsTalk.offsetWidth : 1.5
+			const contact = document.querySelector<HTMLElement>('.contact')
+			const letsTalk = document.querySelector<HTMLElement>('.lets-talk')
+			const initialLetsTalkScale =
+				contact && letsTalk ? contact.offsetWidth / letsTalk.offsetWidth : 1.5
 
-      tl.from('.lets-talk', {
-        scale: initialLetsTalkScale,
-        ease: 'none',
-        duration: 0.5
-      }, 0.5)
+			tl.from(
+				'.lets-talk',
+				{
+					scale: initialLetsTalkScale,
+					ease: 'none',
+					duration: 0.5
+				},
+				0.5
+			)
 
-      gsap.from('.contact-link, .contact__image', {
-        opacity: 0,
-        scrollTrigger: {
-          trigger: '.contact',
-          start: 'bottom-=100px bottom',
-          end: 'bottom bottom',
-          scrub: true
-        }
-      })
-    })
+			gsap.from('.contact-link, .contact__image', {
+				opacity: 0,
+				scrollTrigger: {
+					trigger: '.contact',
+					start: 'bottom-=100px bottom',
+					end: 'bottom bottom',
+					scrub: true
+				}
+			})
+		})
 
-    function onResize() {
+		function onResize() {
 			untrack(() => {
-        if (canvas?.context.state === 'running') {
-          if(animationCompleted) {
-            canvas.context.stop()
-            canvas.context.start()
-          } else {
-            canvas.context.stop()
-          }
-        }
-      })
+				if (canvas?.context.state === 'running') {
+					if (animationCompleted) {
+						canvas.context.stop()
+						canvas.context.start()
+					} else {
+						canvas.context.stop()
+					}
+				}
+			})
 		}
 
 		window.addEventListener('resize', onResize)
 
-    const interval = setInterval(() => {
-      time = new Date(time.getTime() + 1000)
-    }, 1000)
+		const interval = setInterval(() => {
+			time = new Date(time.getTime() + 1000)
+		}, 1000)
 
 		return () => {
 			window.removeEventListener('resize', onResize)
 			untrack(() => {
-        canvas?.context.stop()
-      })
-      clearInterval(interval)
-      ctx.revert()
+				canvas?.context.stop()
+			})
+			clearInterval(interval)
+			ctx.revert()
 		}
-  })
+	})
 
-  function onLetsTalkClicked() {
-    gsap.to(window, {
-      scrollTo: {
-        y: 'max'
-      },
-      ease: 'expo.out',
-      duration: 1
-    })
-  }
+	function onLetsTalkClicked() {
+		gsap.to(window, {
+			scrollTo: {
+				y: 'max'
+			},
+			ease: 'expo.out',
+			duration: 1
+		})
+	}
 </script>
 
-<div
-  class='contact'>
-  <Canvas
-    bind:this={canvas}
-    width='100%'
-    height='100%'
-    gravity={{ scale: 0.00067 }}
-    bounded={false}>
-    <div class='contact__canvas'>
-      <div class='contact__body'>
-        <Rectangle isStatic>
-          <h1 class='lets-talk'>
-            <button
-              class='lets-talk__button'
-              disabled={animationCompleted}
-              onclick={onLetsTalkClicked}>
-              <SplitText
-                text="let's talk!"
-              />
-            </button>
-          </h1>
-        </Rectangle>
-        <p class='time'>
-          {#each format.format(time).split(',') as timeSection}
-            <Rectangle class='time__inner' isStatic>
-              <span>{timeSection}</span>
-            </Rectangle>
-          {/each}
-        </p>
-      </div>
-      <div class='drop-in-items'>
-        <Circle
-          class='contact-link contact-link--email'
-          radius={16}
-          restitution={0.75}
-          size={160}>
-          <a
-            aria-disabled={canvas?.context.state !== 'running'}
-            class='contact-link__inner'
-            href='mailto:pnmartin02@gmail.com'>
-            Email
-          </a>
-        </Circle>
-        <Circle
-          class='contact-link contact-link--github'
-          radius={16}
-          restitution={0.75}
-          size={160}>
-          <a
-            aria-disabled={canvas?.context.state !== 'running'}
-            class='contact-link__inner'
-            href='https://github.com/pnm122'
-            target='_blank'
-            rel='noopener noreferrer'>
-            Github
-          </a>
-        </Circle>
-        <Circle
-          class='contact-link contact-link--linkedin'
-          radius={16}
-          restitution={0.75}
-          size={160}>
-          <a
-            aria-disabled={canvas?.context.state !== 'running'}
-            class='contact-link__inner'
-            href='https://www.linkedin.com/in/pierce-martin-02/'
-            target='_blank'
-            rel='noopener noreferrer'>
-            Linkedin
-          </a>
-        </Circle>
-        <Rectangle
-          class='contact__image'
-          restitution={0.75}
-          radius={16}>
-          <img
-            alt='Pierce Martin'
-            src='images/homepage/pierce.jfif'>
-        </Rectangle>
-      </div>
-      <Rectangle class='wall wall--left' isStatic />
-      <Rectangle class='wall wall--right' isStatic />
-      <Rectangle class='wall wall--bottom' isStatic />
-    </div>
-  </Canvas>
+<div class="contact">
+	<Canvas
+		bind:this={canvas}
+		width="100%"
+		height="100%"
+		gravity={{ scale: 0.00067 }}
+		bounded={false}
+	>
+		<div class="contact__canvas">
+			<div class="contact__body">
+				<Rectangle isStatic>
+					<h1 class="lets-talk">
+						<button
+							class="lets-talk__button"
+							disabled={animationCompleted}
+							onclick={onLetsTalkClicked}
+						>
+							<SplitText text="let's talk!" />
+						</button>
+					</h1>
+				</Rectangle>
+				<p class="time">
+					{#each format.format(time).split(',') as timeSection}
+						<Rectangle class="time__inner" isStatic>
+							<span>{timeSection}</span>
+						</Rectangle>
+					{/each}
+				</p>
+			</div>
+			<div class="drop-in-items">
+				<Circle class="contact-link contact-link--email" radius={16} restitution={0.75} size={160}>
+					<a
+						aria-disabled={canvas?.context.state !== 'running'}
+						class="contact-link__inner"
+						href="mailto:pnmartin02@gmail.com"
+					>
+						Email
+					</a>
+				</Circle>
+				<Circle class="contact-link contact-link--github" radius={16} restitution={0.75} size={160}>
+					<a
+						aria-disabled={canvas?.context.state !== 'running'}
+						class="contact-link__inner"
+						href="https://github.com/pnm122"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Github
+					</a>
+				</Circle>
+				<Circle
+					class="contact-link contact-link--linkedin"
+					radius={16}
+					restitution={0.75}
+					size={160}
+				>
+					<a
+						aria-disabled={canvas?.context.state !== 'running'}
+						class="contact-link__inner"
+						href="https://www.linkedin.com/in/pierce-martin-02/"
+						target="_blank"
+						rel="noopener noreferrer"
+					>
+						Linkedin
+					</a>
+				</Circle>
+				<Rectangle class="contact__image" restitution={0.75} radius={16}>
+					<img alt="Pierce Martin" src="images/homepage/pierce.jfif" />
+				</Rectangle>
+			</div>
+			<Rectangle class="wall wall--left" isStatic />
+			<Rectangle class="wall wall--right" isStatic />
+			<Rectangle class="wall wall--bottom" isStatic />
+		</div>
+	</Canvas>
 </div>
-<div id='contact'></div>
+<div id="contact"></div>
 
 <style lang="scss">
-  @import '$scss/mixins';
-  @import '$scss/variables';
+	@import '$scss/mixins';
+	@import '$scss/variables';
 
-  .contact {
-    @include container;
-    height: 850px;
-    position: relative;
-    margin-top: 350px;
-    // A little margin to make sure that the animation end triggers
-    margin-bottom: 4px;
-    
-    &__canvas {
-      display: flex;
-      flex-direction: column-reverse;
-      height: 100%;
-    }
+	.contact {
+		@include container;
+		height: 850px;
+		position: relative;
+		margin-top: 350px;
+		// A little margin to make sure that the animation end triggers
+		margin-bottom: 4px;
 
-    &__body {
-      height: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
+		&__canvas {
+			display: flex;
+			flex-direction: column-reverse;
+			height: 100%;
+		}
 
-    :global(.contact__image) {
-      width: 200px;
-      height: 200px;
-      overflow: hidden;
+		&__body {
+			height: 100%;
+			display: flex;
+			justify-content: space-between;
+			align-items: flex-end;
+		}
 
-      :global(img) {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-      }
-    }
+		:global(.contact__image) {
+			width: 200px;
+			height: 200px;
+			overflow: hidden;
 
-    :global(.lets-talk) {
-      font-size: $font-size-40;
-      line-height: 0.825;
-      margin-bottom: -0.11em;
-      white-space: nowrap;
+			:global(img) {
+				height: 100%;
+				width: 100%;
+				object-fit: cover;
+			}
+		}
 
-      :global(.lets-talk__button) {
-        color: $black;
-      }
-      
-      :global(.lets-talk__button:disabled) {
-        cursor: default;
-      }
+		:global(.lets-talk) {
+			font-size: $font-size-40;
+			line-height: 0.825;
+			margin-bottom: -0.11em;
+			white-space: nowrap;
 
-      @media screen and (min-width: $screen-sm) {
-        font-size: $font-size-60;
-      }
+			:global(.lets-talk__button) {
+				color: $black;
+			}
 
-      @media screen and (min-width: $screen-md) {
-        font-size: $font-size-96;
-      }
+			:global(.lets-talk__button:disabled) {
+				cursor: default;
+			}
 
-      @media screen and (min-width: $screen-lg) {
-        font-size: $font-size-128;
-      }
-    }
+			@media screen and (min-width: $screen-sm) {
+				font-size: $font-size-60;
+			}
 
-    .drop-in-items {
-      @include v-gap(320px);
-      padding-bottom: 1500px;
-      padding-left: 15%;
+			@media screen and (min-width: $screen-md) {
+				font-size: $font-size-96;
+			}
 
-      @media screen and (min-width: $screen-sm) {
-        padding-left: 41%;
-      }
-    }
+			@media screen and (min-width: $screen-lg) {
+				font-size: $font-size-128;
+			}
+		}
 
-    .time {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      text-align: right;
-      font-size: $font-size-6;
+		.drop-in-items {
+			@include v-gap(320px);
+			padding-bottom: 1500px;
+			padding-left: 15%;
 
-      @media screen and (min-width: $screen-sm) {
-        font-size: $font-size-8;
-      }
-    }
+			@media screen and (min-width: $screen-sm) {
+				padding-left: 41%;
+			}
+		}
 
-    :global(.time__inner) {
-      width: fit-content;
-      white-space: nowrap;
-    }
+		.time {
+			display: flex;
+			flex-direction: column;
+			align-items: flex-end;
+			text-align: right;
+			font-size: $font-size-6;
 
-    :global(.contact-link) {
-      text-transform: lowercase;
-      font-family: $font-heading;
-      font-size: $font-size-24;
-      color: $heading;
+			@media screen and (min-width: $screen-sm) {
+				font-size: $font-size-8;
+			}
+		}
 
-      :global(.contact-link__inner) {
-        width: 100%;
-        height: 100%;
-        border-radius: 999px;
-        @include centered;
-      }
-    }
+		:global(.time__inner) {
+			width: fit-content;
+			white-space: nowrap;
+		}
 
-    :global(.contact-link__inner:focus-visible),
-    :global(.contact-link__inner:hover) {
-      text-decoration: underline;
-      outline: none;
-    }
+		:global(.contact-link) {
+			text-transform: lowercase;
+			font-family: $font-heading;
+			font-size: $font-size-24;
+			color: $heading;
 
-    :global(.contact-link--email) {
-      background-color: $primary;
-    }
+			:global(.contact-link__inner) {
+				width: 100%;
+				height: 100%;
+				border-radius: 999px;
+				@include centered;
+			}
+		}
 
-    :global(.contact-link--github) {
-      background-color: $accent;
-    }
+		:global(.contact-link__inner:focus-visible),
+		:global(.contact-link__inner:hover) {
+			text-decoration: underline;
+			outline: none;
+		}
 
-    :global(.contact-link--linkedin) {
-      background-color: $tertiary;
-    }
+		:global(.contact-link--email) {
+			background-color: $primary;
+		}
 
-    :global(.wall) {
-      position: absolute;
-    }
+		:global(.contact-link--github) {
+			background-color: $accent;
+		}
 
-    :global(.wall--left),
-    :global(.wall--right) {
-      top: 0;
-      bottom: 0;
-      width: 200px;
-    }
-    :global(.wall--bottom) {
-      left: 0;
-      right: 0;
-      height: 200px;
-      top: 100%;
-    }
+		:global(.contact-link--linkedin) {
+			background-color: $tertiary;
+		}
 
-    :global(.wall--left) {
-      right: 100%;
-    }
+		:global(.wall) {
+			position: absolute;
+		}
 
-    :global(.wall--right) {
-      left: 100%;
-    }
-  }
+		:global(.wall--left),
+		:global(.wall--right) {
+			top: 0;
+			bottom: 0;
+			width: 200px;
+		}
+		:global(.wall--bottom) {
+			left: 0;
+			right: 0;
+			height: 200px;
+			top: 100%;
+		}
+
+		:global(.wall--left) {
+			right: 100%;
+		}
+
+		:global(.wall--right) {
+			left: 100%;
+		}
+	}
 </style>

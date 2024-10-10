@@ -3,5 +3,5 @@
  * @param n Animation progress
  */
 export default function vEase(n: number) {
-  return n < 0.5 ? 2 * n : 2 * (1 - n)
+	return n < 0.5 ? 2 * n : 2 * (1 - n)
 }

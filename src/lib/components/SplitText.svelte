@@ -1,7 +1,7 @@
 <script lang="ts">
 	interface Props {
 		text: string
-    wordsOnly?: boolean
+		wordsOnly?: boolean
 		noOverflow?: boolean
 	}
 
@@ -12,24 +12,24 @@
 	{#if noOverflow}
 		<span class="word-wrapper">
 			<span class="word">
-        {#if wordsOnly}
-          {word}
-        {:else}
-          {#each word as letter}
-            <span class="letter">{letter}</span>
-          {/each}
-        {/if}
+				{#if wordsOnly}
+					{word}
+				{:else}
+					{#each word as letter}
+						<span class="letter">{letter}</span>
+					{/each}
+				{/if}
 			</span>
 		</span>
 	{:else}
 		<span class="word">
 			{#if wordsOnly}
-        {word}
-      {:else}
-        {#each word as letter}
-          <span class="letter">{letter}</span>
-        {/each}
-      {/if}
+				{word}
+			{:else}
+				{#each word as letter}
+					<span class="letter">{letter}</span>
+				{/each}
+			{/if}
 		</span>
 	{/if}
 	{' '}

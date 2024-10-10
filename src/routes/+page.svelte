@@ -25,7 +25,7 @@
 		'Stencil',
 		'Node',
 		'Express',
-    'Jasmine',
+		'Jasmine',
 		'Flask',
 		'Flutter',
 		'Firebase',
@@ -41,7 +41,7 @@
 	]
 
 	let skillsCanvas: Canvas | undefined = $state()
-  let screenWidth = $state(browser ? window.innerWidth : 0)
+	let screenWidth = $state(browser ? window.innerWidth : 0)
 
 	function hideElementsAppearingOnScroll() {
 		gsap.to(
@@ -185,7 +185,7 @@
 		})
 
 		function onResize() {
-      screenWidth = window.innerWidth
+			screenWidth = window.innerWidth
 			if (skillsCanvas?.context.state === 'running') {
 				skillsCanvas.context.stop()
 				skillsCanvas.context.start()
@@ -203,7 +203,6 @@
 		})
 
 		observer.observe(document.querySelector('.skills')!)
-
 
 		return () => {
 			observer.disconnect()
@@ -230,125 +229,116 @@
 				design and <u>modern</u> web development.
 			</p>
 			<Button
-        size="large"
-        type="link"
-        class="hero__cta"
-        onClick={e => scrollToLink(e, '#contact')}>
-        Contact Me
-      </Button>
+				size="large"
+				type="link"
+				class="hero__cta"
+				onClick={(e) => scrollToLink(e, '#contact')}
+			>
+				Contact Me
+			</Button>
 		</div>
 	</section>
-  <section class="about" id="about">
-    <div class="about__heading-wrapper">
-      <div class="about-heading">
-        <h1 class="about-heading__text">
-          <SplitText
-            noOverflow
-            text="Creativity is at my core. I love creating rich digital experiences — from perfecting the smallest details to scaffolding the biggest ideas."
-          />
-        </h1>
-        <img
-          class="about-heading__image"
-          id="datepicker"
-          src="images/homepage/datepicker.png"
-          alt="date picker"
-        />
-        <img
-          class="about-heading__image"
-          id="spellingbee"
-          src="images/homepage/spellingbee.png"
-          alt="spelling bee app"
-        />
-        <img
-          class="about-heading__image"
-          id="chatapp"
-          src="images/homepage/chatapp.png"
-          alt="chat app"
-        />
-      </div>
-    </div>
-    <div class="about__content">
-      <p>
-        <SplitText
-          noOverflow
-          wordsOnly
-          text="Most recently, I was an intern on the Design Systems team at Chatham Financial. Most notably, I created, added features to, and maintained components in a component library, wrote extensive unit tests, and created a pipeline to automate the process of converting design tokens into code variables."
-        />
-      </p>
-      <p>
-        <SplitText
-          noOverflow
-          wordsOnly
-          text="Previously, I spent 8 months freelancing on Fiverr, where I became a Level 1 Seller offering web design and development services. I maintained a 5 star rating, crafting quality, bespoke solutions for nearly 50 orders."
-        />
-      </p>
-      <p>
-        <SplitText
-          noOverflow
-          wordsOnly
-          text="I’m an avid tennis player and fan, and I’m passionate about playing music, including guitar, piano, and drums. I also love learning new things, and I’m always seeking out new knowledge."
-        />
-      </p>
-    </div>
-  </section>
-  <section class="skills">
-    <div class="skills__container">
-      <Canvas
-        bind:this={skillsCanvas}
-        width="100%"
-        height="100%"
-        interactive={
-          // Interactive canvas + touch device = annoying scroll behavior
-          browser && !isTouchDevice()
-        }
-        bounded={false}
-        gravity={{ scale: 0.00067 }}
-      >
-        <div class="skills__inner">
-          <ul class="skill-list">
-            {#each skills as skill}
-              <li class="skill-list__item" style="align-self: {getRandomAlignment()};">
-                {#if screenWidth < 768}
-                  <Circle
-                    size={72}
-                    class="skill-circle"
-                    restitution={0.75}
-                  >
-                    {skill}
-                  </Circle>
-                {:else}
-                  <Circle
-                    size={100}
-                    class="skill-circle"
-                    restitution={0.75}
-                  >
-                    {skill}
-                  </Circle>
-                {/if}
-              </li>
-            {/each}
-          </ul>
-          <div class="skills__content">
-            <Rectangle class="skills__left-wall" isStatic />
-            <Rectangle class="skills__right-wall" isStatic />
-            <Rectangle class="skills__bottom-wall" isStatic />
-            <Rectangle style="width: fit-content;" isStatic>
-              <h1 class="skills__heading">Skills</h1>
-            </Rectangle>
-            <Rectangle style="width: fit-content;" isStatic>
-              <p class="skills__description">
-                Through schoolwork, personal and service projects, and professional experience as
-                both a freelancer and as an intern, I've developed actionable skills in many web
-                tools and technologies.
-              </p>
-            </Rectangle>
-          </div>
-        </div>
-      </Canvas>
-    </div>
-  </section>
-  <Projects />
-  <Contact />
+	<section class="about" id="about">
+		<div class="about__heading-wrapper">
+			<div class="about-heading">
+				<h1 class="about-heading__text">
+					<SplitText
+						noOverflow
+						text="Creativity is at my core. I love creating rich digital experiences — from perfecting the smallest details to scaffolding the biggest ideas."
+					/>
+				</h1>
+				<img
+					class="about-heading__image"
+					id="datepicker"
+					src="images/homepage/datepicker.png"
+					alt="date picker"
+				/>
+				<img
+					class="about-heading__image"
+					id="spellingbee"
+					src="images/homepage/spellingbee.png"
+					alt="spelling bee app"
+				/>
+				<img
+					class="about-heading__image"
+					id="chatapp"
+					src="images/homepage/chatapp.png"
+					alt="chat app"
+				/>
+			</div>
+		</div>
+		<div class="about__content">
+			<p>
+				<SplitText
+					noOverflow
+					wordsOnly
+					text="Most recently, I was an intern on the Design Systems team at Chatham Financial. Most notably, I created, added features to, and maintained components in a component library, wrote extensive unit tests, and created a pipeline to automate the process of converting design tokens into code variables."
+				/>
+			</p>
+			<p>
+				<SplitText
+					noOverflow
+					wordsOnly
+					text="Previously, I spent 8 months freelancing on Fiverr, where I became a Level 1 Seller offering web design and development services. I maintained a 5 star rating, crafting quality, bespoke solutions for nearly 50 orders."
+				/>
+			</p>
+			<p>
+				<SplitText
+					noOverflow
+					wordsOnly
+					text="I’m an avid tennis player and fan, and I’m passionate about playing music, including guitar, piano, and drums. I also love learning new things, and I’m always seeking out new knowledge."
+				/>
+			</p>
+		</div>
+	</section>
+	<section class="skills">
+		<div class="skills__container">
+			<Canvas
+				bind:this={skillsCanvas}
+				width="100%"
+				height="100%"
+				interactive={// Interactive canvas + touch device = annoying scroll behavior
+				browser && !isTouchDevice()}
+				bounded={false}
+				gravity={{ scale: 0.00067 }}
+			>
+				<div class="skills__inner">
+					<ul class="skill-list">
+						{#each skills as skill}
+							<li class="skill-list__item" style="align-self: {getRandomAlignment()};">
+								{#if screenWidth < 768}
+									<Circle size={72} class="skill-circle" restitution={0.75}>
+										{skill}
+									</Circle>
+								{:else}
+									<Circle size={100} class="skill-circle" restitution={0.75}>
+										{skill}
+									</Circle>
+								{/if}
+							</li>
+						{/each}
+					</ul>
+					<div class="skills__content">
+						<Rectangle class="skills__left-wall" isStatic />
+						<Rectangle class="skills__right-wall" isStatic />
+						<Rectangle class="skills__bottom-wall" isStatic />
+						<Rectangle style="width: fit-content;" isStatic>
+							<h1 class="skills__heading">Skills</h1>
+						</Rectangle>
+						<Rectangle style="width: fit-content;" isStatic>
+							<p class="skills__description">
+								Through schoolwork, personal and service projects, and professional experience as
+								both a freelancer and as an intern, I've developed actionable skills in many web
+								tools and technologies.
+							</p>
+						</Rectangle>
+					</div>
+				</div>
+			</Canvas>
+		</div>
+	</section>
+	<Projects />
+	<Contact />
 </div>
 
 <style lang="scss">
@@ -469,7 +459,7 @@
 		}
 
 		&__content {
-      padding-bottom: 160px;
+			padding-bottom: 160px;
 			@include v-gap(48px);
 
 			@media screen and (min-width: $screen-md) {
@@ -488,16 +478,16 @@
 		width: 100%;
 		height: 100vh;
 		max-height: 800px;
-    background-color: $primary-dark;
+		background-color: $primary-dark;
 
-    &__container {
-      height: 100%;
-      @include container;
-    }
+		&__container {
+			height: 100%;
+			@include container;
+		}
 
 		&__inner {
 			display: flex;
-      flex-direction: column;
+			flex-direction: column;
 			justify-content: flex-end;
 			height: 100%;
 		}

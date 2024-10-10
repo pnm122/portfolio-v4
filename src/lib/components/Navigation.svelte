@@ -5,44 +5,56 @@
 
 	let open = $state(false)
 
-  function onLinkClicked(e: MouseEvent, link: string) {
-    open = false
-    // GSAP overrides default smooth scrolling, replace it here
-    if(window.location.pathname === '/') {
-      scrollToLink(e, link)
-    }
-  }
+	function onLinkClicked(e: MouseEvent, link: string) {
+		open = false
+		// GSAP overrides default smooth scrolling, replace it here
+		if (window.location.pathname === '/') {
+			scrollToLink(e, link)
+		}
+	}
 </script>
 
-<div class='navigation-container'>
-  <div class="navigation">
-  	<div class="navigation__content">
-  		<nav
-  			class={createClasses({
-  				nav: true,
-  				'nav--expanded': open
-  			})}
-  		>
-  			<ul class="nav__list">
-  				<li class="list-item">
-  					<Button type="link" href="/#case-studies" onClick={(e) => onLinkClicked(e, '#case-studies')} style="text" size="small">
-  						Case studies
-  					</Button>
-  				</li>
-  				<li class="list-item">
-  					<Button type="link" href="/#contact" onClick={(e) => onLinkClicked(e, '#contact')} style="text" size="small">
-  						Contact Me
-  					</Button>
-  				</li>
-  			</ul>
-  		</nav>
-  		<button class="toggle" role="switch" aria-checked={open} onclick={() => (open = !open)}>
-  			<div class="toggle__bar"></div>
-  			<div class="toggle__bar"></div>
-  			<div class="toggle__bar"></div>
-  		</button>
-  	</div>
-  </div>
+<div class="navigation-container">
+	<div class="navigation">
+		<div class="navigation__content">
+			<nav
+				class={createClasses({
+					nav: true,
+					'nav--expanded': open
+				})}
+			>
+				<ul class="nav__list">
+					<li class="list-item">
+						<Button
+							type="link"
+							href="/#case-studies"
+							onClick={(e) => onLinkClicked(e, '#case-studies')}
+							style="text"
+							size="small"
+						>
+							Case studies
+						</Button>
+					</li>
+					<li class="list-item">
+						<Button
+							type="link"
+							href="/#contact"
+							onClick={(e) => onLinkClicked(e, '#contact')}
+							style="text"
+							size="small"
+						>
+							Contact Me
+						</Button>
+					</li>
+				</ul>
+			</nav>
+			<button class="toggle" role="switch" aria-checked={open} onclick={() => (open = !open)}>
+				<div class="toggle__bar"></div>
+				<div class="toggle__bar"></div>
+				<div class="toggle__bar"></div>
+			</button>
+		</div>
+	</div>
 </div>
 
 <style lang="scss">
@@ -52,27 +64,27 @@
 	$nav-items: 2;
 	$nav-item-delay: 0.1s;
 
-  .navigation-container {
-    @include container;
-    // margin: auto; from container doesn't work for fixed elements, need to center it another way
-    left: 50%;
-    transform: translate(-50%);
-    height: 16px;
-    position: fixed;
-    z-index: 999;
-    top: 24px;
-  }
+	.navigation-container {
+		@include container;
+		// margin: auto; from container doesn't work for fixed elements, need to center it another way
+		left: 50%;
+		transform: translate(-50%);
+		height: 16px;
+		position: fixed;
+		z-index: 999;
+		top: 24px;
+	}
 
 	.navigation {
-    position: absolute;
-    right: 0;
+		position: absolute;
+		right: 0;
 		height: 0;
 		display: flex;
 		justify-content: flex-end;
-    /* Force nav to fit content when expanded */
-    max-width: fit-content;
-    /* Width of toggle button */
-    min-width: 56px;
+		/* Force nav to fit content when expanded */
+		max-width: fit-content;
+		/* Width of toggle button */
+		min-width: 56px;
 
 		&__content {
 			width: 0;
@@ -86,7 +98,7 @@
 
 			&:has(.toggle[aria-checked='true']) {
 				width: 100%;
-        padding-left: 8px;
+				padding-left: 8px;
 			}
 
 			&:has(.toggle[aria-checked='false']) {

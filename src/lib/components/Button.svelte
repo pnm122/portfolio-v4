@@ -9,6 +9,7 @@
 		style?: 'primary' | 'text'
 		type?: 'link' | 'button'
 		href?: string
+		newTab?: boolean
 		onClick?: (e: MouseEvent) => void
 		class?: string
 		children: Snippet
@@ -19,6 +20,7 @@
 		style = 'primary',
 		type = 'button',
 		href = '#',
+		newTab = false,
 		onClick,
 		class: className,
 		children
@@ -103,7 +105,14 @@
 		</span>
 	</button>
 {:else}
-	<a bind:this={button} {href} class={classes} onclick={(e) => onClick && onClick(e)}>
+	<a
+		bind:this={button}
+		{href}
+		class={classes}
+		onclick={(e) => onClick && onClick(e)}
+		target={newTab ? '_blank' : undefined}
+		rel={newTab ? 'noopener noreferrer' : undefined}
+	>
 		<div bind:this={buttonBackground} class="button__background">
 			{#if style === 'text'}
 				{@render children()}
