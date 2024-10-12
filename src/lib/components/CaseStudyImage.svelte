@@ -13,14 +13,30 @@
 	$effect(() => {
 		const ctx = gsap.context(() => {
 			const wrapper = document.querySelector(`#${getId()}`)!
-			console.log('id', `#${getId()}`)
-			console.log('wrapper', wrapper)
 			const image = wrapper.querySelector('.image')
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: wrapper,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1
+        }
+      })
 
 			gsap.set(image, {
 				scale: 1.2
 			})
-			gsap.fromTo(
+      tl.from(
+        wrapper,
+        {
+          scale: 0.75,
+          transformOrigin: 'bottom 50vw',
+          duration: 0.25,
+          ease: 'power4.out'
+        },
+        0
+      )
+			tl.fromTo(
 				image,
 				{
 					y: '-10%'
@@ -28,13 +44,9 @@
 				{
 					y: '10%',
 					ease: 'none',
-					scrollTrigger: {
-						trigger: wrapper,
-						start: 'top bottom',
-						end: 'bottom top',
-						scrub: 1
-					}
-				}
+          duration: 1
+				},
+        0
 			)
 		})
 

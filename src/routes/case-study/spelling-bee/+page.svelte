@@ -20,8 +20,8 @@
 			</a>
 			<h1 class="intro__title">Spelling Bee</h1>
 		</div>
-		<div class="has-grid">
-			<p class="intro__description">
+		<div class="intro__description">
+			<p>
 				A replica of the New York Times’ Spelling Bee game with additional features, including hints
 				and leaderboards.
 			</p>
@@ -36,6 +36,26 @@
 		alt="Screenshot of the Spelling Bee game"
 		class="sb-image"
 	/>
+  <section class="section">
+    <h2 class="section__title">Overview</h2>
+    <div class="section__text">
+      <p>
+        Spelling Bee is an improved version of the New York Times’ Spelling Bee game, which I designed and developed from scratch. It includes a replica of the original game, with custom-built solutions for accounts, a points system, in-game hints, game generation, and leaderboards. I was inspired to create the Spelling Bee by the original game both being locked behind a paywall and missing features that I believed would improve the game.
+      </p>
+      <p>
+        In the Spelling Bee, the player tries to find as many words as possible using the provided letters, with the only restriction being that they must use the center letter.
+      </p>
+    </div>
+    <ul class="section__details skill-list">
+      <li class="skill-list__item">Svelte</li>
+      <li class="skill-list__item">MongoDB</li>
+      <li class="skill-list__item">Figma</li>
+      <li class="skill-list__item">Node.js</li>
+      <li class="skill-list__item">Express.js</li>
+      <li class="skill-list__item">TypeScript</li>
+      <li class="skill-list__item">Python</li>
+    </ul>
+  </section>
 </main>
 
 <style lang="scss">
@@ -50,19 +70,11 @@
 		@include container;
 		// place below navigation
 		padding-top: 80px;
+    padding-bottom: 128px;
 		@include v-gap(64px);
 
 		@media screen and (min-width: $screen-md) {
 			@include v-gap(128px);
-		}
-	}
-
-	.has-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-
-		@media screen and (min-width: $screen-lg) {
-			grid-template-columns: repeat(6, minmax(0, 1fr));
 		}
 	}
 
@@ -118,18 +130,22 @@
 		}
 
 		&__description {
-			font-size: $font-size-10;
-			grid-column: 1 / 5;
-			color: $black;
-			view-transition-name: project-description--spelling-bee;
+      @include page-grid;
 
-			@media screen and (min-width: $screen-sm) {
-				font-size: $font-size-16;
-			}
-
-			@media screen and (min-width: $screen-md) {
-				font-size: $font-size-24;
-			}
+      p {
+        font-size: $font-size-10;
+        grid-column: 1 / 9;
+        color: $black;
+        view-transition-name: project-description--spelling-bee;
+  
+        @media screen and (min-width: $screen-sm) {
+          font-size: $font-size-16;
+        }
+  
+        @media screen and (min-width: $screen-md) {
+          font-size: $font-size-24;
+        }
+      }
 		}
 
 		&__buttons {
@@ -137,4 +153,38 @@
 			gap: 16px;
 		}
 	}
+
+  .section {
+    @include page-grid;
+
+    &__title {
+      // font-size: $font-size-12;
+      // font-family: $font-body;
+      // font-weight: 500;
+      // line-height: 1;
+      font-size: $font-size-16;
+      text-transform: lowercase;
+      grid-column: 1 / 3;
+    }
+
+    &__text {
+      @include v-gap(1em);
+      grid-column: 3 / 9;
+    }
+
+    &__details {
+      grid-column: 10 / 13;
+    }
+  }
+
+  .skill-list {
+    @include v-gap(0px);
+    margin: 0;
+    padding: 0;
+
+    &__item {
+      font-size: $font-size-6;
+      display: block;
+    }
+  }
 </style>
