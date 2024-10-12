@@ -31,11 +31,13 @@
 			<Button type="link" href="https://www.thebetterspellingbee.com" newTab>View live site</Button>
 		</div>
 	</section>
-	<CaseStudyImage
-		src="/images/homepage/project-covers/spelling-bee.png"
-		alt="Screenshot of the Spelling Bee game"
-		class="sb-image"
-	/>
+	<section>
+	  <CaseStudyImage
+  		src="/images/homepage/project-covers/spelling-bee.png"
+  		alt="Screenshot of the Spelling Bee game"
+  		class="case-study-image--full-width"
+  	/>
+	</section>
   <section class="section">
     <h2 class="section__title">Overview</h2>
     <div class="section__text">
@@ -56,14 +58,69 @@
       <li class="skill-list__item">Python</li>
     </ul>
   </section>
+  <section class="section">
+    <CaseStudyImage
+  		src="/images/homepage/project-covers/spelling-bee.png"
+  		alt="First image"
+  		class="case-study-image--small-first"
+  	/>
+    <CaseStudyImage
+  		src="/images/homepage/project-covers/spelling-bee.png"
+  		alt="Second image"
+  		class="case-study-image--large-last"
+  	/>
+  </section>
+  <section class="section">
+    <h2 class="section__title">Process</h2>
+    <div class="section__text">
+      <p>
+        I started creating the Spelling Bee by outlining what features I wanted to keep from the original, and what I believed needed improvement. Following this, I created layout mockups to figure out how to organize the content I wanted on the page. The layout needed to include the main game, header, leaderboard, found words list, and more, while remaining mobile-friendly.
+      </p>
+      <p>
+        I then decided on the style of the game, choosing typography and colors, and molding a visual identity. I aimed to create a design that was light and fun, but also soft and smooth. I chose bright accent colors with soft supporting colors, a friendly yet readable and inobtrusive font, and crafted micro-interactions and animations to build a full, exciting user experience.
+      </p>
+    </div>
+  </section>
+  <section class="section">
+    <CaseStudyImage
+  		src="/images/homepage/project-covers/spelling-bee.png"
+  		alt="Third image"
+  		class="case-study-image--large-first"
+  	/>
+    <CaseStudyImage
+  		src="/images/homepage/project-covers/spelling-bee.png"
+  		alt="Fourth image"
+  		class="case-study-image--small-last"
+  	/>
+  </section>
 </main>
 
 <style lang="scss">
 	@import '$scss/variables';
 	@import '$scss/mixins';
 
-	:global(.sb-image) {
+	:global(.case-study-image--full-width) {
 		width: 100%;
+	}
+
+  :global(.case-study-image--small-first) {
+    @include grid-column(1, 5);
+		height: 100%;
+	}
+
+  :global(.case-study-image--large-last) {
+    @include grid-column(5, 13);
+		height: 100%;
+	}
+
+  :global(.case-study-image--large-first) {
+    @include grid-column(1, 9);
+		height: 100%;
+	}
+
+  :global(.case-study-image--small-last) {
+    @include grid-column(9, 13);
+		height: 100%;
 	}
 
 	.case-study {
@@ -158,22 +215,29 @@
     @include page-grid;
 
     &__title {
-      // font-size: $font-size-12;
-      // font-family: $font-body;
-      // font-weight: 500;
-      // line-height: 1;
       font-size: $font-size-16;
       text-transform: lowercase;
-      grid-column: 1 / 3;
+
+      @media screen and (min-width: $screen-lg) {
+        grid-column: 1 / 3;
+      }
     }
 
     &__text {
       @include v-gap(1em);
-      grid-column: 3 / 9;
+      max-width: 600px;
+      font-size: $font-size-9;
+
+      @media screen and (min-width: $screen-lg) {
+        max-width: unset;
+        grid-column: 3 / 9;
+      }
     }
 
     &__details {
-      grid-column: 10 / 13;
+      @media screen and (min-width: $screen-lg) {
+        grid-column: 10 / 13;
+      }
     }
   }
 
@@ -183,7 +247,7 @@
     padding: 0;
 
     &__item {
-      font-size: $font-size-6;
+      font-size: $font-size-7;
       display: block;
     }
   }

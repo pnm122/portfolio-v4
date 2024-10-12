@@ -89,3 +89,10 @@
     grid-template-columns: repeat(12, minmax(0, 1fr));
   }
 }
+
+@mixin grid-column($start, $end) {
+  @media screen and (min-width: $screen-lg) {
+    grid-column-start: $start;
+    grid-column-end: $end;
+  }
+}

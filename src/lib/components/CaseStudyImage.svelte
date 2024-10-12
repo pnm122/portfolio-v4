@@ -30,7 +30,7 @@
         wrapper,
         {
           scale: 0.75,
-          transformOrigin: 'bottom 50vw',
+          transformOrigin: 'bottom center',
           duration: 0.25,
           ease: 'power4.out'
         },
