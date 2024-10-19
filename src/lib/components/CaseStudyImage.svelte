@@ -31,7 +31,7 @@
         {
           scale: 0.75,
           transformOrigin: 'bottom center',
-          duration: 0.25,
+          duration: 0.4,
           ease: 'power4.out'
         },
         0
