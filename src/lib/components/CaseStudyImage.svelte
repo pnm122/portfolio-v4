@@ -23,9 +23,6 @@
         }
       })
 
-			gsap.set(image, {
-				scale: 1.2
-			})
       tl.from(
         wrapper,
         {
@@ -39,10 +36,10 @@
 			tl.fromTo(
 				image,
 				{
-					y: '-10%'
+					y: '-32px'
 				},
 				{
-					y: '10%',
+					y: '32px',
 					ease: 'none',
           duration: 1
 				},
@@ -56,7 +53,7 @@
 	})
 
 	function getId() {
-		return `${src}_${alt}`.replaceAll(/[/.# ]/g, '').toLowerCase()
+		return `${src}_${alt.slice(0, 25)}`.replaceAll(/[^a-zA-Z]/g, '').toLowerCase()
 	}
 </script>
 

@@ -81,11 +81,10 @@
 }
 
 @mixin page-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
+  @include v-gap(16px);
 
   @media screen and (min-width: $screen-lg) {
+    display: grid;
     grid-template-columns: repeat(12, minmax(0, 1fr));
   }
 }
