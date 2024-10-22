@@ -68,6 +68,8 @@
 </div>
 
 <style lang="scss">
+  @import '$scss/case-study';
+
 	.image-wrapper {
 		border-radius: 8px;
 		overflow: hidden;

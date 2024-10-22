@@ -79,19 +79,3 @@
 	width: min(calc(100% - 48px), 1440px);
 	margin: auto;
 }
-
-@mixin page-grid {
-  @include v-gap(16px);
-
-  @media screen and (min-width: $screen-lg) {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-  }
-}
-
-@mixin grid-column($start, $end) {
-  @media screen and (min-width: $screen-lg) {
-    grid-column-start: $start;
-    grid-column-end: $end;
-  }
-}
