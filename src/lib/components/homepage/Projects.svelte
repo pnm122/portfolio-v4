@@ -143,7 +143,7 @@
 						// Faster scroll ==> more cropping
 						const clamp = gsap.utils.clamp(0, 100)
 						// Add negative offset so small scroll speeds don't affect cropping (which can be somewhat jarring)
-						const scrollSpeed = Math.abs(getVelocity()) / 8000 - 0.1
+						const scrollSpeed = Math.abs(getVelocity()) / 8000 - 0.4
 						const padding = clamp(scrollSpeed * 100)
 						if (padding > paddingProxy.padding) {
 							paddingProxy.padding = padding
