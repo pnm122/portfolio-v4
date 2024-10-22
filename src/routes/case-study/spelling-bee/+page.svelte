@@ -289,7 +289,6 @@
 			font-size: $font-size-32;
 			line-height: 1;
 			text-transform: lowercase;
-			view-transition-name: project-title--spelling-bee;
 
 			@media screen and (min-width: $screen-sm) {
 				font-size: $font-size-60;
@@ -311,7 +310,6 @@
         font-size: $font-size-10;
         grid-column: 1 / 9;
         color: $black;
-        view-transition-name: project-description--spelling-bee;
   
         @media screen and (min-width: $screen-sm) {
           font-size: $font-size-16;

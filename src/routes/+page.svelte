@@ -10,7 +10,6 @@
 	import isTouchDevice from '$utils/isTouchDevice'
 	import scrollToLink from '$utils/scrollToLink'
 	import gsap from 'gsap'
-	import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 	import { Canvas, Rectangle, Circle } from 'svelte-physics-renderer'
 
 	const skills = [
@@ -37,7 +36,10 @@
 		'GitLab CI',
 		'Figma',
 		'Adobe XD',
-		'OpenGL'
+		'OpenGL',
+    'Accessibility',
+    'Responsive Design',
+    'REST'
 	]
 
 	let skillsCanvas: Canvas | undefined = $state()
@@ -304,14 +306,14 @@
 			>
 				<div class="skills__inner">
 					<ul class="skill-list">
-						{#each skills as skill}
+						{#each skills.reverse() as skill}
 							<li class="skill-list__item" style="align-self: {getRandomAlignment()};">
 								{#if screenWidth < 768}
-									<Circle size={72} class="skill-circle" restitution={0.75}>
+									<Circle size={76} class="skill-circle" restitution={0.75}>
 										{skill}
 									</Circle>
 								{:else}
-									<Circle size={100} class="skill-circle" restitution={0.75}>
+									<Circle size={108} class="skill-circle" restitution={0.75}>
 										{skill}
 									</Circle>
 								{/if}
@@ -328,8 +330,8 @@
 						<Rectangle style="width: fit-content;" isStatic>
 							<p class="skills__description">
 								Through schoolwork, personal and service projects, and professional experience as
-								both a freelancer and as an intern, I've developed actionable skills in many web
-								tools and technologies.
+								both a freelancer and as an intern, I've developed actionable skills with many web
+								tools, technologies, and concepts.
 							</p>
 						</Rectangle>
 					</div>
@@ -557,7 +559,12 @@
 					background-color: $primary-extra-dark;
 					color: $white;
 					pointer-events: none;
-					font-size: $font-size-6;
+					font-size: $font-size-5-5;
+          text-align: center;
+          -webkit-user-select: none; /* Safari */        
+          -moz-user-select: none; /* Firefox */
+          user-select: none;
+          line-height: 1.15;
 					@include centered;
 
 					@media screen and (min-width: $screen-md) {
