@@ -1,6 +1,7 @@
 <script lang="ts">
 	import CaseStudyImage from '$components/CaseStudyImage.svelte'
 	import CaseStudyIntro from '$components/CaseStudyIntro.svelte'
+	import NextCaseStudyScroller from '$components/NextCaseStudyScroller.svelte'
 </script>
 
 <main class="case-study">
@@ -242,6 +243,10 @@
 		</div>
 	</section>
 </main>
+<NextCaseStudyScroller
+  slug='chatham-financial'
+  title='Chatham Financial'
+/>
 
 <style lang="scss">
 	@import '$scss/case-study';
