@@ -1,3 +1,4 @@
+import { pushState } from '$app/navigation'
 import gsap from 'gsap'
 
 export default function scrollToLink(e: MouseEvent, link: string) {
@@ -5,7 +6,7 @@ export default function scrollToLink(e: MouseEvent, link: string) {
 
 	const newURL = new URL(window.location.href)
 	newURL.hash = link
-	history.pushState({}, '', newURL)
+	pushState(newURL, {})
 
 	gsap.to(window, {
 		scrollTo: {
