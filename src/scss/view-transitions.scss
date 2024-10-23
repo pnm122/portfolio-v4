@@ -1,0 +1,103 @@
+#to-case-study::view-transition-old(root) {
+	animation: downLeftOut $transition-duration-12 $transition-timing forwards;
+}
+
+#to-case-study::view-transition-new(root) {
+	animation: downLeftIn $transition-duration-12 $transition-timing forwards;
+}
+
+#to-home::view-transition-old(root) {
+	animation: upRightOut $transition-duration-12 $transition-timing forwards;
+}
+
+#to-home::view-transition-new(root) {
+	animation: upRightIn $transition-duration-12 $transition-timing forwards;
+}
+
+#between-case-studies-forward::view-transition-old(root) {
+	animation: upOut $transition-duration-12 $transition-timing forwards;
+}
+
+#between-case-studies-forward::view-transition-new(root) {
+	animation: upIn $transition-duration-12 $transition-timing forwards;
+}
+
+#between-case-studies-backward::view-transition-old(root) {
+	animation: downOut $transition-duration-12 $transition-timing forwards;
+}
+
+#between-case-studies-backward::view-transition-new(root) {
+	animation: downIn $transition-duration-12 $transition-timing forwards;
+}
+
+@keyframes downLeftOut {
+	to {
+		transform: translate(-100%, 100%) scale(0.5);
+	}
+}
+
+@keyframes downLeftIn {
+	from {
+		transform: translate(100%, -100%) scale(0.5);
+	}
+}
+
+@keyframes upRightOut {
+	to {
+		transform: translate(100%, -100%) scale(0.5);
+	}
+}
+
+@keyframes upRightIn {
+	from {
+		transform: translate(-100%, 100%) scale(0.5);
+	}
+}
+
+@keyframes upOut {
+	to {
+		transform: translateY(-100%);
+	}
+}
+
+@keyframes upIn {
+	from {
+		transform: translateY(100%);
+	}
+}
+
+@keyframes downOut {
+	to {
+		transform: translateY(100%);
+	}
+}
+
+@keyframes downIn {
+	from {
+		transform: translateY(-100%);
+	}
+}
+
+$num-project-buttons: 4;
+
+@for $i from 0 through $num-project-buttons - 1 {
+  #{'::view-transition-old(project-button--' + $i + ')'} {
+    animation: buttonout $transition-duration-4 #{$i * 50}ms cubic-bezier(.57,-0.48,.94,.25) forwards;
+  }
+
+  #{'::view-transition-new(project-button--' + $i + ')'} {
+    // Must start offset so that it doesn't appear on screen before the animation happens
+    transform: translateY(200px);
+    // Reverse the animation in reverse order
+    // Add a little delay to make it look more in sync with full page animation
+    animation: buttonout $transition-duration-4 #{(($num-project-buttons - $i) * 50) + 250}ms reverse cubic-bezier(.57,-0.48,.94,.25) forwards;
+  }
+}
+
+@keyframes buttonout {
+  from {
+    transform: translate(0);
+  } to {
+		transform: translateY(200px);
+	}
+}
