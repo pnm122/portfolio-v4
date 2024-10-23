@@ -1,47 +1,43 @@
 <script lang="ts">
-  import Button from "./Button.svelte"
+	import Button from './Button.svelte'
 
-  interface Props {
-    title: string
-    description: string
-    source?: string
-    liveSite?: string
-  }
+	interface Props {
+		title: string
+		description: string
+		smallTitle?: boolean
+		source?: string
+		liveSite?: string
+	}
 
-  const {
-    title,
-    description,
-    source,
-    liveSite
-  }: Props = $props()
-
+	const { title, description, smallTitle, source, liveSite }: Props = $props()
 </script>
+
 <section class="intro">
-  <div>
-    <a class="intro__case-studies" href="/#case-studies">
-      <h2>Case studies</h2>
-    </a>
-    <h1 class="intro__title">{title}</h1>
-  </div>
-  <div class="intro__description">
-    <p>{description}</p>
-  </div>
-  {#if source || liveSite}
-    <div class="intro__buttons">
-      {#if source}
-        <Button type="link" href={source} newTab>View source</Button>
-      {/if}
-      {#if liveSite}
-        <Button type="link" href={liveSite} newTab>View live site</Button>
-      {/if}
-    </div>
-  {/if}
+	<div>
+		<a class="intro__case-studies" href="/#case-studies">
+			<h2>Case studies</h2>
+		</a>
+		<h1 class="intro__title{smallTitle ? ' intro__title--small' : ''}">{title}</h1>
+	</div>
+	<div class="intro__description">
+		<p>{description}</p>
+	</div>
+	{#if source || liveSite}
+		<div class="intro__buttons">
+			{#if source}
+				<Button type="link" href={source} newTab>View source</Button>
+			{/if}
+			{#if liveSite}
+				<Button type="link" href={liveSite} newTab>View live site</Button>
+			{/if}
+		</div>
+	{/if}
 </section>
 
 <style lang="scss">
-  @import '$scss/case-study';
+	@import '$scss/case-study';
 
-  .intro {
+	.intro {
 		@include v-gap(12px);
 
 		@media screen and (min-width: $screen-sm) {
@@ -78,35 +74,51 @@
 			line-height: 1;
 			text-transform: lowercase;
 
-			@media screen and (min-width: $screen-sm) {
-				font-size: $font-size-60;
+			&:not(.intro__title--small) {
+				@media screen and (min-width: $screen-sm) {
+					font-size: $font-size-60;
+				}
+
+				@media screen and (min-width: $screen-md) {
+					font-size: $font-size-80;
+				}
+
+				@media screen and (min-width: $screen-xl) {
+					font-size: $font-size-128;
+				}
 			}
 
-			@media screen and (min-width: $screen-md) {
-				font-size: $font-size-80;
-			}
+			&--small {
+				@media screen and (min-width: $screen-sm) {
+					font-size: $font-size-40;
+				}
 
-			@media screen and (min-width: $screen-xl) {
-				font-size: $font-size-128;
+				@media screen and (min-width: $screen-md) {
+					font-size: $font-size-60;
+				}
+
+				@media screen and (min-width: $screen-xl) {
+					font-size: $font-size-96;
+				}
 			}
 		}
 
 		&__description {
-      @include page-grid;
+			@include page-grid;
 
-      p {
-        font-size: $font-size-10;
-        grid-column: 1 / 9;
-        color: $black;
-  
-        @media screen and (min-width: $screen-sm) {
-          font-size: $font-size-16;
-        }
-  
-        @media screen and (min-width: $screen-md) {
-          font-size: $font-size-24;
-        }
-      }
+			p {
+				font-size: $font-size-10;
+				grid-column: 1 / 9;
+				color: $black;
+
+				@media screen and (min-width: $screen-sm) {
+					font-size: $font-size-16;
+				}
+
+				@media screen and (min-width: $screen-md) {
+					font-size: $font-size-24;
+				}
+			}
 		}
 
 		&__buttons {

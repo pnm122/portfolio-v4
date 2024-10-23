@@ -42,26 +42,25 @@ h6 {
 }
 
 ::view-transition-old(root) {
-  animation: out $transition-duration-12 $transition-timing forwards;
+	animation: out $transition-duration-12 $transition-timing forwards;
 }
 
 ::view-transition-new(root) {
-  animation: in $transition-duration-12 $transition-timing forwards;
+	animation: in $transition-duration-12 $transition-timing forwards;
 }
 
 @keyframes out {
-  to {
-    // filter: blur(16px);
-    // opacity: 0;
-    transform: translate(-100%, 100%) scale(0.5);
-  }
+	to {
+		// filter: blur(16px);
+		// opacity: 0;
+		transform: translate(-100%, 100%) scale(0.5);
+	}
 }
 
-
 @keyframes in {
-  from {
-    // filter: blur(16px);
-    // opacity: 0;
-    transform: translate(100%, -100%) scale(0.5);
-  }
+	from {
+		// filter: blur(16px);
+		// opacity: 0;
+		transform: translate(100%, -100%) scale(0.5);
+	}
 }

@@ -37,9 +37,9 @@
 		'Figma',
 		'Adobe XD',
 		'OpenGL',
-    'Accessibility',
-    'Responsive Design',
-    'REST'
+		'Accessibility',
+		'Responsive Design',
+		'REST'
 	]
 
 	let skillsCanvas: Canvas | undefined = $state()
@@ -560,11 +560,11 @@
 					color: $white;
 					pointer-events: none;
 					font-size: $font-size-5-5;
-          text-align: center;
-          -webkit-user-select: none; /* Safari */        
-          -moz-user-select: none; /* Firefox */
-          user-select: none;
-          line-height: 1.15;
+					text-align: center;
+					-webkit-user-select: none; /* Safari */
+					-moz-user-select: none; /* Firefox */
+					user-select: none;
+					line-height: 1.15;
 					@include centered;
 
 					@media screen and (min-width: $screen-md) {

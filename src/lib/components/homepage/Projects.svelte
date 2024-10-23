@@ -27,7 +27,16 @@
 				'A collection of projects from working as an intern at Chatham Financial, primarily focused on improving their design system.',
 			imgSrc: 'chatham-financial.png',
 			slug: 'chatham-financial',
-			skills: ['Stencil', 'SCSS', 'Jasmine', 'Figma', 'Gitlab CI', 'Git', 'TypeScript', 'Accessibility']
+			skills: [
+				'Stencil',
+				'SCSS',
+				'Jasmine',
+				'Figma',
+				'Gitlab CI',
+				'Git',
+				'TypeScript',
+				'Accessibility'
+			]
 		},
 		{
 			name: 'Club Tennis',
@@ -375,15 +384,10 @@
 				href={`/case-study/${slug}`}
 				onkeydown={onProjectLinkKeydown}
 			>
-				<h1
-					class="project__title"
-					id={`project__title--${name}`}
-				>
+				<h1 class="project__title" id={`project__title--${name}`}>
 					{name}
 				</h1>
-				<p
-					class="project__description"
-				>
+				<p class="project__description">
 					{description}
 				</p>
 				<ul class="project__skills">
