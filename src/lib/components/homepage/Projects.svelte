@@ -412,6 +412,7 @@
 				// Also need on focus for tabbing
 				() => onButtonClickOrFocus(i)}
 				onfocus={() => onButtonClickOrFocus(i)}
+        style="view-transition-name: project-button--{i}"
 			>
 				<img src={`images/homepage/project-covers/${imgSrc}`} alt={name} class="button-image" />
 			</button>
