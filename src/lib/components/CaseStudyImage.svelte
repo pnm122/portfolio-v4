@@ -7,10 +7,12 @@
 		src: string
 		alt: string
     placement: 'small-first' | 'small-last' | 'large-first' | 'large-last' | 'half-first' | 'half-last' | 'half-center' | 'full-width'
+    // Must set an explicit aspect ratio to get rid of layout shifting (which can break GSAP animations, also bad UX)
+    aspectRatio: string
     contain?: boolean
 	}
 
-	const { src, alt, placement, contain = false }: Props = $props()
+	const { src, alt, placement, aspectRatio, contain = false }: Props = $props()
 
 	$effect(() => {
 		// A little buggy when testing on my phone, just disable for now
@@ -64,6 +66,7 @@
 
 <div
 	class="case-study-image case-study-image--{placement}"
+  style="aspect-ratio: {aspectRatio}"
 	id={getId()}
 >
 	<img class={createClasses({
@@ -78,7 +81,6 @@
 	.case-study-image {
 		border-radius: 8px;
 		overflow: hidden;
-    height: 100%;
 
     &--full-width {
       width: 100%;

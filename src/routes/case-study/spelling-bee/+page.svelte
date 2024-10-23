@@ -16,6 +16,7 @@
 			src="/images/spelling-bee/gameplay.png"
 			alt="Screenshot of the Spelling Bee game"
 			placement="full-width"
+      aspectRatio="2"
 		/>
 	</section>
 	<section class="section">
@@ -48,11 +49,13 @@
 			src="/images/spelling-bee/game-complete.png"
 			alt="A completed Spelling Bee puzzle"
 			placement="small-first"
+      aspectRatio="1"
 		/>
 		<CaseStudyImage
 			src="/images/spelling-bee/pangram.png"
 			alt="A screenshot of the animation that appears when the user finds a pangram"
 			placement="large-last"
+      aspectRatio="16/9"
 		/>
 	</section>
 	<section class="section">
@@ -82,11 +85,13 @@
 			src="/images/spelling-bee/wireframe.png"
 			alt="Initial wireframes for the Spelling Bee layout"
 			placement="full-width"
+      aspectRatio="1440/1024"
 		/>
 		<CaseStudyImage
 			src="/images/spelling-bee/color-palette.png"
 			alt="The Spelling Bee color palette, with light and dark modes"
 			placement="full-width"
+      aspectRatio="1088/666"
 		/>
 	</section>
 	<section class="section">
@@ -130,11 +135,13 @@
 			src="/images/spelling-bee/help-text.png"
 			alt="A screenshot of the warning that appears when users click the hint button. It contains a description of hints, 'cancel' and 'use hint' buttons, as well as a toggle to not show the warning again"
 			placement="half-first"
+      aspectRatio="740/791"
 		/>
 		<CaseStudyImage
 			src="/images/spelling-bee/hint-letters.png"
 			alt="A screenshot the Spelling Bee game, where the user has taken a hint and the ghost letters are visible"
 			placement="half-last"
+      aspectRatio="1492/925"
 		/>
 	</section>
 	<section class="section">
@@ -206,21 +213,25 @@
 			src="/images/spelling-bee/light-and-dark.png"
 			alt="A screenshot of the Spelling Bee game, split to show both the light and dark themes"
 			placement="full-width"
+      aspectRatio="2"
 		/>
 		<CaseStudyImage
 			src="/images/spelling-bee/word-previews.png"
 			alt="An example of word previews for a Spelling Bee puzzle. Each preview has one gray box for each letter, with a yellow box where the center letter appears. One pangram is visible, distinguishable by its letters being purple instead of gray"
 			placement="large-first"
+      aspectRatio="718/678"
 		/>
 		<CaseStudyImage
 			src="/images/spelling-bee/mobile.png"
 			alt="A screenshot of the Spelling Bee game on a mobile screen"
 			placement="small-last"
+      aspectRatio="449/868"
 		/>
 		<CaseStudyImage
 			src="/images/spelling-bee/profile.png"
 			alt="An example of a user's profile. It shows the user's name, rank, points, words found, pangrams found, puzzles played, puzzles solved, and their longest word found"
 			placement="full-width"
+      aspectRatio="1424/793"
 		/>
 	</section>
 	<section class="section">

@@ -14,6 +14,7 @@ import CaseStudyIntro from '$components/CaseStudyIntro.svelte'
       src="/images/chatham-financial/icons.png"
       alt="A grid of icons relating to projects I worked on at Chatham Financial"
       placement="full-width"
+      aspectRatio="1280/1088"
     />
   </section>
 	<section class="section">
@@ -91,13 +92,15 @@ import CaseStudyIntro from '$components/CaseStudyIntro.svelte'
     <CaseStudyImage
       src="/images/chatham-financial/date-range-picker-keyboard.gif"
       alt="Date range picker keyboard navigation demonstration"
-      placement="large-first"
+      placement="half-first"
+      aspectRatio="512/391"
       contain
     />
     <CaseStudyImage
       src="/images/chatham-financial/date-picker-keyboard.gif"
       alt="Date picker keyboard navigation demonstration"
       placement="small-last"
+      aspectRatio="334/402"
       contain
     />
   </section>
@@ -121,6 +124,7 @@ import CaseStudyIntro from '$components/CaseStudyIntro.svelte'
       src="/images/chatham-financial/date-range-picker-changes.png"
       alt="Date range picker design changes"
       placement="full-width"
+      aspectRatio="1144/432"
     />
   </section>
 	<section class="section">
@@ -172,6 +176,7 @@ import CaseStudyIntro from '$components/CaseStudyIntro.svelte'
       src="/images/chatham-financial/pipeline-diagram.png"
       alt="Diagram of pipeline explained in previous paragraph"
       placement="half-center"
+      aspectRatio="546/730"
     />
   </section>
   <section class="section">
