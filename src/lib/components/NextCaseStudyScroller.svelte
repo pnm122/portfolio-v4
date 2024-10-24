@@ -53,7 +53,7 @@
       }, {
         y: 50,
         rotate: 8,
-        scale: 3.25,
+        scale: 2.75,
         duration: 1,
         ease: 'sine.in'
       }, 0)
@@ -120,8 +120,8 @@
       z-index: -1;
       right: 10vw;
       bottom: 30vh;
-      width: 35vw;
-      height: 35vh;
+      width: 45vw;
+      height: 45vh;
       object-fit: contain;
       filter: drop-shadow(3px 5px 8px rgba(0, 0, 0, 0.13));
       transform: rotate(12deg);
