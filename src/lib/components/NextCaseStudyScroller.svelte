@@ -6,11 +6,13 @@
   interface Props {
     slug: string
     title: string
+    image: string
   }
 
   const {
     slug,
-    title
+    title,
+    image
   }: Props = $props()
 
   let progress = $state(0)
@@ -18,9 +20,9 @@
   $effect(() => {
     let navigation = 0
     const ctx = gsap.context(() => {
-      const container = document.querySelector('.next')
-      const inner = document.querySelector('.next__inner')
-      const progressbar = document.querySelector('.progress')
+      const container = document.querySelector('.next')!
+      const progressbar = container.querySelector('.progress')
+      const image = container.querySelector('.image')
       const updateProgress = gsap.quickTo('.progress__bar', 'width', {
         duration: 0.5,
         ease: 'power4.out'
@@ -32,7 +34,7 @@
           start: 'top top',
           end: '+=1200px',
           pin: true,
-          scrub: true,
+          scrub: 1,
           onUpdate: (self) => {
             updateProgress(self.progress * progressbar!.clientWidth)
 
@@ -44,6 +46,17 @@
           }
         },
       })
+
+      tl.fromTo(image, {
+        y: -50,
+        rotate: -8
+      }, {
+        y: 50,
+        rotate: 8,
+        scale: 3.25,
+        duration: 1,
+        ease: 'sine.in'
+      }, 0)
     })
 
     return () => {
@@ -57,6 +70,10 @@
 
 <div class='next'>
   <div class='next__inner'>
+    <img
+      class='image'
+      src={image}
+      alt='{title} preview image 1'>
     <div class='text'>
       <h2 class='text__up-next'>Up next</h2>
       <div class='above-progress'>
@@ -88,11 +105,27 @@
   @import '$scss/variables';
 
   .next {
-    @include container;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    overflow: hidden;
+
+    &__inner {
+      @include container;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .image {
+      position: absolute;
+      z-index: -1;
+      right: 10vw;
+      bottom: 30vh;
+      width: 35vw;
+      height: 35vh;
+      object-fit: contain;
+      filter: drop-shadow(3px 5px 8px rgba(0, 0, 0, 0.13));
+      transform: rotate(12deg);
+    }
 
     .text {
       @include v-gap(0px);

@@ -257,6 +257,7 @@
 <NextCaseStudyScroller
   slug='chatham-financial'
   title='Chatham Financial'
+  image='/images/chatham-financial/icons.png'
 />
 
 <style lang="scss">
