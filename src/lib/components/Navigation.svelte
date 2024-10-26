@@ -8,7 +8,7 @@
 	function onLinkClicked(e: MouseEvent, link: string) {
 		open = false
 		// GSAP overrides default smooth scrolling, replace it here
-		if (window.location.pathname === '/') {
+		if (window.location.pathname === '/' && link.includes('#')) {
 			scrollToLink(e, link)
 		}
 	}
@@ -24,6 +24,17 @@
 				})}
 			>
 				<ul class="nav__list">
+          <li class="list-item">
+						<Button
+							type="link"
+							href="/"
+							onClick={(e) => onLinkClicked(e, '/')}
+							style="text"
+							size="small"
+						>
+							Home
+						</Button>
+					</li>
 					<li class="list-item">
 						<Button
 							type="link"
@@ -61,7 +72,7 @@
 	@import '$scss/variables';
 	@import '$scss/mixins';
 
-	$nav-items: 2;
+	$nav-items: 3;
 	$nav-item-delay: 0.1s;
 
 	.navigation-container {
