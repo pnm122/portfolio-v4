@@ -10,8 +10,28 @@
 		source="https://github.com/pnm122/pittclubtennis"
 		liveSite="https://clubtennisatpitt.org/"
 	/>
+  <section>
+		<CaseStudyImage
+			src="/images/club-tennis/cover.png"
+			alt="Hero section animation"
+			placement="full-width"
+			aspectRatio="1512/1152"
+		/>
+	</section>
 	<section class="section">
 		<h2 class="section__title">Overview</h2>
+		<div class="section__text">
+			<p>
+				I created this website for the Club Tennis team at the University of Pittsburgh. It features
+				5 public-facing pages: a homepage, about, fundraisers, tournaments, and members. It also has
+				a fully-custom admin panel, allowing Club Tennis board members to easily edit data
+				throughout the website. I created the public website in mid-2023, and then added the admin
+				panel in mid-2024.
+			</p>
+		</div>
+	</section>
+	<section class="section">
+		<h2 class="section__title">Motivation</h2>
 		<div class="section__text">
 			<p>
 				Like many other students, looking for clubs to join was one of the first things I did when I
@@ -31,14 +51,6 @@
 			</p>
 		</div>
 	</section>
-  <section class="section">
-    <CaseStudyImage
-      src="/images/club-tennis/hero-section.png"
-      alt="Hero section animation"
-      placement="full-width"
-      aspectRatio="1150/625"
-    />
-  </section>
 	<section class="section">
 		<div class="section__title">
 			<h2>Process</h2>
@@ -90,10 +102,13 @@
 				goal was generally to keep the layout simple and flexible enough to look great on both
 				mobile and desktop. After several iterations, I ultimately settled on a design that
 				incorporates the University of Pittsburgh colors with a style inspired by other sports-based
-				websites. I used a font I found on the [https://cincinnatiopen.com/]Cincinnati Open tennis
-				tournament website, and designed quick, snappy animations to enhance the “sporty” aesthetic.
-				At this point, I also needed to create the hero image from scratch. The hero image comes
-				from an action shot taken at a tournament, with the background removed and effects added.
+				websites. I used a font I found on the <a
+					href="https://cincinnatiopen.com/"
+					rel="noopener noreferrer"
+					target="_blank">Cincinnati Open</a
+				> tennis tournament website, and designed quick, snappy animations to enhance the “sporty” aesthetic.
+				At this point, I also needed to create the hero image from scratch. The hero image comes from
+				an action shot taken at a tournament, with the background removed and effects added.
 			</p>
 			<p>
 				Once I had created both desktop and mobile designs and ideated animations, I started
@@ -116,14 +131,14 @@
 			</p>
 		</div>
 	</section>
-  <section class="section">
-    <CaseStudyImage
-      src="/images/club-tennis/hero-animation.gif"
-      alt="Hero section animation"
-      placement="large-first"
-      aspectRatio="800/450"
-    />
-  </section>
+	<section class="section">
+		<CaseStudyImage
+			src="/images/club-tennis/hero-animation.gif"
+			alt="Hero section animation"
+			placement="large-first"
+			aspectRatio="800/450"
+		/>
+	</section>
 	<section class="section">
 		<div class="section__title">
 			<h2>Process</h2>

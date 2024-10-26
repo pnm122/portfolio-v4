@@ -74,7 +74,7 @@
 		gsap.set(viewProject, { visibility: 'hidden', scale: 0 })
 		const callback = (e: MouseEvent) => {
 			xTo(e.clientX - 6)
-			yTo(e.clientY - (0.67 * height))
+			yTo(e.clientY - 0.67 * height)
 			const withinProjects = (e.target as HTMLElement).closest('.project')
 			if (withinProjects && !showing) {
 				showViewProject()
@@ -429,7 +429,7 @@
 		left: 0;
 		z-index: 1;
 		background-color: $accent-dark;
-    color: $white;
+		color: $white;
 		padding-inline: 10px;
 		height: 32px;
 		border-radius: 999px;
@@ -447,9 +447,9 @@
 		svg {
 			@include force-size(1.25rem, 1.25rem);
 
-      path {
-        fill: currentColor;
-      }
+			path {
+				fill: currentColor;
+			}
 		}
 	}
 

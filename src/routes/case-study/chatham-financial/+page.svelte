@@ -236,7 +236,7 @@
 <NextCaseStudyScroller
 	slug="club-tennis"
 	title="Club Tennis"
-	image="/images/club-tennis/hero-section.png"
+	image="/images/club-tennis/cover.png"
 />
 
 <style lang="scss">
