@@ -73,8 +73,8 @@
 		const { height } = viewProject.getBoundingClientRect()
 		gsap.set(viewProject, { visibility: 'hidden', scale: 0 })
 		const callback = (e: MouseEvent) => {
-			xTo(e.clientX - 12)
-			yTo(e.clientY - height / 2)
+			xTo(e.clientX - 6)
+			yTo(e.clientY - (0.67 * height))
 			const withinProjects = (e.target as HTMLElement).closest('.project')
 			if (withinProjects && !showing) {
 				showViewProject()
@@ -412,7 +412,7 @@
 				// Also need on focus for tabbing
 				() => onButtonClickOrFocus(i)}
 				onfocus={() => onButtonClickOrFocus(i)}
-        style="view-transition-name: project-button--{i}"
+				style="view-transition-name: project-button--{i}"
 			>
 				<img src={`images/homepage/project-covers/${imgSrc}`} alt={name} class="button-image" />
 			</button>
@@ -428,7 +428,9 @@
 		top: 0;
 		left: 0;
 		z-index: 1;
-		background-color: $accent-light;
+		background-color: $accent-dark;
+    color: $white;
+    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.18);
 		padding-inline: 10px;
 		height: 32px;
 		border-radius: 999px;
@@ -445,6 +447,10 @@
 
 		svg {
 			@include force-size(1.25rem, 1.25rem);
+
+      path {
+        fill: currentColor;
+      }
 		}
 	}
 

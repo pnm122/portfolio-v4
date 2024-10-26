@@ -73,7 +73,7 @@
 		position: fixed;
 		z-index: 999;
 		top: 24px;
-    view-transition-name: navigation;
+		view-transition-name: navigation;
 	}
 
 	.navigation {

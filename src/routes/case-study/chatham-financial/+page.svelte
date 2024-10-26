@@ -1,6 +1,6 @@
 <script>
 	import CaseStudyImage from '$components/CaseStudyImage.svelte'
-import CaseStudyIntro from '$components/CaseStudyIntro.svelte'
+	import CaseStudyIntro from '$components/CaseStudyIntro.svelte'
 </script>
 
 <div class="case-study">
@@ -9,14 +9,14 @@ import CaseStudyIntro from '$components/CaseStudyIntro.svelte'
 		description="A collection of projects from working as an intern at Chatham Financial, primarily focused on improving their design system"
 		smallTitle={true}
 	/>
-  <section class="section">
-    <CaseStudyImage
-      src="/images/chatham-financial/icons.png"
-      alt="A grid of icons relating to projects I worked on at Chatham Financial"
-      placement="full-width"
-      aspectRatio="1280/1088"
-    />
-  </section>
+	<section class="section">
+		<CaseStudyImage
+			src="/images/chatham-financial/icons.png"
+			alt="A grid of icons relating to projects I worked on at Chatham Financial"
+			placement="full-width"
+			aspectRatio="1280/1088"
+		/>
+	</section>
 	<section class="section">
 		<h2 class="section__title">Overview</h2>
 		<div class="section__text">
@@ -88,22 +88,22 @@ import CaseStudyIntro from '$components/CaseStudyIntro.svelte'
 			</p>
 		</div>
 	</section>
-  <section class="section">
-    <CaseStudyImage
-      src="/images/chatham-financial/date-range-picker-keyboard.gif"
-      alt="Date range picker keyboard navigation demonstration"
-      placement="half-first"
-      aspectRatio="512/391"
-      contain
-    />
-    <CaseStudyImage
-      src="/images/chatham-financial/date-picker-keyboard.gif"
-      alt="Date picker keyboard navigation demonstration"
-      placement="small-last"
-      aspectRatio="334/402"
-      contain
-    />
-  </section>
+	<section class="section">
+		<CaseStudyImage
+			src="/images/chatham-financial/date-range-picker-keyboard.gif"
+			alt="Date range picker keyboard navigation demonstration"
+			placement="half-first"
+			aspectRatio="512/391"
+			contain
+		/>
+		<CaseStudyImage
+			src="/images/chatham-financial/date-picker-keyboard.gif"
+			alt="Date picker keyboard navigation demonstration"
+			placement="small-last"
+			aspectRatio="334/402"
+			contain
+		/>
+	</section>
 	<section class="section">
 		<div class="section__title">
 			<h2>Component Library</h2>
@@ -119,14 +119,14 @@ import CaseStudyIntro from '$components/CaseStudyIntro.svelte'
 			</p>
 		</div>
 	</section>
-  <section class="section">
-    <CaseStudyImage
-      src="/images/chatham-financial/date-range-picker-changes.png"
-      alt="Date range picker design changes"
-      placement="full-width"
-      aspectRatio="1144/432"
-    />
-  </section>
+	<section class="section">
+		<CaseStudyImage
+			src="/images/chatham-financial/date-range-picker-changes.png"
+			alt="Date range picker design changes"
+			placement="full-width"
+			aspectRatio="1144/432"
+		/>
+	</section>
 	<section class="section">
 		<h2 class="section__title">Design Tokens</h2>
 		<div class="section__text">
@@ -171,43 +171,64 @@ import CaseStudyIntro from '$components/CaseStudyIntro.svelte'
 			</dl>
 		</div>
 	</section>
-  <section class="section">
-    <CaseStudyImage
-      src="/images/chatham-financial/pipeline-diagram.png"
-      alt="Diagram of pipeline explained in previous paragraph"
-      placement="half-center"
-      aspectRatio="546/730"
-    />
-  </section>
-  <section class="section">
+	<section class="section">
+		<CaseStudyImage
+			src="/images/chatham-financial/pipeline-diagram.png"
+			alt="Diagram of pipeline explained in previous paragraph"
+			placement="half-center"
+			aspectRatio="546/730"
+		/>
+	</section>
+	<section class="section">
 		<h2 class="section__title">Challenges</h2>
 		<div class="section__text">
 			<p>
-				While I brought experience from freelancing, schoolwork, and personal projects into working at Chatham that made me already comfortable with TypeScript, frontend frameworks, SCSS, and more, I also had to overcome many challenges.
+				While I brought experience from freelancing, schoolwork, and personal projects into working
+				at Chatham that made me already comfortable with TypeScript, frontend frameworks, SCSS, and
+				more, I also had to overcome many challenges.
 			</p>
-      <p>
-        For me, the greatest challenge was unit testing. I had only a surface-level understanding of unit tests from schoolwork, so throwing myself into a large project with complex unit tests was difficult. I spent a lot of my time learning syntax, understanding best practices, and debugging many tests.
-      </p>
-      <p>
-        Adding keyboard navigation to the date pickers was also particularly challenging. I had to try several different approaches before finding one that was best suited for Chatham’s needs. It also tested my knowledge of accessibility, Stencil and frontend frameworks generally, and TypeScript.
-      </p>
-      <p>
-        I spent a considerable amount of time creating a system design for the design tokens project as well. Without any template and very few examples to pull from, I had to find answers to questions like: How will Figma updates feed into code? What libraries do we need? What’s the best way to name things so that they’re understandable for designers and usable for code?
-      </p>
-      <p>
-        Finally, I had to learn how to use GitLab pipelines for the design tokens project. I had very seldom worked with pipelines before, so almost everything I created was new to me. I used examples from Chatham, researched, and talked to my mentors extensively throughout the process.
-      </p>
+			<p>
+				For me, the greatest challenge was unit testing. I had only a surface-level understanding of
+				unit tests from schoolwork, so throwing myself into a large project with complex unit tests
+				was difficult. I spent a lot of my time learning syntax, understanding best practices, and
+				debugging many tests.
+			</p>
+			<p>
+				Adding keyboard navigation to the date pickers was also particularly challenging. I had to
+				try several different approaches before finding one that was best suited for Chatham’s
+				needs. It also tested my knowledge of accessibility, Stencil and frontend frameworks
+				generally, and TypeScript.
+			</p>
+			<p>
+				I spent a considerable amount of time creating a system design for the design tokens project
+				as well. Without any template and very few examples to pull from, I had to find answers to
+				questions like: How will Figma updates feed into code? What libraries do we need? What’s the
+				best way to name things so that they’re understandable for designers and usable for code?
+			</p>
+			<p>
+				Finally, I had to learn how to use GitLab pipelines for the design tokens project. I had
+				very seldom worked with pipelines before, so almost everything I created was new to me. I
+				used examples from Chatham, researched, and talked to my mentors extensively throughout the
+				process.
+			</p>
 		</div>
 	</section>
-  <section class="section">
+	<section class="section">
 		<h2 class="section__title">Insights</h2>
 		<div class="section__text">
 			<p>
-				Overall, my experience at Chatham was incredibly rewarding. I learned much more than I had expected in such a short time frame. I deepened my knowledge of TypeScript, shadow DOMs, ARIA and accessibility, Stencil, SCSS, Git, and Figma. I also gained a working knowledge of pipelines, unit testing, and design systems. Additionally, I was lucky enough to work with talented, knowledgeable people, so I learned a lot about asking good questions.
+				Overall, my experience at Chatham was incredibly rewarding. I learned much more than I had
+				expected in such a short time frame. I deepened my knowledge of TypeScript, shadow DOMs,
+				ARIA and accessibility, Stencil, SCSS, Git, and Figma. I also gained a working knowledge of
+				pipelines, unit testing, and design systems. Additionally, I was lucky enough to work with
+				talented, knowledgeable people, so I learned a lot about asking good questions.
 			</p>
-      <p>
-        One of the most valuable takeaways I had from working closely with experienced designers was to materialize every idea. When I first saw their Figma files, I was shocked to see how many ideas they would put down for one problem. I realized by watching and trying myself that it’s often easiest to generate great ideas when you’re not afraid to try everything.
-      </p>
+			<p>
+				One of the most valuable takeaways I had from working closely with experienced designers was
+				to materialize every idea. When I first saw their Figma files, I was shocked to see how many
+				ideas they would put down for one problem. I realized by watching and trying myself that
+				it’s often easiest to generate great ideas when you’re not afraid to try everything.
+			</p>
 		</div>
 	</section>
 </div>
