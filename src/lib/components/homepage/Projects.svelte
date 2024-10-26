@@ -430,7 +430,6 @@
 		z-index: 1;
 		background-color: $accent-dark;
     color: $white;
-    box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.18);
 		padding-inline: 10px;
 		height: 32px;
 		border-radius: 999px;
