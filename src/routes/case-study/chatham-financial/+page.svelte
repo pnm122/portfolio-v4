@@ -205,6 +205,9 @@ import CaseStudyIntro from '$components/CaseStudyIntro.svelte'
 			<p>
 				Overall, my experience at Chatham was incredibly rewarding. I learned much more than I had expected in such a short time frame. I deepened my knowledge of TypeScript, shadow DOMs, ARIA and accessibility, Stencil, SCSS, Git, and Figma. I also gained a working knowledge of pipelines, unit testing, and design systems. Additionally, I was lucky enough to work with talented, knowledgeable people, so I learned a lot about asking good questions.
 			</p>
+      <p>
+        One of the most valuable takeaways I had from working closely with experienced designers was to materialize every idea. When I first saw their Figma files, I was shocked to see how many ideas they would put down for one problem. I realized by watching and trying myself that it’s often easiest to generate great ideas when you’re not afraid to try everything.
+      </p>
 		</div>
 	</section>
 </div>
