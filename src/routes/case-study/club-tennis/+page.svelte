@@ -3,7 +3,7 @@
 	import CaseStudyIntro from '$components/CaseStudyIntro.svelte'
 </script>
 
-<div class="case-study">
+<main class="case-study">
 	<CaseStudyIntro
 		title="Club Tennis"
 		description="A website created for the Club Tennis team at the University of Pittsburgh, featuring a bespoke design and admin panel made from scratch"
@@ -31,6 +31,14 @@
 			</p>
 		</div>
 	</section>
+  <section class="section">
+    <CaseStudyImage
+      src="/images/club-tennis/hero-section.png"
+      alt="Hero section animation"
+      placement="full-width"
+      aspectRatio="1150/625"
+    />
+  </section>
 	<section class="section">
 		<div class="section__title">
 			<h2>Process</h2>
@@ -108,6 +116,14 @@
 			</p>
 		</div>
 	</section>
+  <section class="section">
+    <CaseStudyImage
+      src="/images/club-tennis/hero-animation.gif"
+      alt="Hero section animation"
+      placement="large-first"
+      aspectRatio="800/450"
+    />
+  </section>
 	<section class="section">
 		<div class="section__title">
 			<h2>Process</h2>
@@ -173,7 +189,7 @@
 			</p>
 		</div>
 	</section>
-</div>
+</main>
 
 <style lang="scss">
 	@import '$scss/case-study';

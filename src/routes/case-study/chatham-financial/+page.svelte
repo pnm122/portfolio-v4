@@ -1,9 +1,10 @@
 <script>
 	import CaseStudyImage from '$components/CaseStudyImage.svelte'
 	import CaseStudyIntro from '$components/CaseStudyIntro.svelte'
+	import NextCaseStudyScroller from '$components/NextCaseStudyScroller.svelte'
 </script>
 
-<div class="case-study">
+<main class="case-study">
 	<CaseStudyIntro
 		title="Chatham Financial"
 		description="A collection of projects from working as an intern at Chatham Financial, primarily focused on improving their design system"
@@ -231,7 +232,12 @@
 			</p>
 		</div>
 	</section>
-</div>
+</main>
+<NextCaseStudyScroller
+	slug="club-tennis"
+	title="Club Tennis"
+	image="/images/club-tennis/hero-section.png"
+/>
 
 <style lang="scss">
 	@import '$scss/case-study';
