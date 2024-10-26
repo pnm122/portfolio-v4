@@ -24,6 +24,17 @@
 				})}
 			>
 				<ul class="nav__list">
+          <li class="list-item">
+						<Button
+							type="link"
+							href="/"
+							onClick={(e) => onLinkClicked(e, '/')}
+							style="text"
+							size="small"
+						>
+							Home
+						</Button>
+					</li>
 					<li class="list-item">
 						<Button
 							type="link"
