@@ -10,10 +10,10 @@
 		source="https://github.com/pnm122/pittclubtennis"
 		liveSite="https://clubtennisatpitt.org/"
 	/>
-  <section>
+	<section class="section">
 		<CaseStudyImage
 			src="/images/club-tennis/cover.png"
-			alt="Hero section animation"
+			alt="Members page with an announcement visible. The members page of the admin panel points to the members, and the respective announcement page points to the announcement."
 			placement="full-width"
 			aspectRatio="1512/1152"
 		/>
@@ -92,6 +92,20 @@
 		</div>
 	</section>
 	<section class="section">
+		<CaseStudyImage
+			src="/images/club-tennis/about.png"
+			alt="About page"
+			placement="half-first"
+			aspectRatio="1146/625"
+		/>
+		<CaseStudyImage
+			src="/images/club-tennis/tryouts.png"
+			alt="Tryouts page"
+			placement="half-last"
+			aspectRatio="1146/625"
+		/>
+	</section>
+	<section class="section">
 		<div class="section__title">
 			<h2>Process</h2>
 			<h3 class="subtext">pt. 2 of 3</h3>
@@ -105,10 +119,10 @@
 				websites. I used a font I found on the <a
 					href="https://cincinnatiopen.com/"
 					rel="noopener noreferrer"
-					target="_blank">Cincinnati Open</a
-				> tennis tournament website, and designed quick, snappy animations to enhance the “sporty” aesthetic.
-				At this point, I also needed to create the hero image from scratch. The hero image comes from
-				an action shot taken at a tournament, with the background removed and effects added.
+					target="_blank">Cincinnati Open tennis tournament website</a
+				>, and designed quick, snappy animations to enhance the “sporty” aesthetic. At this point, I
+				also needed to create the hero image from scratch. The hero image comes from an action shot
+				taken at a tournament, with the background removed and effects added.
 			</p>
 			<p>
 				Once I had created both desktop and mobile designs and ideated animations, I started
@@ -138,6 +152,12 @@
 			placement="large-first"
 			aspectRatio="800/450"
 		/>
+    <CaseStudyImage
+			src="/images/club-tennis/members.png"
+			alt="Members page on mid-sized screen, showing two members per row"
+			placement="small-last"
+			aspectRatio="724/864"
+		/>
 	</section>
 	<section class="section">
 		<div class="section__title">
@@ -159,6 +179,26 @@
 				and using Firebase’s APIs.
 			</p>
 		</div>
+	</section>
+  <section class="section">
+		<CaseStudyImage
+			src="/images/club-tennis/members-admin.png"
+			alt="Admin panel members page. It contains a table with each of the members' name, year, role, and whether their image has been uploaded."
+			placement="half-first"
+			aspectRatio="1144/1014"
+		/>
+		<CaseStudyImage
+			src="/images/club-tennis/members-admin-edit.png"
+			alt="Admin panel members page with a side panel visible. The side panel contains a form to let an admin edit the selected member."
+			placement="half-last"
+			aspectRatio="1144/1014"
+		/>
+    <CaseStudyImage
+			src="/images/club-tennis/tournaments-admin-edit.png"
+			alt="Admin panel tournaments page with a side panel visible. The side panel contains a form to edit the tournament, and a date is current being selected using a date picker."
+			placement="full-width"
+			aspectRatio="1596/1079"
+		/>
 	</section>
 	<section class="section">
 		<h2 class="section__title">Final Product</h2>
@@ -185,6 +225,32 @@
 				</li>
 			</ul>
 		</div>
+	</section>
+  <section class="section">
+		<CaseStudyImage
+			src="/images/club-tennis/hero-section.png"
+			alt="Hero section of the homepage on a desktop screen."
+			placement="large-first"
+			aspectRatio="1150/625"
+		/>
+		<CaseStudyImage
+			src="/images/club-tennis/hero-mobile.png"
+			alt="Hero section of the homepage on a mobile screen."
+			placement="small-last"
+			aspectRatio="492/805"
+		/>
+    <CaseStudyImage
+			src="/images/club-tennis/announcement-admin-mobile.png"
+			alt="Admin panel announcement page."
+			placement="small-first"
+			aspectRatio="384/1009"
+		/>
+    <CaseStudyImage
+			src="/images/club-tennis/tournaments.png"
+			alt="Tournaments page. It shows information about several past tournaments, including the name, dates, location, and team's placement."
+			placement="large-last"
+			aspectRatio="1144/1248"
+		/>
 	</section>
 	<section class="section">
 		<h2 class="section__title">Insights</h2>

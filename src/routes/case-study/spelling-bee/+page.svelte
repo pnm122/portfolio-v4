@@ -11,7 +11,7 @@
 		source="https://github.com/pnm122/spelling-bee"
 		liveSite="https://www.thebetterspellingbee.com"
 	/>
-	<section>
+	<section class="section">
 		<CaseStudyImage
 			src="/images/spelling-bee/gameplay.png"
 			alt="Screenshot of the Spelling Bee game"
