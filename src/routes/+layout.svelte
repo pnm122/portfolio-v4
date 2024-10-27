@@ -8,6 +8,7 @@
 	import MouseFollower from '$components/MouseFollower.svelte'
 	import ScrollToPlugin from 'gsap/dist/ScrollToPlugin'
 	import { onNavigate } from '$app/navigation'
+	import scrollToLink from '$utils/scrollToLink'
 
 	if (browser) {
 		gsap.registerPlugin(Observer, ScrollTrigger, ScrollToPlugin)
@@ -23,6 +24,13 @@
 
 	// An ID maintained by svelte that lets me determine if the user is going forward or backward in navigation
 	let currentPageHistoryId = $state<number>(browser ? history.state['sveltekit:history'] : -1)
+
+  $effect(() => {
+    const hash = window.location.hash
+    if(hash) {
+      scrollToLink(undefined, hash, false)
+    }
+  })
 
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return
