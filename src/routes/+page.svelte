@@ -220,7 +220,7 @@
 </script>
 
 <div class="homepage">
-	<section class="hero">
+	<section class="hero" id="hero">
 		<div class="hero__inner">
 			<h1 class="hero__heading">
 				<SplitText text="pierce martin" />

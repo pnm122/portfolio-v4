@@ -31,6 +31,9 @@
 		const fromPath = navigation.from?.url.pathname
 		const toPath = navigation.to?.url.pathname
 
+    // No need to do view transitions if the page isn't changing
+    if(fromPath === toPath) return
+
 		if (!isHomePage(fromPath) && isHomePage(toPath)) {
 			document.querySelector('html')!.id = 'to-home'
 		} else if (!isCaseStudyPage(fromPath) && isCaseStudyPage(toPath)) {

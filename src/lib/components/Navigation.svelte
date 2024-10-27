@@ -27,15 +27,15 @@
           <li class="list-item">
 						<Button
 							type="link"
-							href="/"
-							onClick={(e) => onLinkClicked(e, '/')}
+							href="/#hero"
+							onClick={(e) => onLinkClicked(e, '#hero')}
 							style="text"
 							size="small"
               class="list-item__desktop-link"
 						>
 							Home
 						</Button>
-            <a href="/" onclick={(e) => onLinkClicked(e, '/')} class="list-item__mobile-link">
+            <a href="/#hero" onclick={(e) => onLinkClicked(e, '#hero')} class="list-item__mobile-link">
               Home
             </a>
 					</li>
