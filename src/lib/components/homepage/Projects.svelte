@@ -46,14 +46,14 @@
 			slug: 'club-tennis',
 			skills: ['React', 'Figma', 'Firebase', 'GSAP', 'TypeScript']
 		},
-		{
-			name: 'Flex',
-			description:
-				'A fitness tracker created as part of a Software Engineering course at the University of Pittsburgh.',
-			imgSrc: 'flex.png',
-			slug: 'flex',
-			skills: ['React', 'Spring Boot', 'Figma', 'TypeScript']
-		}
+		// {
+		// 	name: 'Flex',
+		// 	description:
+		// 		'A fitness tracker created as part of a Software Engineering course at the University of Pittsburgh.',
+		// 	imgSrc: 'flex.png',
+		// 	slug: 'flex',
+		// 	skills: ['React', 'Spring Boot', 'Figma', 'TypeScript']
+		// }
 	]
 
 	let showing = $state(false)
