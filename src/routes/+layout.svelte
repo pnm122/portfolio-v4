@@ -10,7 +10,7 @@
 	import { onNavigate } from '$app/navigation'
 	import scrollToLink from '$utils/scrollToLink'
 
-  const { children } = $props()
+	const { children } = $props()
 
 	if (browser) {
 		gsap.registerPlugin(Observer, ScrollTrigger, ScrollToPlugin)
@@ -27,12 +27,12 @@
 	// An ID maintained by svelte that lets me determine if the user is going forward or backward in navigation
 	let currentPageHistoryId = $state<number>(browser ? history.state['sveltekit:history'] : -1)
 
-  $effect(() => {
-    const hash = window.location.hash
-    if(hash) {
-      scrollToLink(undefined, hash, false)
-    }
-  })
+	$effect(() => {
+		const hash = window.location.hash
+		if (hash) {
+			scrollToLink(undefined, hash, false)
+		}
+	})
 
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return
@@ -41,8 +41,8 @@
 		const fromPath = navigation.from?.url.pathname
 		const toPath = navigation.to?.url.pathname
 
-    // No need to do view transitions if the page isn't changing
-    if(fromPath === toPath) return
+		// No need to do view transitions if the page isn't changing
+		if (fromPath === toPath) return
 
 		if (!isHomePage(fromPath) && isHomePage(toPath)) {
 			document.querySelector('html')!.id = 'to-home'
@@ -77,4 +77,3 @@
 
 <Navigation />
 {@render children()}
-

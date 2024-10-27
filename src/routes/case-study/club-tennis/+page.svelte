@@ -153,7 +153,7 @@
 			placement="large-first"
 			aspectRatio="800/450"
 		/>
-    <CaseStudyImage
+		<CaseStudyImage
 			src="/images/club-tennis/members.png"
 			alt="Members page on mid-sized screen, showing two members per row"
 			placement="small-last"
@@ -181,7 +181,7 @@
 			</p>
 		</div>
 	</section>
-  <section class="section">
+	<section class="section">
 		<CaseStudyImage
 			src="/images/club-tennis/members-admin.png"
 			alt="Admin panel members page. It contains a table with each of the members' name, year, role, and whether their image has been uploaded."
@@ -194,7 +194,7 @@
 			placement="half-last"
 			aspectRatio="1144/1014"
 		/>
-    <CaseStudyImage
+		<CaseStudyImage
 			src="/images/club-tennis/tournaments-admin-edit.png"
 			alt="Admin panel tournaments page with a side panel visible. The side panel contains a form to edit the tournament, and a date is current being selected using a date picker."
 			placement="full-width"
@@ -227,7 +227,7 @@
 			</ul>
 		</div>
 	</section>
-  <section class="section">
+	<section class="section">
 		<CaseStudyImage
 			src="/images/club-tennis/hero-section.png"
 			alt="Hero section of the homepage on a desktop screen."
@@ -240,13 +240,13 @@
 			placement="small-last"
 			aspectRatio="492/805"
 		/>
-    <CaseStudyImage
+		<CaseStudyImage
 			src="/images/club-tennis/announcement-admin-mobile.png"
 			alt="Admin panel announcement page."
 			placement="small-first"
 			aspectRatio="384/1009"
 		/>
-    <CaseStudyImage
+		<CaseStudyImage
 			src="/images/club-tennis/tournaments.png"
 			alt="Tournaments page. It shows information about several past tournaments, including the name, dates, location, and team's placement."
 			placement="large-last"
@@ -273,9 +273,9 @@
 	</section>
 </main>
 <NextCaseStudyScroller
-  slug="spelling-bee"
-  title="Spelling Bee"
-  image="/images/spelling-bee/gameplay.png"
+	slug="spelling-bee"
+	title="Spelling Bee"
+	image="/images/spelling-bee/gameplay.png"
 />
 
 <style lang="scss">

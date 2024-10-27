@@ -77,5 +77,5 @@
 
 @mixin container {
 	width: min(calc(100% - 48px), 1440px);
-	margin: auto;
+	margin-inline: auto;
 }

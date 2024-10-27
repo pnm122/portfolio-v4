@@ -1,5 +1,7 @@
 <script lang="ts">
+	import ExternalLinkIcon from '$components/ExternalLinkIcon.svelte'
 	import createClasses from '$utils/createClasses'
+	import isTouchDevice from '$utils/isTouchDevice'
 	import vEase from '$utils/vEase'
 	import gsap from 'gsap'
 	import { untrack } from 'svelte'
@@ -45,7 +47,7 @@
 			imgSrc: 'club-tennis.png',
 			slug: 'club-tennis',
 			skills: ['React', 'Figma', 'Firebase', 'GSAP', 'TypeScript']
-		},
+		}
 		// {
 		// 	name: 'Flex',
 		// 	description:
@@ -56,6 +58,7 @@
 		// }
 	]
 
+	let touch = $state(false)
 	let showing = $state(false)
 	let currentShowViewProjectTimeline = $state<gsap.core.Timeline | undefined>()
 	let selectedProject = $state(0)
@@ -93,6 +96,11 @@
 	}
 
 	$effect(() => {
+		if (isTouchDevice()) {
+			touch = true
+			return
+		}
+
 		const ctx = gsap.context(() => {
 			const projectImages = gsap.utils.toArray('.project-image')
 			const projectsContainer = document.querySelector('.projects') as HTMLElement
@@ -343,21 +351,20 @@
 
 <div bind:this={viewProject} class="view-project" aria-hidden="true">
 	<span>View case study</span>
-	<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-		<path
-      fill="currentColor"
-			d="M15.8075 9.82182L7.90554 17.7237C7.70519 17.9241 7.46949 18.024 7.19843 18.0236C6.92737 18.0231 6.69167 17.9231 6.49133 17.7237C6.29098 17.5243 6.1908 17.2884 6.1908 17.0159C6.1908 16.7435 6.29098 16.508 6.49133 16.3095L14.3932 8.40761L7.4636 8.40761C7.18075 8.40761 6.94788 8.3105 6.76498 8.11628C6.58207 7.92206 6.49085 7.6833 6.49133 7.39998C6.50311 7.12893 6.60046 6.89629 6.78336 6.70207C6.96627 6.50785 7.1989 6.41051 7.48128 6.41003H16.8151C16.9565 6.41003 17.0833 6.43643 17.1955 6.48923C17.3077 6.54203 17.4107 6.6158 17.5045 6.71055C17.5983 6.80531 17.6721 6.90831 17.7258 7.01956C17.7796 7.13081 17.806 7.25762 17.805 7.39998L17.805 16.7338C17.805 16.9931 17.7079 17.2198 17.5137 17.414C17.3195 17.6082 17.0866 17.7115 16.8151 17.7237C16.5322 17.7237 16.2935 17.6264 16.0988 17.4317C15.9041 17.237 15.807 16.9985 15.8075 16.7161L15.8075 9.82182Z"
-		/>
-	</svg>
+	<ExternalLinkIcon />
 </div>
 <section
-	class="projects"
+	class={createClasses({
+		projects: true,
+		'projects--touch-device': touch
+	})}
 	id="case-studies"
 	aria-live="polite"
 	aria-roledescription="carousel"
 	aria-label="Case studies"
 >
 	{#each projects as { imgSrc, name, slug }}
+		<!-- Only appears on non-touch devices -->
 		<div class="project-image">
 			<div class="project-image__padding-box">
 				<img
@@ -368,7 +375,7 @@
 			</div>
 		</div>
 	{/each}
-	{#each projects as { name, description, skills, slug }, index}
+	{#each projects as { name, description, skills, slug, imgSrc }, index}
 		<div
 			class={createClasses({
 				project: true,
@@ -398,6 +405,14 @@
 						<span class="skill">+{skills.length - 4}</span>
 					{/if}
 				</ul>
+				<span class="project__view-text">
+					Tap to view case study
+					<ExternalLinkIcon />
+				</span>
+				<!-- Only appears on touch devices -->
+				<div class="project__image">
+					<img src={`images/homepage/project-covers/${imgSrc}`} alt={name} />
+				</div>
 			</a>
 		</div>
 	{/each}
@@ -451,6 +466,10 @@
 				fill: currentColor;
 			}
 		}
+	}
+
+	:global(body:has(.projects--touch-device) .view-project) {
+		display: none;
 	}
 
 	.projects {
@@ -519,6 +538,14 @@
 					color: $black;
 				}
 			}
+
+			&__image {
+				display: none;
+			}
+
+			&__view-text {
+				display: none;
+			}
 		}
 
 		.project-image {
@@ -563,6 +590,62 @@
 					width: 100%;
 					height: 100%;
 					object-fit: cover;
+				}
+			}
+		}
+
+		&--touch-device {
+			height: unset;
+			flex-direction: column;
+			gap: 64px;
+			@include container;
+
+			.project-buttons {
+				display: none;
+			}
+
+			.project-image {
+				display: none;
+			}
+
+			.project {
+				position: relative;
+				height: 100vh;
+
+				&__link {
+					padding-bottom: clamp(0px, 15%, 130px);
+					padding-left: 0;
+				}
+
+				&__image {
+					display: block;
+					position: absolute;
+					inset: 0;
+					z-index: -1;
+					padding: clamp(0px, 7.5%, 80px);
+
+					img {
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+						border-radius: 16px;
+					}
+				}
+
+				&__view-text {
+					display: flex;
+					height: 44px;
+					line-height: 44px;
+					// font-size: $font-size-10;
+					font-weight: 600;
+					background-color: $accent-dark;
+					color: $white;
+					padding-inline: 12px;
+					border-radius: 8px;
+					margin-top: 12px;
+					align-items: center;
+					gap: 4px;
+					width: fit-content;
 				}
 			}
 		}
