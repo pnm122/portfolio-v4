@@ -10,6 +10,8 @@
 	import { onNavigate } from '$app/navigation'
 	import scrollToLink from '$utils/scrollToLink'
 
+  const { children } = $props()
+
 	if (browser) {
 		gsap.registerPlugin(Observer, ScrollTrigger, ScrollToPlugin)
 	}
@@ -74,4 +76,5 @@
 </script>
 
 <Navigation />
-<slot></slot>
+{@render children()}
+
