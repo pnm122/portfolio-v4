@@ -6,8 +6,8 @@
 [x] Use regular scrolling on touch device projects section
 [x] Don't reshow intro animations after they've happened once (i.e. on going back to the page later)
 [x] Review suggestions to writing
-[ ] Add robots.txt
-[ ] Add icon
+[x] Add robots.txt
+[x] Add icon
 
 ---
 
