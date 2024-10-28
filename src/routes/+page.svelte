@@ -195,10 +195,8 @@
         // Activate scroll timeline only after the hero animations are done
         heroTimeline.eventCallback('onComplete', () => {
           createScrollBasedAnimations(scrollTimeline)
+          homepageVisited.visited = true
         })
-
-        console.log(homepageVisited.visited)
-        homepageVisited.visited = true
       })
 		})
 
