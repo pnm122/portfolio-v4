@@ -4,12 +4,14 @@
 	import Contact from '$components/homepage/Contact.svelte'
 	import Projects from '$components/homepage/Projects.svelte'
 	import SplitText from '$components/SplitText.svelte'
+	import homepageVisited from '$lib/context/homepageVisited.svelte'
 	import popInAnimation from '$utils/animation/popInAnimation'
 	import rollInAnimation from '$utils/animation/rollInAnimation'
 	import slowRollInAnimation from '$utils/animation/slowRollInAnimation'
 	import isTouchDevice from '$utils/isTouchDevice'
 	import scrollToLink from '$utils/scrollToLink'
 	import gsap from 'gsap'
+	import { untrack } from 'svelte'
 	import { Canvas, Rectangle, Circle } from 'svelte-physics-renderer'
 
 	const skills = [
@@ -46,6 +48,8 @@
 	let screenWidth = $state(browser ? window.innerWidth : 0)
 
 	function hideElementsAppearingOnScroll() {
+    if(homepageVisited.visited) return
+    
 		gsap.to(
 			`
       .about-heading__text .letter,
@@ -60,6 +64,8 @@
 	}
 
 	function createHeroAnimations(tl: gsap.core.Timeline) {
+    if(homepageVisited.visited) return
+
 		tl.fromTo('.hero__heading .letter', ...rollInAnimation())
 		tl.fromTo('.hero__description', ...popInAnimation({ delay: 0.125 }))
 		tl.fromTo('.hero__cta', ...popInAnimation({ delay: 0.125 }))
@@ -94,6 +100,30 @@
 	}
 
 	function createScrollBasedAnimations(tl: gsap.core.Timeline) {
+    if(!homepageVisited.visited) {
+      gsap.fromTo(
+        '.about-heading__text .letter',
+        ...slowRollInAnimation({
+          visibility: 'visible',
+          scrollTrigger: {
+            trigger: '.about-heading__text',
+            start: 'top bottom'
+          }
+        })
+      )
+
+      gsap.fromTo(
+        '.about__content .word',
+        ...slowRollInAnimation({
+          visibility: 'visible',
+          scrollTrigger: {
+            trigger: '.about__content',
+            start: 'top bottom'
+          }
+        })
+      )
+    }
+
 		const pictureAnimationData = {
 			'#spellingbee': {
 				parallax: 100,
@@ -113,21 +143,24 @@
 		}
 
 		Object.keys(pictureAnimationData).forEach((el) => {
-			gsap.fromTo(
-				el,
-				{
-					opacity: 0
-				},
-				{
-					opacity: 1,
-					duration: 1,
-					ease: 'expo.inOut',
-					visibility: 'visible',
-					scrollTrigger: {
-						trigger: el
-					}
-				}
-			)
+      if(!homepageVisited.visited) {
+        gsap.fromTo(
+          el,
+          {
+            opacity: 0
+          },
+          {
+            opacity: 1,
+            duration: 1,
+            ease: 'expo.inOut',
+            visibility: 'visible',
+            scrollTrigger: {
+              trigger: el
+            }
+          }
+        )
+      }
+			
 
 			const { parallax, rotate, rotateRange } = pictureAnimationData[el as '#spellingbee']
 			tl.fromTo(
@@ -148,28 +181,6 @@
 				}
 			)
 		})
-
-		gsap.fromTo(
-			'.about-heading__text .letter',
-			...slowRollInAnimation({
-				visibility: 'visible',
-				scrollTrigger: {
-					trigger: '.about-heading__text',
-					start: 'top bottom'
-				}
-			})
-		)
-
-		gsap.fromTo(
-			'.about__content .word',
-			...slowRollInAnimation({
-				visibility: 'visible',
-				scrollTrigger: {
-					trigger: '.about__content',
-					start: 'top bottom'
-				}
-			})
-		)
 	}
 
 	$effect(() => {
@@ -177,13 +188,18 @@
 			const heroTimeline = gsap.timeline()
 			const scrollTimeline = gsap.timeline()
 
-			hideElementsAppearingOnScroll()
-			createHeroAnimations(heroTimeline)
+      untrack(() => {
+        hideElementsAppearingOnScroll()
+        createHeroAnimations(heroTimeline)
 
-			// Activate scroll timeline only after the hero animations are done
-			heroTimeline.eventCallback('onComplete', () => {
-				createScrollBasedAnimations(scrollTimeline)
-			})
+        // Activate scroll timeline only after the hero animations are done
+        heroTimeline.eventCallback('onComplete', () => {
+          createScrollBasedAnimations(scrollTimeline)
+        })
+
+        console.log(homepageVisited.visited)
+        homepageVisited.visited = true
+      })
 		})
 
 		function onResize() {
