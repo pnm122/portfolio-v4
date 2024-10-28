@@ -26,7 +26,7 @@
 		{
 			name: 'Chatham Financial',
 			description:
-				'A collection of projects from working as an intern at Chatham Financial, primarily focused on improving their design system.',
+				'A collection of projects from my internship at Chatham Financial, primarily focused on improving their design system.',
 			imgSrc: 'chatham-financial.png',
 			slug: 'chatham-financial',
 			skills: [

@@ -23,11 +23,11 @@
 		<h2 class="section__title">Overview</h2>
 		<div class="section__text">
 			<p>
-				Spelling Bee is an improved version of the New York Times’ Spelling Bee game, which I
-				designed and developed from scratch. It includes a replica of the original game, with
-				custom-built solutions for accounts, a points system, in-game hints, game generation, and
-				leaderboards. I was inspired to create the Spelling Bee by the original game both being
-				locked behind a paywall and missing features that I believed would improve the game.
+				Spelling Bee is an improved version of the New York Times’ Spelling Bee, which I designed
+				and developed from scratch. It includes a replica of the original game, with custom-built
+				solutions for accounts, a points system, in-game hints, game generation, and leaderboards. I
+				was inspired to create the Spelling Bee because the original game was locked behind a
+				paywall and missing features that I believed would improve the game.
 			</p>
 			<p>
 				In the Spelling Bee, the player tries to find as many words as possible using the provided
@@ -75,7 +75,7 @@
 				I then decided on the style of the game, choosing typography and colors, and molding a
 				visual identity. I aimed to create a design that was light and fun, but also soft and
 				smooth. I chose bright accent colors with soft supporting colors, a friendly yet readable
-				and inobtrusive font, and crafted micro-interactions and animations to build a full,
+				and unobtrusive font, and crafted micro-interactions and animations to build a full,
 				exciting user experience.
 			</p>
 		</div>
@@ -155,11 +155,11 @@
 			<p>
 				I also spent a considerable amount of time trying to find a usable dictionary for the game.
 				All open source dictionaries I found suffered from one of two problems: including “words”
-				that weren't real words (i.e. can’t be found on any other dictionary), or the exact
+				that weren't real words (i.e. can’t be found in any other dictionary), or the exact
 				opposite—missing words. Ultimately, the dictionary I currently use suffers from missing
 				words, though it comes fairly close. I made the decision to use a dictionary with some
-				missing words rather than too many, because I believed it was more enjoyable than playing
-				the game with unguessable words. From testing, users also agreed with this sentiment.
+				missing words rather than too many, because I believed playing the game with unguessable
+				words was less enjoyable. From testing, users also agreed with this sentiment.
 			</p>
 			<p>
 				Another challenge I faced was creating a layout that worked for both mobile and desktop. For
@@ -202,9 +202,9 @@
 			</ul>
 			<p>
 				Today, the game still has some known issues and I have many ideas for new features that I
-				may slowly add over time. However, it’s still a project I’m very proud of, given that, in
-				the process of creating it, I learned new technologies, solved difficult problems, and
-				turned an idea into a real product.
+				may slowly add over time. However, I'm still very proud of this project, given that, in the
+				process of creating it, I learned new technologies, solved difficult problems, and turned an
+				idea into a real product.
 			</p>
 		</div>
 	</section>
@@ -239,17 +239,16 @@
 		<div class="section__text">
 			<p>
 				I used an iterative process with user testing and feedback for the first time in one of my
-				personal projects. From this process, I reiterated the importance of the idea that “you are
-				not the user.” I found that oftentimes, what I thought was crucial for a great user
-				experience didn’t align with the actual users’ beliefs. It is, in my opinion, absolutely
-				necessary to get feedback from real users to make a great product.
+				personal projects. This process reinforced the importance of the idea that “you are not the
+				user.” I found that oftentimes, what I thought was crucial for a great user experience
+				didn’t align with the actual users’ beliefs. It is, in my opinion, absolutely necessary to
+				get feedback from real users to make a great product.
 			</p>
 			<p>
 				I also spent a lot of time working with tools that were new to me, so I was able to develop
-				a working knowledge with them. This project gives me a foundation to start from for any
-				future project that I want to use Svelte, Node+Express, or MongoDB for. These tools also
-				don’t exist in a vacuum—many concepts I tackled are applicable to other frameworks and
-				tools.
+				a working knowledge of them. This project gives me a foundation for starting any future
+				project that I want to use Svelte, Node+Express, or MongoDB for. These tools also don’t
+				exist in a vacuum—many concepts I tackled are applicable to other frameworks and tools.
 			</p>
 		</div>
 	</section>

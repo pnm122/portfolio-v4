@@ -1,5 +1,5 @@
 const homepageVisited = $state({
-  visited: false
+	visited: false
 })
 
 export default homepageVisited

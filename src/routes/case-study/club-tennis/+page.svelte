@@ -24,10 +24,10 @@
 		<div class="section__text">
 			<p>
 				I created this website for the Club Tennis team at the University of Pittsburgh. It features
-				5 public-facing pages: a homepage, about, fundraisers, tournaments, and members. It also has
-				a fully-custom admin panel, allowing Club Tennis board members to easily edit data
-				throughout the website. I created the public website in mid-2023, and then added the admin
-				panel in mid-2024.
+				5 public-facing pages: homepage, about, fundraisers, tournaments, and members. It also has a
+				fully-custom admin panel, allowing Club Tennis board members to easily edit data throughout
+				the website. I created the public website in mid-2023, and then added the admin panel in
+				mid-2024.
 			</p>
 		</div>
 	</section>
@@ -36,19 +36,19 @@
 		<div class="section__text">
 			<p>
 				Like many other students, looking for clubs to join was one of the first things I did when I
-				decided to attend the University of Pittsburgh. Since I was an avid tennis player, the Club
-				Tennis team was one of the first clubs I looked at. However, I struggled to find accurate
-				and up-to-date information, since the team had three separate websites, all of which were no
+				decided to attend the University of Pittsburgh. Since I was an avid tennis player, Club
+				Tennis was one of the first clubs I looked at. However, I struggled to find accurate and
+				up-to-date information, since the team had three separate websites, all of which were no
 				longer updated. In fact, I initially didn’t try out for the club because these websites gave
 				me the impression that practices and travel tournaments were mandatory, so joining the club
 				would likely be overwhelming for me.
 			</p>
 			<p>
-				When I ultimately did try out and make the team, I realized that my impression wasn’t right.
+				When I ultimately did try out and make the team, I realized I was misled by their websites.
 				I also imagined how valuable it would have been to have clear and up-to-date information
-				about the club when I had looked initially. When I took the role of Social Chair in the
-				club, I made the promise to create a new website for club, with transparent information and
-				a way to be maintained after I graduated.
+				about the club when I had looked initially. When I took the role of Social Chair, I made the
+				promise to create a new website for the club, with transparent information and a way to be
+				maintained after I graduated.
 			</p>
 		</div>
 	</section>
@@ -71,15 +71,15 @@
 			<p>
 				Since the club relies fairly heavily on fundraisers, I realized a fundraiser page on the
 				website could help bring more visibility to them. While thinking about this, I noted that I
-				need some way of announcing to visitors when the club has an active fundraiser or any other
-				important announcement.
+				needed some way of announcing to visitors when the club had an active fundraiser or any
+				other important announcement.
 			</p>
 			<p>
 				I also believed a tournaments page with information about upcoming and previous tournaments
-				could be useful for multiple reasons: it allows people interested in joining the club to get
-				a sense of how often and where the club goes to tournaments, tells those who want to watch
-				the tournaments when and where to go, and gives a place for the club to show off when they
-				place in tournaments.
+				could be useful for multiple reasons: it would allow people interested in joining the club
+				to get a sense of how often and where the club goes to tournaments, tell those who want to
+				watch the tournaments when and where to go, and give a place for the club to show off when
+				they place in tournaments.
 			</p>
 			<p>
 				Finally, I chose to include a members page with pictures and names of all the players in the
@@ -257,12 +257,11 @@
 		<h2 class="section__title">Insights</h2>
 		<div class="section__text">
 			<p>
-				My biggest takeaway from this project was expanding my knowledge of web development tools
-				significantly. I learned how to use GSAP to bring my animation ideas to life. I also
-				deepened my knowledge of React, using state reducers for the first time and learning how to
-				create protected routes integrated with Firebase. Additionally, while working on the custom
-				components for the admin panel, I explored more advanced TypeScript features, like generics,
-				keyof & typeof, and mapped types.
+				This project significantly expanded my knowledge of web development. I learned how to use
+				GSAP to bring my animation ideas to life. I also deepened my knowledge of React, using state
+				reducers for the first time and learning how to create protected routes integrated with
+				Firebase. Additionally, while working on the custom components for the admin panel, I
+				explored more advanced TypeScript features, like generics, keyof & typeof, and mapped types.
 			</p>
 			<p>
 				While creating the Club Tennis site, I handled every part of the process: ideation, design,

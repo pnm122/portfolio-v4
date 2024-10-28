@@ -48,8 +48,8 @@
 	let screenWidth = $state(browser ? window.innerWidth : 0)
 
 	function hideElementsAppearingOnScroll() {
-    if(homepageVisited.visited) return
-    
+		if (homepageVisited.visited) return
+
 		gsap.to(
 			`
       .about-heading__text .letter,
@@ -64,7 +64,7 @@
 	}
 
 	function createHeroAnimations(tl: gsap.core.Timeline) {
-    if(homepageVisited.visited) return
+		if (homepageVisited.visited) return
 
 		tl.fromTo('.hero__heading .letter', ...rollInAnimation())
 		tl.fromTo('.hero__description', ...popInAnimation({ delay: 0.125 }))
@@ -100,29 +100,29 @@
 	}
 
 	function createScrollBasedAnimations(tl: gsap.core.Timeline) {
-    if(!homepageVisited.visited) {
-      gsap.fromTo(
-        '.about-heading__text .letter',
-        ...slowRollInAnimation({
-          visibility: 'visible',
-          scrollTrigger: {
-            trigger: '.about-heading__text',
-            start: 'top bottom'
-          }
-        })
-      )
+		if (!homepageVisited.visited) {
+			gsap.fromTo(
+				'.about-heading__text .letter',
+				...slowRollInAnimation({
+					visibility: 'visible',
+					scrollTrigger: {
+						trigger: '.about-heading__text',
+						start: 'top bottom'
+					}
+				})
+			)
 
-      gsap.fromTo(
-        '.about__content .word',
-        ...slowRollInAnimation({
-          visibility: 'visible',
-          scrollTrigger: {
-            trigger: '.about__content',
-            start: 'top bottom'
-          }
-        })
-      )
-    }
+			gsap.fromTo(
+				'.about__content .word',
+				...slowRollInAnimation({
+					visibility: 'visible',
+					scrollTrigger: {
+						trigger: '.about__content',
+						start: 'top bottom'
+					}
+				})
+			)
+		}
 
 		const pictureAnimationData = {
 			'#spellingbee': {
@@ -143,24 +143,23 @@
 		}
 
 		Object.keys(pictureAnimationData).forEach((el) => {
-      if(!homepageVisited.visited) {
-        gsap.fromTo(
-          el,
-          {
-            opacity: 0
-          },
-          {
-            opacity: 1,
-            duration: 1,
-            ease: 'expo.inOut',
-            visibility: 'visible',
-            scrollTrigger: {
-              trigger: el
-            }
-          }
-        )
-      }
-			
+			if (!homepageVisited.visited) {
+				gsap.fromTo(
+					el,
+					{
+						opacity: 0
+					},
+					{
+						opacity: 1,
+						duration: 1,
+						ease: 'expo.inOut',
+						visibility: 'visible',
+						scrollTrigger: {
+							trigger: el
+						}
+					}
+				)
+			}
 
 			const { parallax, rotate, rotateRange } = pictureAnimationData[el as '#spellingbee']
 			tl.fromTo(
@@ -188,16 +187,16 @@
 			const heroTimeline = gsap.timeline()
 			const scrollTimeline = gsap.timeline()
 
-      untrack(() => {
-        hideElementsAppearingOnScroll()
-        createHeroAnimations(heroTimeline)
+			untrack(() => {
+				hideElementsAppearingOnScroll()
+				createHeroAnimations(heroTimeline)
 
-        // Activate scroll timeline only after the hero animations are done
-        heroTimeline.eventCallback('onComplete', () => {
-          createScrollBasedAnimations(scrollTimeline)
-          homepageVisited.visited = true
-        })
-      })
+				// Activate scroll timeline only after the hero animations are done
+				heroTimeline.eventCallback('onComplete', () => {
+					createScrollBasedAnimations(scrollTimeline)
+					homepageVisited.visited = true
+				})
+			})
 		})
 
 		function onResize() {
@@ -288,7 +287,7 @@
 				<SplitText
 					noOverflow
 					wordsOnly
-					text="Most recently, I was an intern on the Design Systems team at Chatham Financial. Most notably, I created, added features to, and maintained components in a component library, wrote extensive unit tests, and created a pipeline to automate the process of converting design tokens into code variables."
+					text="Most recently, I was an intern on the Design Systems team at Chatham Financial. During my internship, I created, added features to, and maintained components in a component library, wrote extensive unit tests, and created a pipeline to automate the process of converting design tokens into code variables."
 				/>
 			</p>
 			<p>

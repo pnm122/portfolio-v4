@@ -5,11 +5,17 @@
 [x] Find a better way of detecting a touch device
 [x] Use regular scrolling on touch device projects section
 [x] Don't reshow intro animations after they've happened once (i.e. on going back to the page later)
-[ ] Review suggestions to writing
+[x] Review suggestions to writing
+[ ] Add robots.txt
+[ ] Add icon
 
 ---
 
 ## post-v1.0
+
+## post-v1.0
+t-v1.0
 [ ] Improve 404 page
 [ ] Add Flex case study
 [ ] Add Chat App case study
+[ ] Convert to .webpo .webp

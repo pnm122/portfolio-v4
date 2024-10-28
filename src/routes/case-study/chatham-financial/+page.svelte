@@ -7,7 +7,7 @@
 <main class="case-study">
 	<CaseStudyIntro
 		title="Chatham Financial"
-		description="A collection of projects from working as an intern at Chatham Financial, primarily focused on improving their design system"
+		description="A collection of projects from my internship at Chatham Financial, primarily focused on improving their design system"
 		smallTitle={true}
 	/>
 	<section class="section">
@@ -74,18 +74,18 @@
 				ensure my implementation met the gold standard. My implementation also had to be accessible,
 				so all Chatham clients would be able to use the components easily. For example, visual
 				indicators such as focus and selected states had to be clearly visible (i.e. meet a minimum
-				standard for contrast and spacing). Also, I worked with the screen reader NVDA to optimize
-				the components for screen readers. I also wrote a custom solution for “focus trapping,”
-				where keyboard-based focus is contained within the popup once the user focuses into the
-				popup. This ensures that the keyboard users (and particularly screen reader users) won’t get
+				standard for contrast and spacing). I worked with the screen reader NVDA to optimize the
+				components for screen readers. I also wrote a custom solution for “focus trapping,” where
+				keyboard-based focus is contained within the popup once the user focuses into the popup.
+				This ensures that the keyboard users (and particularly screen reader users) won’t get
 				confused by accidentally leaving the context of the popup while expecting to navigate within
 				the popup.
 			</p>
 			<p>
-				These new features also needed to be tested extensively, to ensure they work both at the
-				time of writing the code as well as when future changes are made. I wrote dozens of unit
-				tests in Jasmine for these changes, as well as refactoring many existing tests and deleting
-				many that were obsoleted.
+				These new features needed to be tested extensively, to ensure they work both at the time of
+				writing the code as well as when future changes are made. I wrote dozens of unit tests in
+				Jasmine for these changes, as well as refactoring many existing tests and deleting many that
+				were obsolete.
 			</p>
 		</div>
 	</section>
@@ -184,14 +184,14 @@
 		<h2 class="section__title">Challenges</h2>
 		<div class="section__text">
 			<p>
-				While I brought experience from freelancing, schoolwork, and personal projects into working
-				at Chatham that made me already comfortable with TypeScript, frontend frameworks, SCSS, and
-				more, I also had to overcome many challenges.
+				While my experiences from freelancing, schoolwork, and personal projects made me comfortable
+				with TypeScript, frontend frameworks, SCSS, and more, I also had to overcome many
+				challenges.
 			</p>
 			<p>
-				For me, the greatest challenge was unit testing. I had only a surface-level understanding of
-				unit tests from schoolwork, so throwing myself into a large project with complex unit tests
-				was difficult. I spent a lot of my time learning syntax, understanding best practices, and
+				My greatest challenge was unit testing. I had only a surface-level understanding of unit
+				tests from schoolwork, so throwing myself into a large project with complex unit tests was
+				difficult. I spent a lot of my time learning syntax, understanding best practices, and
 				debugging many tests.
 			</p>
 			<p>
