@@ -4,7 +4,6 @@
 	import Contact from '$components/homepage/Contact.svelte'
 	import Projects from '$components/homepage/Projects.svelte'
 	import SplitText from '$components/SplitText.svelte'
-	import homepageVisited from '$lib/context/homepageVisited.svelte'
 	import popInAnimation from '$utils/animation/popInAnimation'
 	import rollInAnimation from '$utils/animation/rollInAnimation'
 	import slowRollInAnimation from '$utils/animation/slowRollInAnimation'
@@ -46,25 +45,18 @@
 
 	let skillsCanvas: Canvas | undefined = $state()
 	let screenWidth = $state(browser ? window.innerWidth : 0)
+  let loadPercent = $state(0)
 
-	function hideElementsAppearingOnScroll() {
-		if (homepageVisited.visited) return
+  function isHomepageVisited() {
+    return document.body.getAttribute('data-visited') === 'true'
+  }
 
-		gsap.to(
-			`
-      .about-heading__text .letter,
-      .about-heading__image,
-      .about__content .word
-    `,
-			{
-				visibility: 'hidden',
-				duration: 0
-			}
-		)
-	}
+  function setHomepageVisited(val: boolean) {
+    document.body.setAttribute('data-visited', val.toString())
+  }
 
 	function createHeroAnimations(tl: gsap.core.Timeline) {
-		if (homepageVisited.visited) return
+		if (isHomepageVisited()) return
 
 		tl.fromTo('.hero__heading .letter', ...rollInAnimation())
 		tl.fromTo('.hero__description', ...popInAnimation({ delay: 0.125 }))
@@ -73,7 +65,7 @@
 		tl.fromTo(
 			'.hero',
 			{
-				scale: 0.85,
+				scale: 0.75,
 				transformOrigin: 'center 50vh'
 			},
 			{
@@ -91,6 +83,7 @@
 			},
 			{
 				scaleX: 1,
+        visibility: 'visible',
 				ease: 'power4.out',
 				duration: 0.25,
 				stagger: 0.05,
@@ -100,7 +93,7 @@
 	}
 
 	function createScrollBasedAnimations(tl: gsap.core.Timeline) {
-		if (!homepageVisited.visited) {
+		if (!isHomepageVisited()) {
 			gsap.fromTo(
 				'.about-heading__text .letter',
 				...slowRollInAnimation({
@@ -143,7 +136,7 @@
 		}
 
 		Object.keys(pictureAnimationData).forEach((el) => {
-			if (!homepageVisited.visited) {
+			if (!isHomepageVisited()) {
 				gsap.fromTo(
 					el,
 					{
@@ -182,20 +175,106 @@
 		})
 	}
 
+  function animatePreloader(tl: gsap.core.Timeline) {
+    if(!isHomepageVisited()) {
+      // tl.to('.preloader__bar', {
+      //   height: 0,
+      //   // borderBottomLeftRadius: 999,
+      //   // borderBottomRightRadius: 999,
+      //   duration: 0.75,
+      //   ease: 'power4.inOut',
+      //   stagger: {
+      //     amount: 0.25,
+      //     ease: 'none',
+      //     from: 'start'
+      //   }
+      // })
+
+      // tl.to('.preloader__bar', {
+      //   height: 0,
+      //   duration: 0.75,
+      //   ease: 'power4.inOut',
+      //   stagger: {
+      //     amount: 0.15,
+      //     ease: 'none',
+      //     from: 'center'
+      //   }
+      // })
+
+      const loadPercentProxy = { value: 0 }
+      tl.to(loadPercentProxy, {
+        value: 100,
+        ease: 'power4.out',
+        duration: 1,
+        onUpdate: () => {
+          untrack(() => {
+            loadPercent = Math.round(loadPercentProxy.value)
+          })
+        }
+      })
+
+      tl.to('.preloader__background', {
+        y: '-100%',
+        duration: 0.75,
+        ease: 'power4.inOut',
+        stagger: 0.075
+      }, '0.5')
+    }
+    
+    tl.set('.preloader', {
+      display: 'none'
+    })
+
+    tl.fromTo('.homepage', {
+      y: '100vh',
+    }, {
+      y: 0,
+      duration: 0.75,
+      ease: 'power4.inOut'
+    }, '>-0.75')
+
+    tl.fromTo('.homepage', {
+      borderRadius: 64,
+      scale: 0.8,
+      transformOrigin: 'center 50vh',
+    }, {
+      borderRadius: 0,
+      scale: 1,
+      duration: 0.5,
+      ease: 'power4.inOut',
+    })
+  }
+
+  function hideAnimatingElements() {
+    if(isHomepageVisited()) return
+    gsap.set(`
+      .about-heading__text .letter,
+      .about__content .word,
+      #spellingbee,
+      #chatapp,
+      #datepicker,
+      .navigation .toggle__bar
+    `, {
+      visibility: 'hidden'
+    })
+  }
+
 	$effect(() => {
+    // return
 		const ctx = gsap.context(() => {
+      const preloaderTimeline = gsap.timeline()
 			const heroTimeline = gsap.timeline()
 			const scrollTimeline = gsap.timeline()
 
 			untrack(() => {
-				hideElementsAppearingOnScroll()
-				createHeroAnimations(heroTimeline)
-
-				// Activate scroll timeline only after the hero animations are done
-				heroTimeline.eventCallback('onComplete', () => {
-					createScrollBasedAnimations(scrollTimeline)
-					homepageVisited.visited = true
-				})
+        hideAnimatingElements()
+        animatePreloader(preloaderTimeline)
+				
+        preloaderTimeline.eventCallback('onComplete', () => {
+          console.log('preloader complete')
+          createScrollBasedAnimations(scrollTimeline)
+          setHomepageVisited(true)
+        })
 			})
 		})
 
@@ -232,11 +311,20 @@
 	}
 </script>
 
-<div class="homepage">
+<div class="preloader">
+  <div class="preloader__background">
+    <div class="preloader-text">
+      <h1>{loadPercent}%</h1>
+    </div>
+  </div>
+  <div class="preloader__background"></div>
+  <div class="preloader__background"></div>
+</div>
+<main class="homepage">
 	<section class="hero" id="hero">
 		<div class="hero__inner">
 			<h1 class="hero__heading">
-				<SplitText text="pierce martin" />
+				Pierce Martin
 			</h1>
 			<p class="hero__description">
 				I am a software developer and designer passionate about <i>human-centered</i>,
@@ -354,14 +442,64 @@
 	</section>
 	<Projects />
 	<Contact />
-</div>
+</main>
 
 <style lang="scss">
 	@import '$scss/variables';
 	@import '$scss/mixins';
 
+  :global(body) {
+    background-color: $primary-extra-dark;
+  }
+
+  .preloader {
+    z-index: 9999;
+    position: fixed;
+    inset: 0;
+
+    &__background {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+
+      &:nth-of-type(3) {
+        z-index: 1;
+        background-color: $primary-extra-dark;
+      }
+
+      &:nth-of-type(2) {
+        z-index: 2;
+        background-color: $primary-dark;
+      }
+
+      &:nth-of-type(1) {
+        z-index: 3;
+        background-color: $primary;
+      }
+
+      .preloader-text {
+        @include container;
+        padding-bottom: 24px;
+
+        h1 {
+          font-size: $font-size-24;
+          text-transform: lowercase;
+
+          @media screen and (min-width: $screen-md) {
+            font-size: $font-size-32;
+          }
+        }
+      }
+    }
+  }
+
 	.homepage {
 		overflow: hidden;
+    background-color: $background;
 	}
 
 	.hero {
@@ -379,6 +517,7 @@
 		&__heading {
 			font-size: $font-size-32;
 			white-space: nowrap;
+      text-transform: lowercase;
 
 			@media screen and (min-width: $screen-xs) {
 				font-size: $font-size-40;

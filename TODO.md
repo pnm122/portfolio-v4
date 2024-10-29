@@ -1,7 +1,6 @@
 ## v1.0
 
-[ ] Prevent flash before animations start on page load
-[ ] Figure out browser history problems
+[x] Prevent flash before animations start on page load
 [x] Find a better way of detecting a touch device
 [x] Use regular scrolling on touch device projects section
 [x] Don't reshow intro animations after they've happened once (i.e. on going back to the page later)
@@ -13,8 +12,8 @@
 
 ## post-v1.0
 
-## post-v1.0
-t-v1.0
+[ ] Replace chat app image on homepage
+[ ] Figure out browser history problems
 [ ] Improve 404 page
 [ ] Add Flex case study
 [ ] Add Chat App case study

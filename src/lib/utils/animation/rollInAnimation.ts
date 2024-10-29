@@ -9,6 +9,7 @@ export default function rollInAnimation(
 		},
 		{
 			scaleY: 1,
+      visibility: 'visible',
 			ease: 'back.out',
 			duration: 0.25,
 			stagger: 0.025,
