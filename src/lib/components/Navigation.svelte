@@ -83,7 +83,13 @@
 					</li>
 				</ul>
 			</nav>
-			<button class="toggle" role="switch" aria-checked={open} onclick={() => (open = !open)}>
+			<button
+				class="toggle"
+				role="switch"
+				aria-label="Open navigation"
+				aria-checked={open}
+				onclick={() => (open = !open)}
+			>
 				<div class="toggle__bar"></div>
 				<div class="toggle__bar"></div>
 				<div class="toggle__bar"></div>

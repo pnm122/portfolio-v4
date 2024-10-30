@@ -12,6 +12,7 @@
 
 ## post-v1.0
 
+[ ] Resize during preloader breaks animations
 [ ] Clean up scroll to hash behavior on load
 [ ] Replace chat app image on homepage
 [ ] Figure out browser history problems

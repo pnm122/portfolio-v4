@@ -374,7 +374,7 @@
 	aria-roledescription="carousel"
 	aria-label="Case studies"
 >
-	{#each projects as { imgSrc, name, slug }}
+	{#each projects as { imgSrc, name }}
 		<!-- Only appears on non-touch devices -->
 		<div class="project-image">
 			<div class="project-image__padding-box">

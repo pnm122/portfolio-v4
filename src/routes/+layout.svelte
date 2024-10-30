@@ -5,7 +5,6 @@
 	import gsap from 'gsap'
 	import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
 	import { Observer } from 'gsap/dist/Observer'
-	import MouseFollower from '$components/MouseFollower.svelte'
 	import ScrollToPlugin from 'gsap/dist/ScrollToPlugin'
 	import { onNavigate } from '$app/navigation'
 	import scrollToLink from '$utils/scrollToLink'

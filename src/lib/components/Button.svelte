@@ -60,7 +60,7 @@
 				onMove: ({ x, y }) => {
 					if (!isHovering) return
 
-					const { x: bgX, y: bgY, width, height } = buttonBackground?.getBoundingClientRect()!
+					const { x: bgX, y: bgY, width, height } = buttonBackground!.getBoundingClientRect()
 					const xOffset = x! - bgX - width / 2
 					const yOffset = y! - bgY - height / 2
 					gsap.to(buttonBackground!, {
