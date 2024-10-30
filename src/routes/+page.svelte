@@ -7,7 +7,7 @@
 	import slowRollInAnimation from '$utils/animation/slowRollInAnimation'
 	import isTouchDevice from '$utils/isTouchDevice'
 	import scrollToLink from '$utils/scrollToLink'
-	import { isSiteLoaded, setSiteLoaded } from '$utils/siteLoaded'
+	import { siteLoaded, markSiteLoaded, isSiteLoaded } from '$utils/siteLoaded'
 	import gsap from 'gsap'
 	import { untrack } from 'svelte'
 	import { Canvas, Rectangle, Circle } from 'svelte-physics-renderer'
@@ -242,7 +242,7 @@
 				document.querySelector<HTMLElement>('.navigation-container')!.style.transform = ''
 				// console.log('preloader complete')
 				createScrollBasedAnimations(scrollTimeline)
-				setSiteLoaded(true)
+				markSiteLoaded()
 			})
 		})
 

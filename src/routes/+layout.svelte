@@ -8,12 +8,16 @@
 	import ScrollToPlugin from 'gsap/dist/ScrollToPlugin'
 	import { onNavigate } from '$app/navigation'
 	import scrollToLink from '$utils/scrollToLink'
-	import { setSiteLoaded } from '$utils/siteLoaded'
+	import { markSiteLoaded, siteLoaded } from '$utils/siteLoaded'
+	import debounce from 'debounce'
 
 	const { children } = $props()
 
 	if (browser) {
 		gsap.registerPlugin(Observer, ScrollTrigger, ScrollToPlugin)
+		// Stop scroll trigger from refreshing on window resize
+		// Will be manually handled later
+		ScrollTrigger.config({ autoRefreshEvents: 'visibilitychange,DOMContentLoaded,load' })
 	}
 
 	function isCaseStudyPage(path: string | undefined) {
@@ -27,7 +31,18 @@
 	// An ID maintained by svelte that lets me determine if the user is going forward or backward in navigation
 	let currentPageHistoryId = $state<number>(browser ? history.state['sveltekit:history'] : -1)
 
+	const refreshScrollTrigger = debounce(async () => {
+		// Wait for site to be loaded so there can never be a refresh while the preloader is animating
+		// Allowing refresh while the preloader animates will cause GSAP calculations to be off
+		await siteLoaded
+		console.log('refresh after site loaded')
+		ScrollTrigger.refresh()
+	}, 100)
+
 	$effect(() => {
+		// Manually reattach custom refreshing on resize to the scroll trigger
+		window.addEventListener('resize', refreshScrollTrigger)
+
 		const hash = window.location.hash
 		if (hash) {
 			scrollToLink(undefined, hash, false)
@@ -35,7 +50,11 @@
 
 		// Homepage will handle this post-preloader
 		if (window.location.pathname !== '/') {
-			setSiteLoaded(true)
+			markSiteLoaded()
+		}
+
+		return () => {
+			window.removeEventListener('resize', refreshScrollTrigger)
 		}
 	})
 
