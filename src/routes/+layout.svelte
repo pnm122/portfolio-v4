@@ -9,6 +9,7 @@
 	import ScrollToPlugin from 'gsap/dist/ScrollToPlugin'
 	import { onNavigate } from '$app/navigation'
 	import scrollToLink from '$utils/scrollToLink'
+	import { setSiteLoaded } from '$utils/siteLoaded'
 
 	const { children } = $props()
 
@@ -31,6 +32,11 @@
 		const hash = window.location.hash
 		if (hash) {
 			scrollToLink(undefined, hash, false)
+		}
+
+		// Homepage will handle this post-preloader
+		if (window.location.pathname !== '/') {
+			setSiteLoaded(true)
 		}
 	})
 

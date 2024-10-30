@@ -4,11 +4,10 @@
 	import Contact from '$components/homepage/Contact.svelte'
 	import Projects from '$components/homepage/Projects.svelte'
 	import SplitText from '$components/SplitText.svelte'
-	import popInAnimation from '$utils/animation/popInAnimation'
-	import rollInAnimation from '$utils/animation/rollInAnimation'
 	import slowRollInAnimation from '$utils/animation/slowRollInAnimation'
 	import isTouchDevice from '$utils/isTouchDevice'
 	import scrollToLink from '$utils/scrollToLink'
+	import { isSiteLoaded, setSiteLoaded } from '$utils/siteLoaded'
 	import gsap from 'gsap'
 	import { untrack } from 'svelte'
 	import { Canvas, Rectangle, Circle } from 'svelte-physics-renderer'
@@ -45,55 +44,10 @@
 
 	let skillsCanvas: Canvas | undefined = $state()
 	let screenWidth = $state(browser ? window.innerWidth : 0)
-  let loadPercent = $state(0)
-
-  function isHomepageVisited() {
-    return document.body.getAttribute('data-visited') === 'true'
-  }
-
-  function setHomepageVisited(val: boolean) {
-    document.body.setAttribute('data-visited', val.toString())
-  }
-
-	function createHeroAnimations(tl: gsap.core.Timeline) {
-		if (isHomepageVisited()) return
-
-		tl.fromTo('.hero__heading .letter', ...rollInAnimation())
-		tl.fromTo('.hero__description', ...popInAnimation({ delay: 0.125 }))
-		tl.fromTo('.hero__cta', ...popInAnimation({ delay: 0.125 }))
-
-		tl.fromTo(
-			'.hero',
-			{
-				scale: 0.75,
-				transformOrigin: 'center 50vh'
-			},
-			{
-				scale: 1,
-				ease: 'power4.out',
-				duration: 0.375,
-				delay: 0.125
-			}
-		)
-
-		tl.fromTo(
-			'.navigation .toggle__bar',
-			{
-				scaleX: 0
-			},
-			{
-				scaleX: 1,
-        visibility: 'visible',
-				ease: 'power4.out',
-				duration: 0.25,
-				stagger: 0.05,
-				delay: 0.25
-			}
-		)
-	}
+	let loadPercent = $state(0)
 
 	function createScrollBasedAnimations(tl: gsap.core.Timeline) {
-		if (!isHomepageVisited()) {
+		if (!isSiteLoaded()) {
 			gsap.fromTo(
 				'.about-heading__text .letter',
 				...slowRollInAnimation({
@@ -136,7 +90,7 @@
 		}
 
 		Object.keys(pictureAnimationData).forEach((el) => {
-			if (!isHomepageVisited()) {
+			if (!isSiteLoaded()) {
 				gsap.fromTo(
 					el,
 					{
@@ -175,106 +129,120 @@
 		})
 	}
 
-  function animatePreloader(tl: gsap.core.Timeline) {
-    if(!isHomepageVisited()) {
-      // tl.to('.preloader__bar', {
-      //   height: 0,
-      //   // borderBottomLeftRadius: 999,
-      //   // borderBottomRightRadius: 999,
-      //   duration: 0.75,
-      //   ease: 'power4.inOut',
-      //   stagger: {
-      //     amount: 0.25,
-      //     ease: 'none',
-      //     from: 'start'
-      //   }
-      // })
+	function animatePreloader(tl: gsap.core.Timeline) {
+		if (isSiteLoaded()) return
 
-      // tl.to('.preloader__bar', {
-      //   height: 0,
-      //   duration: 0.75,
-      //   ease: 'power4.inOut',
-      //   stagger: {
-      //     amount: 0.15,
-      //     ease: 'none',
-      //     from: 'center'
-      //   }
-      // })
+		document.body.setAttribute('data-loading', 'true')
 
-      const loadPercentProxy = { value: 0 }
-      tl.to(loadPercentProxy, {
-        value: 100,
-        ease: 'power4.out',
-        duration: 1,
-        onUpdate: () => {
-          untrack(() => {
-            loadPercent = Math.round(loadPercentProxy.value)
-          })
-        }
-      })
+		const loadPercentProxy = { value: 0 }
+		tl.to(loadPercentProxy, {
+			value: 100,
+			ease: 'power4.out',
+			duration: 1,
+			onUpdate: () => {
+				untrack(() => {
+					loadPercent = Math.round(loadPercentProxy.value)
+				})
+			}
+		})
 
-      tl.to('.preloader__background', {
-        y: '-100%',
-        duration: 0.75,
-        ease: 'power4.inOut',
-        stagger: 0.075
-      }, '0.5')
-    }
-    
-    tl.set('.preloader', {
-      display: 'none'
-    })
+		tl.to(
+			'.preloader__background',
+			{
+				y: '-100%',
+				duration: 0.75,
+				ease: 'power4.inOut',
+				stagger: 0.05
+			},
+			'0.5'
+		)
 
-    tl.fromTo('.homepage', {
-      y: '100vh',
-    }, {
-      y: 0,
-      duration: 0.75,
-      ease: 'power4.inOut'
-    }, '>-0.75')
+		tl.set('.preloader', {
+			display: 'none'
+		})
 
-    tl.fromTo('.homepage', {
-      borderRadius: 64,
-      scale: 0.8,
-      transformOrigin: 'center 50vh',
-    }, {
-      borderRadius: 0,
-      scale: 1,
-      duration: 0.5,
-      ease: 'power4.inOut',
-    })
-  }
+		tl.fromTo(
+			'.homepage, .navigation-container',
+			{
+				y: '100vh'
+			},
+			{
+				y: 0,
+				duration: 0.75,
+				ease: 'power4.inOut'
+			},
+			'>-0.75'
+		)
 
-  function hideAnimatingElements() {
-    if(isHomepageVisited()) return
-    gsap.set(`
+		tl.fromTo(
+			'.homepage, .navigation-container',
+			{
+				borderRadius: 32,
+				scale: 0.8,
+				transformOrigin: 'center 50vh'
+			},
+			{
+				borderRadius: 0,
+				scale: 1,
+				duration: 0.5,
+				ease: 'power4.inOut'
+			}
+		)
+
+		tl.set('body', {
+			overflow: 'auto'
+		})
+	}
+
+	function hideAnimatingElements() {
+		if (isSiteLoaded()) return
+		gsap.set(
+			`
       .about-heading__text .letter,
       .about__content .word,
       #spellingbee,
       #chatapp,
-      #datepicker,
-      .navigation .toggle__bar
-    `, {
-      visibility: 'hidden'
-    })
-  }
+      #datepicker
+    `,
+			{
+				visibility: 'hidden'
+			}
+		)
+	}
+
+	let projectsLoadResolve = () => {}
+	const projectsLoad = new Promise<void>((res) => (projectsLoadResolve = res))
+	let contactLoadResolve = () => {}
+	const contactLoad = new Promise<void>((res) => (contactLoadResolve = res))
+	let preloaderCompleteResolve = () => {}
+	const preloaderComplete = new Promise<void>((res) => (preloaderCompleteResolve = res))
 
 	$effect(() => {
-    // return
+		// Preloader won't be shown if homepage was already visited
+		if (isSiteLoaded()) preloaderCompleteResolve()
+
 		const ctx = gsap.context(() => {
-      const preloaderTimeline = gsap.timeline()
-			const heroTimeline = gsap.timeline()
+			const preloaderTimeline = gsap.timeline()
 			const scrollTimeline = gsap.timeline()
 
-			untrack(() => {
-        hideAnimatingElements()
-        animatePreloader(preloaderTimeline)
-				
-        preloaderTimeline.eventCallback('onComplete', () => {
-          console.log('preloader complete')
-          createScrollBasedAnimations(scrollTimeline)
-          setHomepageVisited(true)
-        })
+			untrack(async () => {
+				await Promise.all([projectsLoad, contactLoad])
+				hideAnimatingElements()
+				animatePreloader(preloaderTimeline)
+
+				preloaderTimeline.eventCallback('onComplete', preloaderCompleteResolve)
+
+				await preloaderComplete
+
+				document.body.setAttribute('data-loading', 'false')
+				// Manually reset transform to stop homepage and nav from creating a stacking context
+				// Otherwise, the projects section gets positioned incorrectly and goes offscreen when pinned
+				// and inner navigation positioning is incorrect
+				document.querySelector<HTMLElement>('.homepage')!.style.transform = ''
+				document.querySelector<HTMLElement>('.navigation-container')!.style.transform = ''
+				// console.log('preloader complete')
+				createScrollBasedAnimations(scrollTimeline)
+				setSiteLoaded(true)
 			})
 		})
 
@@ -289,6 +257,9 @@
 		window.addEventListener('resize', onResize)
 
 		const observer = new IntersectionObserver(async (e) => {
+			// Wait for preloader to be complete to (1) make sure circles dropping in is shown and
+			// (2) make sure the positions aren't calculated before the animation is finished
+			await preloaderComplete
 			if (e[0].isIntersecting) {
 				skillsCanvas?.context.start()
 			} else {
@@ -309,23 +280,32 @@
 	function getRandomAlignment() {
 		return ['flex-start', 'center', 'flex-end'][Math.round(Math.random() * 2)]
 	}
+
+	function onProjectsLoad() {
+		console.log('projects load')
+		projectsLoadResolve()
+	}
+
+	function onContactLoad() {
+		console.log('contact load')
+		contactLoadResolve()
+	}
 </script>
 
 <div class="preloader">
-  <div class="preloader__background">
-    <div class="preloader-text">
-      <h1>{loadPercent}%</h1>
-    </div>
-  </div>
-  <div class="preloader__background"></div>
-  <div class="preloader__background"></div>
+	<div class="preloader__background">
+		<div class="preloader-text">
+			<h1>{loadPercent}%</h1>
+		</div>
+	</div>
+	<div class="preloader__background"></div>
+	<div class="preloader__background"></div>
+	<div class="preloader__background"></div>
 </div>
 <main class="homepage">
 	<section class="hero" id="hero">
 		<div class="hero__inner">
-			<h1 class="hero__heading">
-				Pierce Martin
-			</h1>
+			<h1 class="hero__heading">Pierce Martin</h1>
 			<p class="hero__description">
 				I am a software developer and designer passionate about <i>human-centered</i>,
 				<b>intuitive</b>
@@ -440,66 +420,79 @@
 			</Canvas>
 		</div>
 	</section>
-	<Projects />
-	<Contact />
+	<Projects onLoad={onProjectsLoad} />
+	<Contact projectsLoaded={projectsLoad} onLoad={onContactLoad} {preloaderComplete} />
 </main>
 
 <style lang="scss">
 	@import '$scss/variables';
 	@import '$scss/mixins';
 
-  :global(body) {
-    background-color: $primary-extra-dark;
-  }
+	:global(body[data-loading='true']) {
+		background-color: $primary-extra-dark;
+	}
 
-  .preloader {
-    z-index: 9999;
-    position: fixed;
-    inset: 0;
+	:global(body:not([data-loaded='true'])) {
+		overflow: hidden;
+	}
 
-    &__background {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      inset: 0;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
+	:global(body[data-loaded='true'] .preloader) {
+		display: none;
+	}
 
-      &:nth-of-type(3) {
-        z-index: 1;
-        background-color: $primary-extra-dark;
-      }
+	.preloader {
+		z-index: 9999;
+		position: fixed;
+		inset: 0;
 
-      &:nth-of-type(2) {
-        z-index: 2;
-        background-color: $primary-dark;
-      }
+		&__background {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			inset: 0;
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
 
-      &:nth-of-type(1) {
-        z-index: 3;
-        background-color: $primary;
-      }
+			&:nth-of-type(4) {
+				z-index: 1;
+				background-color: $primary-extra-dark;
+			}
 
-      .preloader-text {
-        @include container;
-        padding-bottom: 24px;
+			&:nth-of-type(3) {
+				z-index: 2;
+				background-color: $primary-dark;
+			}
 
-        h1 {
-          font-size: $font-size-24;
-          text-transform: lowercase;
+			&:nth-of-type(2) {
+				z-index: 3;
+				background-color: $primary-semi-dark;
+			}
 
-          @media screen and (min-width: $screen-md) {
-            font-size: $font-size-32;
-          }
-        }
-      }
-    }
-  }
+			&:nth-of-type(1) {
+				z-index: 4;
+				background-color: $primary;
+			}
+
+			.preloader-text {
+				@include container;
+				padding-bottom: 24px;
+
+				h1 {
+					font-size: $font-size-24;
+					text-transform: lowercase;
+
+					@media screen and (min-width: $screen-md) {
+						font-size: $font-size-32;
+					}
+				}
+			}
+		}
+	}
 
 	.homepage {
 		overflow: hidden;
-    background-color: $background;
+		background-color: $background;
 	}
 
 	.hero {
@@ -517,7 +510,7 @@
 		&__heading {
 			font-size: $font-size-32;
 			white-space: nowrap;
-      text-transform: lowercase;
+			text-transform: lowercase;
 
 			@media screen and (min-width: $screen-xs) {
 				font-size: $font-size-40;
@@ -562,6 +555,8 @@
 			&__text {
 				text-align: center;
 				font-size: $font-size-20;
+				position: relative;
+				z-index: 1;
 
 				@media screen and (min-width: $screen-sm) {
 					font-size: $font-size-24;
@@ -577,19 +572,19 @@
 				transform: translate(-50%, -50%);
 
 				&#spellingbee {
-					z-index: -1;
+					z-index: 2;
 					left: 75%;
 					top: -40%;
 
 					@media screen and (min-width: $screen-md) {
-						z-index: 1;
+						z-index: 0;
 						left: 15%;
 						top: 150%;
 					}
 				}
 
 				&#chatapp {
-					z-index: -2;
+					z-index: 0;
 					left: 25%;
 					top: -33%;
 
@@ -600,7 +595,7 @@
 				}
 
 				&#datepicker {
-					z-index: -1;
+					z-index: 0;
 					left: 50%;
 					top: 150%;
 

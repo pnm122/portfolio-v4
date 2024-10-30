@@ -4,7 +4,14 @@
 	import isTouchDevice from '$utils/isTouchDevice'
 	import vEase from '$utils/vEase'
 	import gsap from 'gsap'
+	import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 	import { untrack } from 'svelte'
+
+	interface Props {
+		onLoad: () => void
+	}
+
+	const { onLoad }: Props = $props()
 
 	interface Project {
 		name: string
@@ -98,8 +105,11 @@
 	$effect(() => {
 		if (isTouchDevice()) {
 			touch = true
+			onLoad()
 			return
 		}
+
+		ScrollTrigger.addEventListener('refresh', onLoad)
 
 		const ctx = gsap.context(() => {
 			const projectImages = gsap.utils.toArray('.project-image')
@@ -268,6 +278,7 @@
 		const cleanup = createViewProjectFollower()
 
 		return () => {
+			ScrollTrigger.removeEventListener('refresh', onLoad)
 			cleanup()
 			ctx.revert()
 		}

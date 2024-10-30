@@ -1,8 +1,19 @@
 <script lang="ts">
 	import SplitText from '$components/SplitText.svelte'
 	import gsap from 'gsap'
+	import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 	import { untrack } from 'svelte'
 	import { Canvas, Circle, Rectangle } from 'svelte-physics-renderer'
+
+	interface Props {
+		preloaderComplete: Promise<void>
+		projectsLoaded: Promise<void>
+		onLoad: () => void
+	}
+
+	// Must wait until preloader is completed to make sure canvas positions
+	// are calculated correctly
+	const { preloaderComplete, projectsLoaded, onLoad }: Props = $props()
 
 	const format = new Intl.DateTimeFormat([], {
 		timeZone: 'America/New_York',
@@ -21,8 +32,15 @@
 	$effect(() => {
 		const ctx = gsap.context(async () => {
 			await document.fonts.ready
+			// Wait for projects section to load first since it pins a section and causes the whole page to offset
+			await projectsLoaded
 
-			gsap.set('.lets-talk', {
+			const contact = document.querySelector<HTMLElement>('.contact')
+			const letsTalk = document.querySelector<HTMLElement>('.lets-talk')
+			const initialLetsTalkScale =
+				contact && letsTalk ? contact.offsetWidth / letsTalk.offsetWidth : 1.5
+
+			gsap.set(letsTalk, {
 				transformOrigin: 'bottom left'
 			})
 
@@ -34,8 +52,9 @@
 					scrub: true
 				},
 				onStart: () => {
-					untrack(() => {
+					untrack(async () => {
 						if (animationCompleted) animationCompleted = false
+						await preloaderComplete
 						canvas?.context.stop()
 					})
 				},
@@ -45,26 +64,26 @@
 					})
 				},
 				onComplete: () => {
-					untrack(() => {
+					untrack(async () => {
 						if (!animationCompleted) animationCompleted = true
+						await preloaderComplete
 						canvas?.context.start()
 					})
 				}
 			})
 
-			tl.from('.lets-talk', {
-				y: '-400px',
-				ease: 'none',
-				duration: 1
-			})
-
-			const contact = document.querySelector<HTMLElement>('.contact')
-			const letsTalk = document.querySelector<HTMLElement>('.lets-talk')
-			const initialLetsTalkScale =
-				contact && letsTalk ? contact.offsetWidth / letsTalk.offsetWidth : 1.5
+			tl.from(
+				letsTalk,
+				{
+					y: '-400px',
+					ease: 'none',
+					duration: 1
+				},
+				0
+			)
 
 			tl.from(
-				'.lets-talk',
+				letsTalk,
 				{
 					scale: initialLetsTalkScale,
 					ease: 'none',
@@ -82,10 +101,15 @@
 					scrub: true
 				}
 			})
+
+			// Should be called after a refresh in theory but it doesn't seem to get called?
+			// This should be fine anyways?
+			onLoad()
 		})
 
 		function onResize() {
-			untrack(() => {
+			untrack(async () => {
+				await preloaderComplete
 				if (canvas?.context.state === 'running') {
 					if (animationCompleted) {
 						canvas.context.stop()
@@ -104,6 +128,7 @@
 		}, 1000)
 
 		return () => {
+			ScrollTrigger.removeEventListener('refresh', onLoad)
 			window.removeEventListener('resize', onResize)
 			untrack(() => {
 				canvas?.context.stop()

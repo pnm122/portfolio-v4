@@ -12,6 +12,7 @@ $gray-7: oklch(32.57% 0.002 67.75);
 
 $green-1: oklch(0.94 0.1 134.41);
 $green-2: oklch(0.88 0.13 134.12);
+$green-4: oklch(0.62 0.12 134.07);
 $green-6: oklch(0.43 0.11 134.07);
 $green-7: oklch(0.28 0.06 133.57);
 
@@ -22,6 +23,7 @@ $red-3: oklch(0.78 0.13 30.68);
 
 // Semantic tokens
 $primary: $green-2;
+$primary-semi-dark: $green-4;
 $primary-dark: $green-6;
 $primary-extra-dark: $green-7;
 $primary-light: $green-1;
