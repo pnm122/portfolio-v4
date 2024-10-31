@@ -2,6 +2,7 @@
 	import ExternalLinkIcon from '$components/ExternalLinkIcon.svelte'
 	import createClasses from '$utils/createClasses'
 	import isTouchDevice from '$utils/isTouchDevice'
+	import { isPreloading } from '$utils/preloader'
 	import vEase from '$utils/vEase'
 	import gsap from 'gsap'
 	import ScrollTrigger from 'gsap/dist/ScrollTrigger'
@@ -103,15 +104,22 @@
 	}
 
 	$effect(() => {
+    console.log('projects effect')
 		if (isTouchDevice()) {
 			touch = true
 			onLoad()
 			return
 		}
 
-		ScrollTrigger.addEventListener('refresh', onLoad)
+		ScrollTrigger.addEventListener('refresh', () => {
+      if(isPreloading()) {
+        console.log('preloading')
+      }
+      onLoad()
+    })
 
 		const ctx = gsap.context(() => {
+      console.log('in gsap context')
 			const projectImages = gsap.utils.toArray('.project-image')
 			const projectsContainer = document.querySelector('.projects') as HTMLElement
 			// Scale the projects themselves rather than the whole container
