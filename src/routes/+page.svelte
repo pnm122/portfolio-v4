@@ -33,6 +33,8 @@
 		'GSAP',
 		'Matter.js',
 		'Java',
+    'C',
+    'Python',
 		'Git',
 		'GitLab CI',
 		'Figma',
