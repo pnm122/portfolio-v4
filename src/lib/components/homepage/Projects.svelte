@@ -104,7 +104,6 @@
 	}
 
 	$effect(() => {
-    console.log('projects effect')
 		if (isTouchDevice()) {
 			touch = true
 			onLoad()
@@ -112,20 +111,19 @@
 		}
 
 		ScrollTrigger.addEventListener('refresh', () => {
-      // Workaround since refresh gets called twice in production
-      // I can't figure out the cause, but I can manually refresh after preloading to get around this
-      if(isPreloading()) {
-        finishedPreloading.then(() => {
-          onLoad()
-          ScrollTrigger.refresh()
-        })
-      } else {
-        onLoad()
-      }
-    })
+			// Workaround since refresh gets called twice in production
+			// I can't figure out the cause, but I can manually refresh after preloading to get around this
+			if (isPreloading()) {
+				finishedPreloading.then(() => {
+					onLoad()
+					ScrollTrigger.refresh()
+				})
+			} else {
+				onLoad()
+			}
+		})
 
 		const ctx = gsap.context(() => {
-      console.log('in gsap context')
 			const projectImages = gsap.utils.toArray('.project-image')
 			const projectsContainer = document.querySelector('.projects') as HTMLElement
 			// Scale the projects themselves rather than the whole container

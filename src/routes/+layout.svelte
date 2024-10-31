@@ -35,7 +35,6 @@
 		// Wait for site to be loaded so there can never be a refresh while the preloader is animating
 		// Allowing refresh while the preloader animates will cause GSAP calculations to be off
 		await siteLoaded
-		console.log('refresh after site loaded')
 		ScrollTrigger.refresh()
 	}, 100)
 

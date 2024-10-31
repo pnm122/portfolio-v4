@@ -133,7 +133,7 @@
 	function animatePreloader(tl: gsap.core.Timeline) {
 		if (isSiteLoaded()) return
 
-    setPreloadingState('active')
+		setPreloadingState('active')
 		document.body.setAttribute('data-loading', 'true')
 
 		const loadPercentProxy = { value: 0 }
@@ -233,8 +233,8 @@
 				animatePreloader(preloaderTimeline)
 
 				preloaderTimeline.eventCallback('onComplete', () => {
-          setPreloadingState('finished')
-        })
+					setPreloadingState('finished')
+				})
 
 				await finishedPreloading
 
@@ -244,7 +244,6 @@
 				// and inner navigation positioning is incorrect
 				document.querySelector<HTMLElement>('.homepage')!.style.transform = ''
 				document.querySelector<HTMLElement>('.navigation-container')!.style.transform = ''
-				// console.log('preloader complete')
 				createScrollBasedAnimations(scrollTimeline)
 				markSiteLoaded()
 			})
@@ -286,12 +285,10 @@
 	}
 
 	function onProjectsLoad() {
-		console.log('projects load')
 		projectsLoadResolve()
 	}
 
 	function onContactLoad() {
-		console.log('contact load')
 		contactLoadResolve()
 	}
 </script>

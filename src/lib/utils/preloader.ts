@@ -9,9 +9,9 @@ if (browser) {
 
 function setPreloadingState(state: 'inactive' | 'active' | 'finished') {
 	document.body.setAttribute('data-preloading', state)
-	if(state === 'finished') {
-    finishedPreloadingCallback()
-  }
+	if (state === 'finished') {
+		finishedPreloadingCallback()
+	}
 }
 
 function isPreloading() {

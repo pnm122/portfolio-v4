@@ -14,7 +14,7 @@
 
 [ ] Hydration mismatch
 [ ] Remove console logs from portfolio and physics library
-[ ] Projects section broken in production
+[x] Projects section broken in production
 [x] Resize during preloader breaks animations
 [ ] Clean up scroll to hash behavior on load
 [ ] Replace chat app image on homepage
