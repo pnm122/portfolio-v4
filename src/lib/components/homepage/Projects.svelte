@@ -2,6 +2,7 @@
 	import ExternalLinkIcon from '$components/ExternalLinkIcon.svelte'
 	import createClasses from '$utils/createClasses'
 	import isTouchDevice from '$utils/isTouchDevice'
+	import { finishedPreloading, isPreloading } from '$utils/preloader'
 	import vEase from '$utils/vEase'
 	import gsap from 'gsap'
 	import ScrollTrigger from 'gsap/dist/ScrollTrigger'
@@ -109,7 +110,18 @@
 			return
 		}
 
-		ScrollTrigger.addEventListener('refresh', onLoad)
+		ScrollTrigger.addEventListener('refresh', () => {
+			// Workaround since refresh gets called twice in production
+			// I can't figure out the cause, but I can manually refresh after preloading to get around this
+			if (isPreloading()) {
+				finishedPreloading.then(() => {
+					onLoad()
+					ScrollTrigger.refresh()
+				})
+			} else {
+				onLoad()
+			}
+		})
 
 		const ctx = gsap.context(() => {
 			const projectImages = gsap.utils.toArray('.project-image')

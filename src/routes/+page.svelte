@@ -6,6 +6,7 @@
 	import SplitText from '$components/SplitText.svelte'
 	import slowRollInAnimation from '$utils/animation/slowRollInAnimation'
 	import isTouchDevice from '$utils/isTouchDevice'
+	import { finishedPreloading, setPreloadingState } from '$utils/preloader'
 	import scrollToLink from '$utils/scrollToLink'
 	import { siteLoaded, markSiteLoaded, isSiteLoaded } from '$utils/siteLoaded'
 	import gsap from 'gsap'
@@ -132,6 +133,7 @@
 	function animatePreloader(tl: gsap.core.Timeline) {
 		if (isSiteLoaded()) return
 
+		setPreloadingState('active')
 		document.body.setAttribute('data-loading', 'true')
 
 		const loadPercentProxy = { value: 0 }
@@ -230,9 +232,11 @@
 				hideAnimatingElements()
 				animatePreloader(preloaderTimeline)
 
-				preloaderTimeline.eventCallback('onComplete', preloaderCompleteResolve)
+				preloaderTimeline.eventCallback('onComplete', () => {
+					setPreloadingState('finished')
+				})
 
-				await preloaderComplete
+				await finishedPreloading
 
 				document.body.setAttribute('data-loading', 'false')
 				// Manually reset transform to stop homepage and nav from creating a stacking context
@@ -240,7 +244,6 @@
 				// and inner navigation positioning is incorrect
 				document.querySelector<HTMLElement>('.homepage')!.style.transform = ''
 				document.querySelector<HTMLElement>('.navigation-container')!.style.transform = ''
-				// console.log('preloader complete')
 				createScrollBasedAnimations(scrollTimeline)
 				markSiteLoaded()
 			})
@@ -282,12 +285,10 @@
 	}
 
 	function onProjectsLoad() {
-		console.log('projects load')
 		projectsLoadResolve()
 	}
 
 	function onContactLoad() {
-		console.log('contact load')
 		contactLoadResolve()
 	}
 </script>
