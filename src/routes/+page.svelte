@@ -8,7 +8,7 @@
 	import isTouchDevice from '$utils/isTouchDevice'
 	import { finishedPreloading, setPreloadingState } from '$utils/preloader'
 	import scrollToLink from '$utils/scrollToLink'
-	import { siteLoaded, markSiteLoaded, isSiteLoaded } from '$utils/siteLoaded'
+	import { markSiteLoaded, isSiteLoaded } from '$utils/siteLoaded'
 	import gsap from 'gsap'
 	import { untrack } from 'svelte'
 	import { Canvas, Rectangle, Circle } from 'svelte-physics-renderer'
@@ -216,12 +216,10 @@
 	const projectsLoad = new Promise<void>((res) => (projectsLoadResolve = res))
 	let contactLoadResolve = () => {}
 	const contactLoad = new Promise<void>((res) => (contactLoadResolve = res))
-	let preloaderCompleteResolve = () => {}
-	const preloaderComplete = new Promise<void>((res) => (preloaderCompleteResolve = res))
 
 	$effect(() => {
 		// Preloader won't be shown if homepage was already visited
-		if (isSiteLoaded()) preloaderCompleteResolve()
+		if (isSiteLoaded()) setPreloadingState('finished')
 
 		const ctx = gsap.context(() => {
 			const preloaderTimeline = gsap.timeline()
@@ -262,7 +260,7 @@
 		const observer = new IntersectionObserver(async (e) => {
 			// Wait for preloader to be complete to (1) make sure circles dropping in is shown and
 			// (2) make sure the positions aren't calculated before the animation is finished
-			await preloaderComplete
+			await finishedPreloading
 			if (e[0].isIntersecting) {
 				skillsCanvas?.context.start()
 			} else {
@@ -422,7 +420,7 @@
 		</div>
 	</section>
 	<Projects onLoad={onProjectsLoad} />
-	<Contact projectsLoaded={projectsLoad} onLoad={onContactLoad} {preloaderComplete} />
+	<Contact projectsLoaded={projectsLoad} onLoad={onContactLoad} />
 </main>
 
 <style lang="scss">

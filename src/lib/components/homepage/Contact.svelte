@@ -1,19 +1,17 @@
 <script lang="ts">
 	import SplitText from '$components/SplitText.svelte'
+	import { finishedPreloading } from '$utils/preloader'
 	import gsap from 'gsap'
 	import ScrollTrigger from 'gsap/dist/ScrollTrigger'
 	import { untrack } from 'svelte'
 	import { Canvas, Circle, Rectangle } from 'svelte-physics-renderer'
 
 	interface Props {
-		preloaderComplete: Promise<void>
 		projectsLoaded: Promise<void>
 		onLoad: () => void
 	}
 
-	// Must wait until preloader is completed to make sure canvas positions
-	// are calculated correctly
-	const { preloaderComplete, projectsLoaded, onLoad }: Props = $props()
+	const { projectsLoaded, onLoad }: Props = $props()
 
 	const format = new Intl.DateTimeFormat([], {
 		timeZone: 'America/New_York',
@@ -54,7 +52,9 @@
 				onStart: () => {
 					untrack(async () => {
 						if (animationCompleted) animationCompleted = false
-						await preloaderComplete
+            // Must wait until preloader is completed to make sure canvas positions
+	          // are calculated correctly
+						await finishedPreloading
 						canvas?.context.stop()
 					})
 				},
@@ -66,7 +66,9 @@
 				onComplete: () => {
 					untrack(async () => {
 						if (!animationCompleted) animationCompleted = true
-						await preloaderComplete
+            // Must wait until preloader is completed to make sure canvas positions
+	          // are calculated correctly
+						await finishedPreloading
 						canvas?.context.start()
 					})
 				}
@@ -109,7 +111,7 @@
 
 		function onResize() {
 			untrack(async () => {
-				await preloaderComplete
+				await finishedPreloading
 				if (canvas?.context.state === 'running') {
 					if (animationCompleted) {
 						canvas.context.stop()
