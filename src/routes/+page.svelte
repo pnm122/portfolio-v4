@@ -293,6 +293,10 @@
 	}
 </script>
 
+<svelte:head>
+  <title>Pierce Martin | Web Developer and Designer</title>
+</svelte:head>
+
 <div class="preloader">
 	<div class="preloader__background">
 		<div class="preloader-text">

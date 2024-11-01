@@ -4,6 +4,10 @@
 	import NextCaseStudyScroller from '$components/NextCaseStudyScroller.svelte'
 </script>
 
+<svelte:head>
+  <title>Case Study | Chatham Financial</title>
+</svelte:head>
+
 <main class="case-study">
 	<CaseStudyIntro
 		title="Chatham Financial"
