@@ -425,7 +425,7 @@
 						<li class="skill">{skill}</li>
 					{/each}
 					{#if skills.length > 4}
-						<span class="skill">+{skills.length - 4}</span>
+						<li class="skill">+{skills.length - 4}</li>
 					{/if}
 				</ul>
 				<span class="project__view-text">
