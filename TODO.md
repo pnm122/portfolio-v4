@@ -12,6 +12,7 @@
 
 ## post-v1.0
 
+[ ] Move case study preview text towards center on larger screens
 [ ] Hydration mismatch
 [ ] Remove console logs from portfolio and physics library
 [x] Projects section broken in production

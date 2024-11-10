@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { browser } from '$app/environment'
+	import { browser, dev } from '$app/environment'
 	import Navigation from '$components/Navigation.svelte'
 	import '$scss/index.scss'
 	import gsap from 'gsap'
@@ -10,6 +10,9 @@
 	import scrollToLink from '$utils/scrollToLink'
 	import { markSiteLoaded, siteLoaded } from '$utils/siteLoaded'
 	import debounce from 'debounce'
+  import { inject } from '@vercel/analytics'
+
+  inject({ mode: dev ? 'development' : 'production', debug: false })
 
 	const { children } = $props()
 
