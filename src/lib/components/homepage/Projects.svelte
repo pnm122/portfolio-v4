@@ -514,15 +514,16 @@
 			inset: 0;
 
 			&__link {
+        --offset-from-buttons: 16px;
+
 				height: 100%;
-				width: 100%;
 				// Place project info above buttons
 				padding-bottom: calc(
-					16px + var(--button-bottom-padding) + var(--selected-button-offset) + var(--button-height)
+					var(--offset-from-buttons) + var(--button-bottom-padding) + var(--selected-button-offset) + var(--button-height)
 				);
-				padding-left: 24px;
 				justify-content: flex-end;
 				@include v-gap(0px);
+        @include container;
 
 				&:focus-visible {
 					outline: none;
@@ -532,6 +533,10 @@
 						text-decoration: underline;
 					}
 				}
+
+        @media screen and (min-height: 720px) {
+          --offset-from-buttons: 10vh;
+        }
 			}
 
 			&__title {
