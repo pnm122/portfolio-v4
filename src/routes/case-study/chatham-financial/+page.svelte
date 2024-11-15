@@ -32,6 +32,16 @@
 				in Figma with UI designers to improve the design of several components and pages.
 			</p>
 		</div>
+    <ul class="section__details skill-list">
+			<li class="skill-list__item">Stencil</li>
+			<li class="skill-list__item">SCSS</li>
+			<li class="skill-list__item">Jasmine</li>
+			<li class="skill-list__item">Figma</li>
+			<li class="skill-list__item">GitLab CI</li>
+			<li class="skill-list__item">Git</li>
+			<li class="skill-list__item">TypeScript</li>
+			<li class="skill-list__item">Accessibility</li>
+		</ul>
 	</section>
 	<section class="section">
 		<div class="section__title">

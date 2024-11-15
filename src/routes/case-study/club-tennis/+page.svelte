@@ -34,6 +34,13 @@
 				mid-2024.
 			</p>
 		</div>
+    <ul class="section__details skill-list">
+			<li class="skill-list__item">React</li>
+			<li class="skill-list__item">Figma</li>
+			<li class="skill-list__item">Firebase</li>
+			<li class="skill-list__item">GSAP</li>
+			<li class="skill-list__item">TypeScript</li>
+		</ul>
 	</section>
 	<section class="section">
 		<h2 class="section__title">Motivation</h2>
