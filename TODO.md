@@ -13,6 +13,7 @@
 ## post-v1.0
 
 [x] Add missing skills to Chatham and Club Tennis case studies
+[x] Use SvelteKit for robots.txt
 [ ] Move case study preview text towards center on larger screens
 [ ] Hydration mismatch
 [ ] Remove console logs from portfolio and physics library
