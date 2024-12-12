@@ -25,4 +25,4 @@
 [ ] Improve 404 page
 [ ] Add Flex case study
 [ ] Add Chat App case study
-[ ] Convert to .webpo .webp
+[ ] Convert images to .webp

@@ -42,6 +42,7 @@
 				'SCSS',
 				'Jasmine',
 				'Figma',
+        'Storybook',
 				'Gitlab CI',
 				'Git',
 				'TypeScript',

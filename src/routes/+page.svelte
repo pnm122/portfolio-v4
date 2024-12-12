@@ -26,6 +26,8 @@
 		'Node',
 		'Express',
 		'Jasmine',
+    'Jest',
+    'Storybook',
 		'Flask',
 		'Flutter',
 		'Firebase',

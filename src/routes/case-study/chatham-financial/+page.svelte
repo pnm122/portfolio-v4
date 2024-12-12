@@ -37,6 +37,7 @@
 			<li class="skill-list__item">SCSS</li>
 			<li class="skill-list__item">Jasmine</li>
 			<li class="skill-list__item">Figma</li>
+      <li class="skill-list__item">Storybook</li>
 			<li class="skill-list__item">GitLab CI</li>
 			<li class="skill-list__item">Git</li>
 			<li class="skill-list__item">TypeScript</li>
