@@ -29,6 +29,7 @@
 		'Jasmine',
     'Jest',
     'Storybook',
+    'Prisma ORM',
     'React Query',
 		'Flask',
 		'Flutter',
