@@ -9,48 +9,10 @@
 	import { finishedPreloading, setPreloadingState } from '$utils/preloader'
 	import scrollToLink from '$utils/scrollToLink'
 	import { markSiteLoaded, isSiteLoaded } from '$utils/siteLoaded'
+	import { skills } from '$utils/skills'
 	import gsap from 'gsap'
 	import { untrack } from 'svelte'
 	import { Canvas, Rectangle, Circle } from 'svelte-physics-renderer'
-
-	const skills = [
-		'HTML',
-		'CSS',
-		'SCSS',
-		'Tailwind',
-		'JavaScript',
-		'TypeScript',
-		'React',
-    'Next.js',
-		'Svelte',
-		'Stencil',
-		'Node',
-		'Express',
-		'Jasmine',
-    'Jest',
-    'Storybook',
-    'Prisma ORM',
-    'React Query',
-		'Flask',
-		'Flutter',
-		'Firebase',
-		'MongoDB',
-		'GSAP',
-		'Matter.js',
-		'Java',
-    'C',
-    'Python',
-		'Git',
-		'GitLab CI',
-    'GitLab Issues',
-    'Linear',
-		'Figma',
-		'Adobe XD',
-		'OpenGL',
-		'Accessibility',
-		'Responsive Design',
-		'REST'
-	]
 
 	let skillsCanvas: Canvas | undefined = $state()
 	let screenWidth = $state(browser ? window.innerWidth : 0)
@@ -399,7 +361,7 @@
 			>
 				<div class="skills__inner">
 					<ul class="skill-list">
-						{#each skills.reverse() as skill}
+						{#each skills.toReversed() as skill}
 							<li class="skill-list__item" style="align-self: {getRandomAlignment()};">
 								{#if screenWidth < 768}
 									<Circle size={76} class="skill-circle" restitution={0.75}>

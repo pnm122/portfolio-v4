@@ -1,7 +1,14 @@
-<script>
+<script lang="ts">
 	import CaseStudyImage from '$components/CaseStudyImage.svelte'
 	import CaseStudyIntro from '$components/CaseStudyIntro.svelte'
 	import NextCaseStudyScroller from '$components/NextCaseStudyScroller.svelte'
+	import { projects } from '$utils/projects'
+
+	const {
+		name,
+		description,
+		skills,
+	} = projects.find(({ slug }) => slug === 'chatham-financial')!
 </script>
 
 <svelte:head>
@@ -10,8 +17,8 @@
 
 <main class="case-study">
 	<CaseStudyIntro
-		title="Chatham Financial"
-		description="A collection of projects from my internship at Chatham Financial, primarily focused on improving their design system"
+		title={name}
+		description={description}
 		smallTitle={true}
 	/>
 	<section class="section">
@@ -33,15 +40,9 @@
 			</p>
 		</div>
     <ul class="section__details skill-list">
-			<li class="skill-list__item">Stencil</li>
-			<li class="skill-list__item">SCSS</li>
-			<li class="skill-list__item">Jasmine</li>
-			<li class="skill-list__item">Figma</li>
-      <li class="skill-list__item">Storybook</li>
-			<li class="skill-list__item">GitLab CI</li>
-			<li class="skill-list__item">Git</li>
-			<li class="skill-list__item">TypeScript</li>
-			<li class="skill-list__item">Accessibility</li>
+			{#each skills as skill}
+				<li class="skill-list__item">{skill}</li>
+			{/each}
 		</ul>
 	</section>
 	<section class="section">
@@ -249,9 +250,7 @@
 	</section>
 </main>
 <NextCaseStudyScroller
-	slug="club-tennis"
-	title="Club Tennis"
-	image="/images/club-tennis/hero-section.png"
+	current='chatham-financial'
 />
 
 <style lang="scss">

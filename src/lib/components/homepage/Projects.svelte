@@ -3,6 +3,8 @@
 	import createClasses from '$utils/createClasses'
 	import isTouchDevice from '$utils/isTouchDevice'
 	import { finishedPreloading, isPreloading } from '$utils/preloader'
+	import { projects } from '$utils/projects'
+	import type { Skill } from '$utils/skills'
 	import vEase from '$utils/vEase'
 	import gsap from 'gsap'
 	import ScrollTrigger from 'gsap/dist/ScrollTrigger'
@@ -13,59 +15,6 @@
 	}
 
 	const { onLoad }: Props = $props()
-
-	interface Project {
-		name: string
-		description: string
-		imgSrc: string
-		slug: string
-		skills: string[]
-	}
-
-	const projects: Project[] = [
-		{
-			name: 'Spelling Bee',
-			description:
-				'A replica of the New York Times’ Spelling Bee game with additional features, including hints and leaderboards.',
-			imgSrc: 'spelling-bee.png',
-			slug: 'spelling-bee',
-			skills: ['Svelte', 'MongoDB', 'Figma', 'Node.js', 'Express.js', 'TypeScript', 'Python']
-		},
-		{
-			name: 'Chatham Financial',
-			description:
-				'A collection of projects from my internship at Chatham Financial, primarily focused on improving their design system.',
-			imgSrc: 'chatham-financial.png',
-			slug: 'chatham-financial',
-			skills: [
-				'Stencil',
-				'SCSS',
-				'Jasmine',
-				'Figma',
-        'Storybook',
-				'Gitlab CI',
-				'Git',
-				'TypeScript',
-				'Accessibility'
-			]
-		},
-		{
-			name: 'Club Tennis',
-			description:
-				'A website created for the Club Tennis team at the University of Pittsburgh, featuring a bespoke design and admin panel made from scratch.',
-			imgSrc: 'club-tennis.png',
-			slug: 'club-tennis',
-			skills: ['React', 'Figma', 'Firebase', 'GSAP', 'TypeScript']
-		}
-		// {
-		// 	name: 'Flex',
-		// 	description:
-		// 		'A fitness tracker created as part of a Software Engineering course at the University of Pittsburgh.',
-		// 	imgSrc: 'flex.png',
-		// 	slug: 'flex',
-		// 	skills: ['React', 'Spring Boot', 'Figma', 'TypeScript']
-		// }
-	]
 
 	let touch = $state(false)
 	let showing = $state(false)
@@ -387,19 +336,19 @@
 	aria-roledescription="carousel"
 	aria-label="Case studies"
 >
-	{#each projects as { imgSrc, name }}
+	{#each projects as { homeImgSrc, name }}
 		<!-- Only appears on non-touch devices -->
 		<div class="project-image">
 			<div class="project-image__padding-box">
 				<img
 					class="project-image__image"
-					src={`images/homepage/project-covers/${imgSrc}`}
+					src={`images/homepage/project-covers/${homeImgSrc}`}
 					alt={name}
 				/>
 			</div>
 		</div>
 	{/each}
-	{#each projects as { name, description, skills, slug, imgSrc }, index}
+	{#each projects as { name, description, skills, slug, homeImgSrc }, index}
 		<div
 			class={createClasses({
 				project: true,
@@ -435,13 +384,13 @@
 				</span>
 				<!-- Only appears on touch devices -->
 				<div class="project__image">
-					<img src={`images/homepage/project-covers/${imgSrc}`} alt={name} />
+					<img src={`images/homepage/project-covers/${homeImgSrc}`} alt={name} />
 				</div>
 			</a>
 		</div>
 	{/each}
 	<div class="project-buttons" role="tablist" tabindex="-1" onkeydown={onButtonGroupKeydown}>
-		{#each projects as { name, imgSrc }, i}
+		{#each projects as { name, homeImgSrc }, i}
 			<button
 				class="project-buttons__button"
 				role="tab"
@@ -453,7 +402,7 @@
 				onfocus={() => onButtonClickOrFocus(i)}
 				style="view-transition-name: project-button--{i}"
 			>
-				<img src={`images/homepage/project-covers/${imgSrc}`} alt={name} class="button-image" />
+				<img src={`images/homepage/project-covers/${homeImgSrc}`} alt={name} class="button-image" />
 			</button>
 		{/each}
 	</div>
