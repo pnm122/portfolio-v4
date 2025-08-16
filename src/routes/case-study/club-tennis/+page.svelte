@@ -1,7 +1,16 @@
-<script>
+<script lang="ts">
 	import CaseStudyImage from '$components/CaseStudyImage.svelte'
 	import CaseStudyIntro from '$components/CaseStudyIntro.svelte'
 	import NextCaseStudyScroller from '$components/NextCaseStudyScroller.svelte'
+	import { projects } from '$utils/projects'
+
+	const {
+		name,
+		description,
+		skills,
+		source,
+		liveSite,
+	} = projects.find(({ slug }) => slug === 'club-tennis')!
 </script>
 
 <svelte:head>
@@ -10,10 +19,10 @@
 
 <main class="case-study">
 	<CaseStudyIntro
-		title="Club Tennis"
-		description="A website created for the Club Tennis team at the University of Pittsburgh, featuring a bespoke design and admin panel made from scratch"
-		source="https://github.com/pnm122/pittclubtennis"
-		liveSite="https://clubtennisatpitt.org/"
+		title={name}
+		description={description}
+		source={source}
+		liveSite={liveSite}
 	/>
 	<section class="section">
 		<CaseStudyImage
@@ -35,11 +44,9 @@
 			</p>
 		</div>
     <ul class="section__details skill-list">
-			<li class="skill-list__item">React</li>
-			<li class="skill-list__item">Figma</li>
-			<li class="skill-list__item">Firebase</li>
-			<li class="skill-list__item">GSAP</li>
-			<li class="skill-list__item">TypeScript</li>
+			{#each skills as skill}
+				<li class="skill-list__item">{skill}</li>
+			{/each}
 		</ul>
 	</section>
 	<section class="section">
@@ -283,9 +290,7 @@
 	</section>
 </main>
 <NextCaseStudyScroller
-	slug="spelling-bee"
-	title="Spelling Bee"
-	image="/images/spelling-bee/gameplay.png"
+	current='club-tennis'
 />
 
 <style lang="scss">

@@ -4,14 +4,17 @@
 	import { goto } from '$app/navigation'
 	import isTouchDevice from '$utils/isTouchDevice'
 	import ExternalLinkIcon from './ExternalLinkIcon.svelte'
+	import { projects } from '$utils/projects'
 
 	interface Props {
-		slug: string
-		title: string
-		image: string
+		/** Slug of the current page */
+		current: string
 	}
 
-	const { slug, title, image }: Props = $props()
+	const { current }: Props = $props()
+
+	const currentIndex = projects.findIndex(({ slug }) => slug === current);
+	const { slug, name, previewImgSrc } = projects.at((currentIndex + 1) % projects.length)!
 
 	let progress = $state(0)
 	let touch = $state(false)
@@ -79,12 +82,12 @@
 
 <div class="next{touch ? ' next--touch-device' : ''}">
 	<div class="next__inner">
-		<img class="image" src={image} alt="{title} preview image 1" />
+		<img class="image" src={previewImgSrc} alt="{name} preview image 1" />
 		<div class="text">
 			<h2 class="text__up-next">Up next</h2>
 			<div class="above-progress">
 				<h1 class="above-progress__title">
-					{title}
+					{name}
 				</h1>
 				<Button type="link" href="/case-study/{slug}" class="above-progress__skip" style="text">
 					Skip

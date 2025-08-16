@@ -2,6 +2,15 @@
 	import CaseStudyImage from '$components/CaseStudyImage.svelte'
 	import CaseStudyIntro from '$components/CaseStudyIntro.svelte'
 	import NextCaseStudyScroller from '$components/NextCaseStudyScroller.svelte'
+	import { projects } from '$utils/projects'
+
+	const {
+		name,
+		description,
+		skills,
+		source,
+		liveSite,
+	} = projects.find(({ slug }) => slug === 'spelling-bee')!
 </script>
 
 <svelte:head>
@@ -10,10 +19,10 @@
 
 <main class="case-study">
 	<CaseStudyIntro
-		title="Spelling Bee"
-		description="A replica of the New York Times’ Spelling Bee game with additional features, including hints and leaderboards"
-		source="https://github.com/pnm122/spelling-bee"
-		liveSite="https://www.thebetterspellingbee.com"
+		title={name}
+		description={description}
+		source={source}
+		liveSite={liveSite}
 	/>
 	<section class="section">
 		<CaseStudyImage
@@ -39,13 +48,9 @@
 			</p>
 		</div>
 		<ul class="section__details skill-list">
-			<li class="skill-list__item">Svelte</li>
-			<li class="skill-list__item">MongoDB</li>
-			<li class="skill-list__item">Figma</li>
-			<li class="skill-list__item">Node.js</li>
-			<li class="skill-list__item">Express.js</li>
-			<li class="skill-list__item">TypeScript</li>
-			<li class="skill-list__item">Python</li>
+			{#each skills as skill}
+				<li class="skill-list__item">{skill}</li>
+			{/each}
 		</ul>
 	</section>
 	<section class="section">
@@ -258,9 +263,7 @@
 	</section>
 </main>
 <NextCaseStudyScroller
-	slug="chatham-financial"
-	title="Chatham Financial"
-	image="/images/chatham-financial/icons.png"
+	current='spelling-bee'
 />
 
 <style lang="scss">
