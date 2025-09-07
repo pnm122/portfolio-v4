@@ -4,7 +4,6 @@
 	import isTouchDevice from '$utils/isTouchDevice'
 	import { finishedPreloading, isPreloading } from '$utils/preloader'
 	import { projects } from '$utils/projects'
-	import type { Skill } from '$utils/skills'
 	import vEase from '$utils/vEase'
 	import gsap from 'gsap'
 	import ScrollTrigger from 'gsap/dist/ScrollTrigger'
