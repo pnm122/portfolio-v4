@@ -40,7 +40,8 @@ export const skills = [
   'OpenGL',
   'Accessibility',
   'Responsive Design',
-  'REST'
+  'REST',
+  'Supabase',
 ] as const;
 
 export type Skill = typeof skills[number];

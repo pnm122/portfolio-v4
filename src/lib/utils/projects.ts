@@ -13,6 +13,16 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    name: 'typevs.me',
+    description: 'A realtime head-to-head typing competition game.',
+    homeImgSrc: 'typing-race.png',
+    previewImgSrc: '/images/typing-race/opengraph.png',
+    slug: 'typing-race',
+    liveSite: 'https://www.typevs.me/',
+    source: 'https://github.com/pnm122/type-versus-me',
+    skills: ['Next.js', 'Socket.io', 'Prisma ORM', 'Jest', 'Supabase', 'TypeScript', 'SCSS', 'Husky', 'ESLint', 'Prettier', 'GitHub Actions']
+  },
+  {
     name: 'Spelling Bee',
     description:
       'A replica of the New York Times’ Spelling Bee game with additional features, including hints and leaderboards.',
