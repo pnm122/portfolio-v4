@@ -281,7 +281,7 @@
 		<div class="hero__inner">
 			<h1 class="hero__heading">Pierce Martin</h1>
 			<p class="hero__description">
-				I am a software developer and designer passionate about <i>human-centered</i>,
+				I’m a software developer and designer passionate about <i>human-centered</i>,
 				<b>intuitive</b>
 				design and <u>modern</u> web development.
 			</p>
@@ -329,7 +329,7 @@
 				<SplitText
 					noOverflow
 					wordsOnly
-					text="I am currently working as a Software Developer at Katara. As the sole frontend developer and designer, I am focused on creating the best user experience possible. I also manage the technical documentation, helping users understand and navigate our complex product."
+					text="I’m currently working as a Software Developer at Katara. As the sole frontend developer and designer, I’m focused on creating the best user experience possible. I also manage the technical documentation, helping users understand and navigate our complex product."
 				/>
 			</p>
 			<p>
