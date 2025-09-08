@@ -45,14 +45,14 @@
 
 		const pictureAnimationData = {
 			'#spellingbee': {
+				parallax: 50,
+				rotate: 8,
+				rotateRange: -18
+			},
+			'#typing-race': {
 				parallax: 100,
 				rotate: 30,
 				rotateRange: 20
-			},
-			'#chatapp': {
-				parallax: 50,
-				rotate: -25,
-				rotateRange: -10
 			},
 			'#datepicker': {
 				parallax: 125,
@@ -174,7 +174,7 @@
       .about-heading__text .letter,
       .about__content .word,
       #spellingbee,
-      #chatapp,
+      #typing-race,
       #datepicker
     `,
 			{
@@ -263,7 +263,7 @@
 </script>
 
 <svelte:head>
-  <title>Pierce Martin | Web Developer and Designer</title>
+	<title>Pierce Martin | Web Developer and Designer</title>
 </svelte:head>
 
 <div class="preloader">
@@ -281,7 +281,7 @@
 		<div class="hero__inner">
 			<h1 class="hero__heading">Pierce Martin</h1>
 			<p class="hero__description">
-				I am a software developer and designer passionate about <i>human-centered</i>,
+				I’m a software developer and designer passionate about <i>human-centered</i>,
 				<b>intuitive</b>
 				design and <u>modern</u> web development.
 			</p>
@@ -318,8 +318,8 @@
 				/>
 				<img
 					class="about-heading__image"
-					id="chatapp"
-					src="images/homepage/chatapp.png"
+					id="typing-race"
+					src="images/homepage/typing-race.png"
 					alt="chat app"
 				/>
 			</div>
@@ -329,14 +329,14 @@
 				<SplitText
 					noOverflow
 					wordsOnly
-					text="Most recently, I was an intern on the Design Systems team at Chatham Financial. During my internship, I created, added features to, and maintained components in a component library, wrote extensive unit tests, and created a pipeline to automate the process of converting design tokens into code variables."
+					text="I’m currently working as a Software Developer at Katara. As the sole frontend developer and designer, I’m focused on creating the best user experience possible. I also manage the technical documentation, helping users understand and navigate our complex product."
 				/>
 			</p>
 			<p>
 				<SplitText
 					noOverflow
 					wordsOnly
-					text="Previously, I spent 8 months freelancing on Fiverr, where I became a Level 1 Seller offering web design and development services. I maintained a 5 star rating, crafting quality, bespoke solutions for nearly 50 orders."
+					text="Previously, I was an intern on the Design Systems team at Chatham Financial and a freelancer on Fiverr. From my experiences, I have built a diverse set of skills across web development and design."
 				/>
 			</p>
 			<p>
@@ -544,38 +544,45 @@
 			&__image {
 				position: absolute;
 				transform: translate(-50%, -50%);
+				max-width: unset;
+				max-height: unset;
 
-				&#spellingbee {
+				&#typing-race {
 					z-index: 2;
 					left: 75%;
 					top: -40%;
+					height: 130px;
 
 					@media screen and (min-width: $screen-md) {
-						z-index: 0;
 						left: 15%;
-						top: 150%;
+						top: 170%;
+						height: 170px;
 					}
 				}
 
-				&#chatapp {
+				&#spellingbee {
 					z-index: 0;
-					left: 25%;
-					top: -33%;
+					left: 15%;
+					top: -25%;
+					height: 180px;
 
 					@media screen and (min-width: $screen-md) {
 						left: 75%;
-						top: 115%;
+						top: 150%;
+						height: 240px;
 					}
 				}
 
 				&#datepicker {
 					z-index: 0;
 					left: 50%;
-					top: 150%;
+					top: 125%;
+					height: 180px;
 
 					@media screen and (min-width: $screen-md) {
 						left: 100%;
-						top: 0%;
+						top: -15%;
+						height: 225px;
 					}
 				}
 			}
