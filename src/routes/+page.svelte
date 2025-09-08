@@ -263,7 +263,7 @@
 </script>
 
 <svelte:head>
-  <title>Pierce Martin | Web Developer and Designer</title>
+	<title>Pierce Martin | Web Developer and Designer</title>
 </svelte:head>
 
 <div class="preloader">
@@ -329,14 +329,14 @@
 				<SplitText
 					noOverflow
 					wordsOnly
-					text="Most recently, I was an intern on the Design Systems team at Chatham Financial. During my internship, I created, added features to, and maintained components in a component library, wrote extensive unit tests, and created a pipeline to automate the process of converting design tokens into code variables."
+					text="I am currently working as a Software Developer at Katara. As the sole frontend developer and designer, I am focused on creating the best user experience possible. I also manage the technical documentation, helping users understand and navigate our complex product."
 				/>
 			</p>
 			<p>
 				<SplitText
 					noOverflow
 					wordsOnly
-					text="Previously, I spent 8 months freelancing on Fiverr, where I became a Level 1 Seller offering web design and development services. I maintained a 5 star rating, crafting quality, bespoke solutions for nearly 50 orders."
+					text="Previously, I was an intern on the Design Systems team at Chatham Financial and a freelancer on Fiverr. From my experiences, I have built a diverse set of skills across web development and design."
 				/>
 			</p>
 			<p>
