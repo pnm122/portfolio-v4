@@ -45,14 +45,14 @@
 
 		const pictureAnimationData = {
 			'#spellingbee': {
+				parallax: 50,
+				rotate: 8,
+				rotateRange: -18
+			},
+			'#typing-race': {
 				parallax: 100,
 				rotate: 30,
 				rotateRange: 20
-			},
-			'#chatapp': {
-				parallax: 50,
-				rotate: -25,
-				rotateRange: -10
 			},
 			'#datepicker': {
 				parallax: 125,
@@ -174,7 +174,7 @@
       .about-heading__text .letter,
       .about__content .word,
       #spellingbee,
-      #chatapp,
+      #typing-race,
       #datepicker
     `,
 			{
@@ -318,8 +318,8 @@
 				/>
 				<img
 					class="about-heading__image"
-					id="chatapp"
-					src="images/homepage/chatapp.png"
+					id="typing-race"
+					src="images/homepage/typing-race.png"
 					alt="chat app"
 				/>
 			</div>
@@ -544,38 +544,45 @@
 			&__image {
 				position: absolute;
 				transform: translate(-50%, -50%);
+				max-width: unset;
+				max-height: unset;
 
-				&#spellingbee {
+				&#typing-race {
 					z-index: 2;
 					left: 75%;
 					top: -40%;
+					height: 130px;
 
 					@media screen and (min-width: $screen-md) {
-						z-index: 0;
 						left: 15%;
-						top: 150%;
+						top: 170%;
+						height: 170px;
 					}
 				}
 
-				&#chatapp {
+				&#spellingbee {
 					z-index: 0;
-					left: 25%;
-					top: -33%;
+					left: 15%;
+					top: -25%;
+					height: 180px;
 
 					@media screen and (min-width: $screen-md) {
 						left: 75%;
-						top: 115%;
+						top: 150%;
+						height: 240px;
 					}
 				}
 
 				&#datepicker {
 					z-index: 0;
 					left: 50%;
-					top: 150%;
+					top: 125%;
+					height: 180px;
 
 					@media screen and (min-width: $screen-md) {
 						left: 100%;
-						top: 0%;
+						top: -15%;
+						height: 225px;
 					}
 				}
 			}
