@@ -34,8 +34,7 @@
 	@include page-grid;
 
 	&__title {
-		&:not(:has(h2)),
-		& h2 {
+		&, & h2 {
 			font-size: $font-size-16;
 			text-transform: lowercase;
 		}
@@ -53,7 +52,7 @@
 	}
 
 	&__subtitle {
-		font-size: $font-size-14;
+		font-size: $font-size-12;
 		text-transform: lowercase;
 		letter-spacing: 0.0125em;
 
