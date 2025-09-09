@@ -16,6 +16,7 @@ export const skills = [
   'Storybook',
   'Prisma ORM',
   'React Query',
+  'shadcn/ui',
   'Flask',
   'Flutter',
   'Firebase',
