@@ -249,10 +249,6 @@
 		}
 	})
 
-	function getRandomAlignment() {
-		return ['flex-start', 'center', 'flex-end'][Math.round(Math.random() * 2)]
-	}
-
 	function onProjectsLoad() {
 		projectsLoadResolve()
 	}
@@ -362,7 +358,7 @@
 				<div class="skills__inner">
 					<ul class="skill-list">
 						{#each skills.toReversed() as skill}
-							<li class="skill-list__item" style="align-self: {getRandomAlignment()};">
+							<li class="skill-list__item" style="width: {Math.floor(Math.random() * 33)}%">
 								{#if screenWidth < 768}
 									<Circle size={76} class="skill-circle" restitution={0.75}>
 										{skill}
@@ -384,9 +380,8 @@
 						</Rectangle>
 						<Rectangle style="width: fit-content;" isStatic>
 							<p class="skills__description">
-								Through schoolwork, personal and service projects, and professional experience as
-								both a freelancer and as an intern, I've developed actionable skills with many web
-								tools, technologies, and concepts.
+								Through multiple professional experiences and personal projects, I've developed
+								actionable skills with many web tools, technologies, and concepts.
 							</p>
 						</Rectangle>
 					</div>
@@ -634,7 +629,7 @@
 			font-size: $font-size-24;
 			color: $white;
 			text-transform: lowercase;
-			line-height: 1;
+			line-height: 0.85;
 			width: fit-content;
 
 			@media screen and (min-width: $screen-md) {
@@ -673,15 +668,18 @@
 		}
 
 		.skill-list {
-			margin-left: auto;
-			padding: 0 15% 650px;
+			// margin-left: auto;
+			// padding: 0 15% 650px;
+			padding-bottom: 650px;
 			display: flex;
 			flex-direction: column;
-			gap: 160px;
-			width: 160px;
+			gap: 80px;
 
 			&__item {
-				display: block;
+				display: flex;
+				justify-content: flex-end;
+				// Width of circle on desktop, make sure that they don't get squished
+				min-width: 108px;
 
 				:global(.skill-circle) {
 					background-color: $primary-extra-dark;
