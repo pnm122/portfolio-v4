@@ -52,8 +52,8 @@
 				onStart: () => {
 					untrack(async () => {
 						if (animationCompleted) animationCompleted = false
-            // Must wait until preloader is completed to make sure canvas positions
-	          // are calculated correctly
+						// Must wait until preloader is completed to make sure canvas positions
+						// are calculated correctly
 						await finishedPreloading
 						canvas?.context.stop()
 					})
@@ -66,8 +66,8 @@
 				onComplete: () => {
 					untrack(async () => {
 						if (!animationCompleted) animationCompleted = true
-            // Must wait until preloader is completed to make sure canvas positions
-	          // are calculated correctly
+						// Must wait until preloader is completed to make sure canvas positions
+						// are calculated correctly
 						await finishedPreloading
 						canvas?.context.start()
 					})
@@ -172,13 +172,13 @@
 						</button>
 					</h1>
 				</Rectangle>
-				<p class="time">
+				<div class="time">
 					{#each format.format(time).split(',') as timeSection}
 						<Rectangle class="time__inner" isStatic>
 							<span>{timeSection}</span>
 						</Rectangle>
 					{/each}
-				</p>
+				</div>
 			</div>
 			<div class="drop-in-items">
 				<Circle class="contact-link contact-link--email" radius={16} restitution={0.75} size={160}>
@@ -309,6 +309,9 @@
 			align-items: flex-end;
 			text-align: right;
 			font-size: $font-size-6;
+			font-family: monospace;
+			font-weight: 500;
+			line-height: 1.15;
 
 			@media screen and (min-width: $screen-sm) {
 				font-size: $font-size-8;
